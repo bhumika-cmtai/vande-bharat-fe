@@ -38,13 +38,13 @@ const PrintStyles = () => (
 // ===================================================================================
 const InvoiceTemplate = ({ order }: { order: Order }) => {
   const companyDetails = {
-    name: 'Velvetvibe',
+    name: 'VandeBharat',
     address: 'abcd noida',
     gstin: '07BATPS3910H1ZC',
     contact: '+91 99xxxxx',
-    email: 'Velvetvibe@.com',
-    website: 'www.velvetvibe.org',
-    logo: '/Velvetvibe-PNG.png'
+    email: 'VandeBharat@.com',
+    website: 'www.VandeBharat.org',
+    logo: '/VandeBharat-PNG.png'
   };
 
   return (
@@ -52,7 +52,7 @@ const InvoiceTemplate = ({ order }: { order: Order }) => {
         <div className="w-[800px] bg-white p-4 font-sans mx-auto">
             <div className="flex items-center justify-between bg-black text-white p-6">
                 <div className="w-40">
-                    <Image src={companyDetails.logo} alt="Velvetvibe Logo" width={150} height={42} className="brightness-0 invert"/>
+                    <Image src={companyDetails.logo} alt="VandeBharat Logo" width={150} height={42} className="brightness-0 invert"/>
                 </div>
                 <h1 className="text-4xl font-bold tracking-wider">INVOICE</h1>
             </div>

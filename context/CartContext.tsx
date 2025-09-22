@@ -38,12 +38,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<LocalCartItem[]>([]);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem("velvetvibe-cart");
+    const savedCart = localStorage.getItem("VandeBharat-cart");
     if (savedCart) setItems(JSON.parse(savedCart));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("velvetvibe-cart", JSON.stringify(items));
+    localStorage.setItem("VandeBharat-cart", JSON.stringify(items));
   }, [items]);
 
   const addToCart = (product: Product, variant?: Variant, quantity = 1) => {

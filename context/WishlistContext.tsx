@@ -26,7 +26,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Load saved wishlist from localStorage on initial render
-    const savedWishlist = localStorage.getItem("velvetvibe-wishlist")
+    const savedWishlist = localStorage.getItem("VandeBharat-wishlist")
     if (savedWishlist) {
       setItems(JSON.parse(savedWishlist))
     }
@@ -34,7 +34,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Save wishlist to localStorage whenever it changes
-    localStorage.setItem("velvetvibe-wishlist", JSON.stringify(items))
+    localStorage.setItem("VandeBharat-wishlist", JSON.stringify(items))
   }, [items])
 
   const addToWishlist = (product: Product, selectedVariant?: Variant) => {

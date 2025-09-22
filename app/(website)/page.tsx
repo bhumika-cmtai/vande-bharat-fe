@@ -1,89 +1,67 @@
-"use client";
+import HeroSlider from '@/components/home/HeroSlider';
+import { CategorySlider } from '@/components/home/CategorySlider'; // <-- 1. Import Karein
+import { ProductSection } from '@/components/home/ProductSection';
+import { Certifications } from '@/components/home/Certifications';
+import { WhyChooseUs } from '@/components/home/WhyChooseUs';
+import { BenefitsStrip } from '@/components/BenefitsStrip';
+import { FeatureGrid } from '@/components/FeatureGrid';
+import { AllProducts } from '@/components/home/AllProducts';
+import { Testimonials } from '@/components/home/Testimonials';
+import { PromoBanner } from '@/components/home/PromoBanner';
+import { ProductCarousel } from '@/components/home/ProductCarousel';
 
-import { useState, useEffect } from "react";
-import Header from "@/components/Header";
-import Navbar from "@/components/Navbar";
-import HomePageSkeleton from "@/components/skeleton/HomePageSkeleton";
-import { HeroSection } from "@/components/home/HeroSection";
-import { ProductSection } from "@/components/home/ProductSection";
-import { CategoryScroller } from "@/components/home/CategoryScroller";
-import { PromoBanner } from "@/components/home/PromoBanner";
-import { BrandLogos } from "@/components/home/BrandLogos";
-import { FeaturesSection } from "@/components/home/FeaturesSection";
-import { ContactForm } from "@/components/home/ContactForm";
-import { StyleYourSpace } from "@/components/home/StyleYourSpace";
-
-const HomePage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // This effect is now only for the initial page skeleton.
-    // Each ProductSection will handle its own loading state.
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return (
-      <>
-        <Header />
-        <Navbar />
-        <HomePageSkeleton />
-      </>
-    );
-  }
-
+export default function HomePage() {
   return (
-    <div className="bg-[var(--base-50)]/30">
-      <Header />
-      <Navbar />
-
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+    <main>
+      {/* 1 */}
+      <HeroSlider />
+      
+      <div className="py-16 md:py-24 space-y-20 md:space-y-28">
+      {/* 2 */}
         
-        <HeroSection />
+        <CategorySlider /> 
+      {/* 3 */}
 
-        <ProductSection
-          title="New Arrivals"
-          queryParams={{ category: "Clothing", limit: 4 }}
-        />
-
-        <CategoryScroller />
-        
-        <ProductSection
-          title="Trending Products"
-          queryParams={{ tags: "hot", limit: 4 }}
-        />
-
-        <ProductSection
-          title="Discover Our Decor Collection"
-          queryParams={{ category: "Decorative", limit: 4 }}
-        />
-
-        <PromoBanner />
-        <StyleYourSpace/> 
-        
-        <BrandLogos />
-        
-        <ProductSection
-            title="Women's Fashion"
-            queryParams={{ gender: "Women", category: "Clothing", limit: 4 }}
-        />
-        
-        <ProductSection
+        <ProductSection 
           title="Featured Products"
-          queryParams={{ tags: "feature",limit: 4 }} // Fetches the 4 latest products of any kind
+          subtitle="Fresh from our farms to your home."
+          filterParams={{ tags: 'Sale', limit: 4 }}
         />
-        
-        <FeaturesSection />
+      {/* 4 */}
 
-        <ContactForm />
+        <FeatureGrid /> 
 
-      </main>
-    </div>
+
+      {/* 5 */}
+        <ProductSection 
+          title="Pure & Personal Care"
+          subtitle="Nourish your body with the goodness of nature."
+          filterParams={{ category: 'Personal Care', limit: 4 }}
+        />
+        {/* 6 */}
+        <PromoBanner />
+        {/* 7 */}
+        <ProductCarousel />
+        {/* 8 */}
+        <ProductSection 
+          title="New Arrivals"
+          subtitle="Our most popular customer picks this season."
+          filterParams={{ tags: 'New', limit: 8 }}
+        />
+      {/* 9 */}
+      <AllProducts />
+
+      {/* 10 */}
+        <Certifications />
+        {/* 11 */}
+        <ProductSection 
+          title="Healthy Grains & Flours"
+          subtitle="The foundation of a wholesome Indian meal."
+          filterParams={{ category: 'Grains', limit: 4 }}
+        />
+        {/* 12 */}
+        <Testimonials />
+      </div>
+    </main>
   );
-};
-
-export default HomePage;
+}

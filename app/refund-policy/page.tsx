@@ -102,7 +102,7 @@ export default function RefundPolicyPage() {
               </PolicySection>
               
               <PolicySection id="initiate-return" icon={Mail} title="3. How to Initiate a Return">
-                <p>Starting a return is simple. Please email our friendly customer care team at <a href="mailto:support@velvetvibe.com" className="text-primary underline">support@velvetvibe.com</a> with your order number and the items you wish to return. We will guide you through the next steps for a smooth process.</p>
+                <p>Starting a return is simple. Please email our friendly customer care team at <a href="mailto:support@VandeBharat.com" className="text-primary underline">support@VandeBharat.com</a> with your order number and the items you wish to return. We will guide you through the next steps for a smooth process.</p>
               </PolicySection>
 
               <PolicySection id="processing" icon={RefreshCw} title="4. Refund Processing">
@@ -122,7 +122,7 @@ export default function RefundPolicyPage() {
               
               <PolicySection id="support" icon={HelpCircle} title="7. Questions & Support">
                 <p>If you haven't received your refund within the expected timeline, we recommend first checking with your bank or credit card company. If you've done this and still need assistance, please don't hesitate to reach out to us. We're here to help!</p>
-                <p><strong>Contact Us:</strong> <a href="mailto:support@velvetvibe.com" className="text-primary underline">support@velvetvibe.com</a></p>
+                <p><strong>Contact Us:</strong> <a href="mailto:support@VandeBharat.com" className="text-primary underline">support@VandeBharat.com</a></p>
               </PolicySection>
 
             </div>

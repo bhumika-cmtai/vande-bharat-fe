@@ -111,7 +111,7 @@ export default function ShippingPolicyPage() {
               </PolicySection>
 
               <PolicySection id="damaged-lost" icon={ShieldAlert} title="5. Damaged or Lost Packages">
-                <p>We pack every item securely to ensure it arrives in perfect condition. In the rare event that your order arrives damaged, please contact us within <strong>48 hours</strong> of delivery at <a href="mailto:support@velvetvibe.com" className="text-primary underline">support@velvetvibe.com</a> with your Order ID and photos of the damage. We will assist you promptly. For packages lost in transit, we will coordinate directly with our courier partners to resolve the issue.</p>
+                <p>We pack every item securely to ensure it arrives in perfect condition. In the rare event that your order arrives damaged, please contact us within <strong>48 hours</strong> of delivery at <a href="mailto:support@VandeBharat.com" className="text-primary underline">support@VandeBharat.com</a> with your Order ID and photos of the damage. We will assist you promptly. For packages lost in transit, we will coordinate directly with our courier partners to resolve the issue.</p>
               </PolicySection>
 
               <PolicySection id="address-accuracy" icon={Home} title="6. Address Accuracy">

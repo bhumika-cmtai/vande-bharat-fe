@@ -144,7 +144,7 @@ export default function PrivacyPolicyPage() {
               
               <PolicySection id="contact-us" icon={Mail} title="8. Contact Us">
                 <p>If you have any questions or concerns about this Privacy Policy, our team is here to help. Please feel free to reach out to us.</p>
-                <p><strong>Email:</strong> <a href="mailto:privacy@velvetvibe.com" className="text-primary underline">privacy@velvetvibe.com</a></p>
+                <p><strong>Email:</strong> <a href="mailto:privacy@VandeBharat.com" className="text-primary underline">privacy@VandeBharat.com</a></p>
               </PolicySection>
             </div>
           </div>

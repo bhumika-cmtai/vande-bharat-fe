@@ -24,7 +24,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Velvetvibe",
+  title: "VandeBharat",
   description:
     "",
   generator: "v0.app",

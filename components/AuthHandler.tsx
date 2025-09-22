@@ -36,7 +36,7 @@ export const AuthHandler = () => {
          ("User logged in. Starting local data merge...");
 
         // Cart sync is now handled in the login page to prevent conflicts
-        // const localCart = localStorage.getItem("velvetvibe-cart");
+        // const localCart = localStorage.getItem("VandeBharat-cart");
         // if (localCart) {
         //   const cartItems: LocalCartItem[] = JSON.parse(localCart);
         //   if (cartItems.length > 0) {
@@ -50,13 +50,13 @@ export const AuthHandler = () => {
         //         }))
         //       )
         //     );
-        //     localStorage.removeItem("velvetvibe-cart");
+        //     localStorage.removeItem("VandeBharat-cart");
         //      ("Local cart cleared.");
         //   }
         // }
 
         // Wishlist sync is now handled in the login page to prevent conflicts
-        // const localWishlist = localStorage.getItem("velvetvibe-wishlist");
+        // const localWishlist = localStorage.getItem("VandeBharat-wishlist");
         // if (localWishlist) {
         //   const wishlistItems: LocalWishlistItem[] = JSON.parse(localWishlist);
         //   if (wishlistItems.length > 0) {
@@ -66,7 +66,7 @@ export const AuthHandler = () => {
         //         dispatch(addToWishlist(item._id))
         //       )
         //     );
-        //     localStorage.removeItem("velvetvibe-wishlist");
+        //     localStorage.removeItem("VandeBharat-wishlist");
         //      ("Local wishlist cleared.");
         //   }
         // }

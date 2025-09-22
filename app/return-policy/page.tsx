@@ -111,7 +111,7 @@ export default function ReturnPolicyPage() {
               </PolicySection>
               
               <PolicySection id="initiate-return" icon={CornerUpLeft} title="5. How to Start a Return">
-                <p>Initiating a return is easy. Simply send an email to our customer care team at <a href="mailto:support@velvetvibe.com" className="text-primary underline">support@velvetvibe.com</a> with your Order ID and the name of the item(s) you wish to return. We will reply with detailed instructions and arrange for a reverse pickup from your address.</p>
+                <p>Initiating a return is easy. Simply send an email to our customer care team at <a href="mailto:support@VandeBharat.com" className="text-primary underline">support@VandeBharat.com</a> with your Order ID and the name of the item(s) you wish to return. We will reply with detailed instructions and arrange for a reverse pickup from your address.</p>
               </ PolicySection>
 
               <PolicySection id="inspection" icon={Search} title="6. Inspection & Approval">

@@ -93,7 +93,7 @@ export default function TermsAndConditionsPage() {
               
               <PolicySection id="introduction" icon={BookText} title="1. Introduction">
                 <p>
-                  Welcome to Velvet Vibe! These Terms of Service ("Terms") govern your use of our website (velvetvibe.com) and the purchase of our women's clothing and decorative home goods. By accessing our site and placing an order, you agree to be bound by these Terms and our <a href="/privacy-policy" className="text-primary underline">Privacy Policy</a>.
+                  Welcome to Velvet Vibe! These Terms of Service ("Terms") govern your use of our website (VandeBharat.com) and the purchase of our women's clothing and decorative home goods. By accessing our site and placing an order, you agree to be bound by these Terms and our <a href="/privacy-policy" className="text-primary underline">Privacy Policy</a>.
                 </p>
               </PolicySection>
 
@@ -138,7 +138,7 @@ export default function TermsAndConditionsPage() {
 
               <PolicySection id="contact" icon={Mail} title="8. Contact Information">
                 <p>
-                  Questions about these Terms of Service should be sent to us at <a href="mailto:legal@velvetvibe.com" className="text-primary underline">legal@velvetvibe.com</a>.
+                  Questions about these Terms of Service should be sent to us at <a href="mailto:legal@VandeBharat.com" className="text-primary underline">legal@VandeBharat.com</a>.
                 </p>
               </PolicySection>
 

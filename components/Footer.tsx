@@ -1,121 +1,129 @@
-// src/components/Footer.tsx
-import React from 'react';
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Youtube, ArrowRight } from 'lucide-react';
+// import { VandeBharatLogo } from '../icons/Logo';
+import { IndiaFlag } from './icons/IndiaFlag';
+import { UKFlag } from './icons/UKFlag';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { MotionDiv } from './motion/MotionDiv';
+import Image from 'next/image';
 
-// --- UPDATED Data for footer links based on your file structure ---
-const infoLinks = [
-  { name: 'My Account', href: '/account' },
-  { name: 'Order History', href: '/account/orders' }, // Assuming this route exists under account
-  { name: 'Bulk Orders', href: '/bulk-order' },
-  // { name: 'Contact Us', href: '/' }, // Assuming a contact page
+const footerLinkGroups = [
+  {
+    title: 'Products Range',
+    links: ['Personal Care', 'Hair Care', 'Skin Care', 'Wellness Product', 'Food Product'],
+  },
+  {
+    title: 'Navigations',
+    links: ['About us', 'Success Stories', 'Director Message', 'Achievements', 'Legals', 'Downloads', 'Grievance Cell'],
+  },
+  {
+    title: 'Policies',
+    links: ['Obligations', 'Prohibitions', 'Model Code Of Conduct', 'Terms & Conditions', 'Other Policies', 'Cancellation & Return', 'Shipping & Delivery'],
+  },
 ];
 
-const quickShopLinks = [
-  { name: 'New Arrivals', href: '/new-arrivals' },
-  { name: 'Best Sellers', href: '/best-sellers' },
-  { name: 'Sale', href: '/sale' },
-  { name: 'All Products', href: '/shop' },
-  { name: 'Ethnic Wear', href: '/ethnic-wear' },
+const socialLinks = [
+  { icon: Facebook, href: '#', name: 'Facebook' },
+  { icon: Instagram, href: '#', name: 'Instagram' },
+  { icon: Twitter, href: '#', name: 'Twitter' },
+  { icon: Youtube, href: '#', name: 'Youtube' },
 ];
 
-const customerServiceLinks = [
-  { name: 'Shipping Policy', href: '/shipping-policy' },
-  { name: 'Return Policy', href: '/return-policy' },
-  { name: 'Refund Policy', href: '/refund-policy' },
-  { name: 'Privacy Policy', href: '/privacy-policy' },
-  { name: 'Terms & Conditions', href: '/terms-and-conditions' },
-];
-
-// Payment Icons Component
-const PaymentIcons = () => (
-  <div className="flex items-center space-x-2">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Old_Visa_Logo.svg" alt="Visa" className="h-6" />
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/2560px-MasterCard_Logo.svg.png" alt="Mastercard" className="h-6" />
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" alt="Amex" className="h-6" />
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" alt="PayPal" className="h-5" />
-    {/* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Discover_Card_logo.svg/2560px-Discover_Card_logo.svg.png" alt="Discover" className="h-4" /> */}
-  </div>
-);
-
-const Footer = () => {
+ const Footer = () => {
   return (
-    <footer className="bg-[var(--base-100)] text-gray-800 border-t border-gray-200">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-          
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <h2 className="text-3xl font-serif font-bold mb-4">Velvetvibe</h2>
-            <div className="space-y-3 text-sm text-gray-600">
-              <p><span className="font-semibold text-gray-800">Mail:</span> hi.Velvetvibe@example.com</p>
-              <p><span className="font-semibold text-gray-800">Phone:</span> 1-333-345-6868</p>
-              <p><span className="font-semibold text-gray-800">Address:</span> abcd street, Noida, India</p>
+    <footer className="bg-gray-50 border-t border-gray-200 text-brand-dark">
+      <div className="container mx-auto px-6 py-12">
+        <MotionDiv
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+            
+            {/* Link Groups */}
+            {footerLinkGroups.map((group) => (
+              <div key={group.title}>
+                <h4 className="font-bold text-brand-blue mb-4">{group.title}</h4>
+                <ul className="space-y-3">
+                  {group.links.map((link) => (
+                    <li key={link}>
+                      <Link href="#" className="hover:text-brand-orange transition-colors duration-300">
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            {/* Contact Us Section */}
+            <div className="xl:col-span-2">
+              <h4 className="font-bold text-brand-blue mb-4">Contact Us</h4>
+              <div className="space-y-6">
+                {/* India Office */}
+                <div>
+                  <div className="flex items-center font-semibold mb-2">
+                    <span className="mr-2">Corporate Office INDIA</span>
+                    <IndiaFlag className="w-6 h-auto rounded" />
+                  </div>
+                  <address className="not-italic text-sm space-y-1 text-gray-600">
+                    <p>VANDE BHARAT MARKETING PVT. LTD.</p>
+                    <p>K-131, KRISHNA PARK EXTN.,</p>
+                    <p>NEAR JANAKPURI DISTRICT CENTRE</p>
+                    <p>NEW DELHI -110018 (INDIA)</p>
+                    <p><strong>CIN No.:</strong> U74999DL2021PTC377351</p>
+                    <p><strong>GST No.:</strong> 07AAHCV9253G1ZZ</p>
+                    <p><strong>TEL/Fax:</strong> +91 11 41671550</p>
+                    <p><strong>Whatsapp No:</strong> +91 8860001947</p>
+                    <p><strong>Email:</strong> support@vandebharatmart.com</p>
+                  </address>
+                </div>
+                {/* UK Office */}
+                <div>
+                  <div className="flex items-center font-semibold mb-2">
+                    <span className="mr-2">Branch Office LONDON (U.K)</span>
+                    <UKFlag className="w-6 h-auto" />
+                  </div>
+                  <address className="not-italic text-sm space-y-1 text-gray-600">
+                     <p>VANDE BHARAT MARKETING PVT. LTD.</p>
+                    <p>CARLYON ROAD, UB4 0NS, HAYES</p>
+                    <p>LONDON, ENGLAND (U.K)</p>
+                    <p><strong>Mob No:</strong> +44 74040 91171</p>
+                    <p><strong>Email:</strong> info@vandebharatmart.com</p>
+                  </address>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-4 tracking-wider">INFORMATION</h3>
-            <ul className="space-y-3">
-              {infoLinks.map(link => (
-                <li key={link.name}><Link href={link.href} className="text-gray-600 hover:text-black transition-colors">{link.name}</Link></li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-4 tracking-wider">QUICK SHOP</h3>
-            <ul className="space-y-3">
-              {quickShopLinks.map(link => (
-                <li key={link.name}><Link href={link.href} className="text-gray-600 hover:text-black transition-colors">{link.name}</Link></li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-4 tracking-wider">CUSTOMER SERVICES</h3>
-            <ul className="space-y-3">
-              {customerServiceLinks.map(link => (
-                <li key={link.name}><Link href={link.href} className="text-gray-600 hover:text-black transition-colors">{link.name}</Link></li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <h3 className="font-semibold text-gray-800 mb-4 tracking-wider">NEWSLETTER</h3>
-            <p className="text-gray-600 mb-4 text-sm">Sign up for our newsletter and get 10% off your first purchase</p>
-            <form className="flex items-center">
-              <input type="email" placeholder="Enter your e-mail" className="w-full text-sm bg-white border border-gray-300 rounded-l-md p-3 focus:outline-none focus:ring-1 focus:ring-black" />
-              <button type="submit" aria-label="Subscribe to newsletter" className="bg-black text-white p-3 rounded-r-md hover:bg-gray-800 transition-colors">
-                <ArrowRight size={20} />
-              </button>
-            </form>
-            <div className="flex items-center space-x-4 mt-6">
-              <a href="#" aria-label="Facebook"><Facebook size={20} className="text-gray-600 hover:text-black"/></a>
-              <a href="#" aria-label="Instagram"><Instagram size={20} className="text-gray-600 hover:text-black"/></a>
-              <a href="#" aria-label="Twitter"><Twitter size={20} className="text-gray-600 hover:text-black"/></a>
-              <a href="#" aria-label="Youtube"><Youtube size={20} className="text-gray-600 hover:text-black"/></a>
+          <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+            <div className="text-center md:text-left mb-6 md:mb-0">
+              <Link href="/" className="inline-block mb-4">
+                 <Image
+                  src="/logo1.png"
+                  alt="Vande bharat logo"
+                  width={200}
+                  height={200}
+                  className="h-12"
+                  />
+              </Link>
+              <p className="text-sm text-gray-500">2025 Vande Bharat Mart. All Rights Reserved.</p>
+            </div>
+            <div className='text-center'>
+              <h4 className="font-bold text-brand-blue mb-3">Follow us</h4>
+              <div className="flex justify-center space-x-4">
+                {socialLinks.map((social) => (
+                  <a key={social.name} href={social.href} aria-label={social.name} className="text-gray-500 hover:text-brand-orange transition-colors duration-300">
+                    <social.icon className="w-6 h-6" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div className="border-t border-gray-200">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 gap-4">
-            <p className="text-center md:text-left">© {new Date().getFullYear()} Velvetvibe. All Rights Reserved.</p>
-            <div className="flex items-center space-x-4">
-              {/* <button>English ▼</button>
-              <button>USD ▼</button> */}
-            </div>
-            <div className="flex items-center space-x-2">
-              <span>Payment:</span>
-              <PaymentIcons />
-            </div>
-          </div>
-        </div>
+        </MotionDiv>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default Footer

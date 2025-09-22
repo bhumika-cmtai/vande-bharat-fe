@@ -36,17 +36,12 @@ export interface Product {
 
   images: string[];
   video?: string;
-  category: 'Clothing' | 'Decorative' | string;
+  category: string;
   sub_category: string;
   brand: string;
   gender?: 'Men' | 'Women' | 'Unisex';
   tags?: string[];
   
-  fit?: string;
-  careInstructions?: string;
-  sleeveLength?: string;
-  neckType?: string;
-  pattern?: string;
 
   reviews?: Review[];
   averageRating?: number;
