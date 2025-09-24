@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/motion/motionVariants'; // Path ko check kar lein
+import Link from 'next/link';
 
 const slides = [
   {
@@ -138,9 +139,11 @@ const HeroSlider = () => {
           {slide.subtitle}
         </motion.p>
         <motion.div variants={fadeInUp}>
-          <Button size="lg" className="bg-[var(--primary-button-theme)] text-lg hover:bg-[var(--secondary-button-theme)] ">
-            {slide.buttonText}
-          </Button>
+          <Link href="/shop">
+            <Button size="lg" className="bg-[var(--primary-button-theme)] text-lg hover:bg-[var(--secondary-button-theme)] ">
+              {slide.buttonText}
+            </Button>
+          </Link>
         </motion.div>
       </motion.div>
 

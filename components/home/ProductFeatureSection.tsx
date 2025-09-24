@@ -2,6 +2,7 @@ import React from 'react';
 import { MotionDiv } from '@/components/motion/MotionDiv';
 import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 import { Leaf, Heart, ShieldCheck, Award, Sparkles, Star } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ProductFeaturesSection() {
   const features = [
@@ -177,9 +178,11 @@ export default function ProductFeaturesSection() {
                 whileTap={{ scale: 0.95 }}
                 className="inline-block"
               >
-                <button className="bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-50 transition-colors shadow-lg hover:shadow-xl">
-                  Shop Now 
-                </button>
+                <Link href="/shop">
+                  <button className="bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-50 transition-colors shadow-lg hover:shadow-xl">
+                    Shop Now 
+                  </button>
+                </Link>
               </MotionDiv>
             </div>
           </div>

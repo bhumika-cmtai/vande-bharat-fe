@@ -1,23 +1,58 @@
 import Link from 'next/link';
-// import { VandeBharatLogo } from '../icons/Logo';
-import { IndiaFlag } from './icons/IndiaFlag';
-import { UKFlag } from './icons/UKFlag';
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { MotionDiv } from './motion/MotionDiv';
 import Image from 'next/image';
+import { IndiaFlag } from './icons/IndiaFlag';
+import { UKFlag } from './icons/UKFlag';
+
+// Helper function to convert link text to a URL-friendly slug
+const toSlug = (text: string) => {
+  const lower = text.toLowerCase();
+  // Handle special cases first
+  if (lower === 'about us') return '/about';
+  if (lower === 'terms & conditions') return '/policies/terms-and-conditions';
+  
+  // General rule
+  return '/' + lower
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/&/g, 'and'); // Replace & with 'and'
+};
 
 const footerLinkGroups = [
   {
     title: 'Products Range',
-    links: ['Personal Care', 'Hair Care', 'Skin Care', 'Wellness Product', 'Food Product'],
+    links: [
+      { name: 'Personal Care', href: '/products/personal-care' },
+      { name: 'Hair Care', href: '/products/hair-care' },
+      { name: 'Skin Care', href: '/products/skin-care' },
+      { name: 'Wellness Product', href: '/products/wellness' },
+      { name: 'Food Product', href: '/products/food' },
+    ],
   },
   {
     title: 'Navigations',
-    links: ['About us', 'Success Stories', 'Director Message', 'Achievements', 'Legals', 'Downloads', 'Grievance Cell'],
+    links: [
+      { name: 'About us', href: '/about' },
+      { name: 'Success Stories', href: '/success-stories' },
+      // Linking to sections on the corporate info page
+      { name: 'Director Message', href: '/corporate-info#director-message' }, 
+      { name: 'Achievements', href: '/corporate-info#achievements' },
+      { name: 'Legals', href: '/corporate-info#legal' },
+      { name: 'Downloads', href: '/corporate-info#downloads' },
+      { name: 'Grievance Cell', href: '/corporate-info#grievance-cell' },
+    ],
   },
   {
     title: 'Policies',
-    links: ['Obligations', 'Prohibitions', 'Model Code Of Conduct', 'Terms & Conditions', 'Other Policies', 'Cancellation & Return', 'Shipping & Delivery'],
+    links: [
+      { name: 'Obligations', href: '/policies/obligations' },
+      { name: 'Prohibitions', href: '/policies/prohibitions' },
+      { name: 'Model Code Of Conduct', href: '/policies/code-of-conduct' },
+      { name: 'Terms & Conditions', href: '/policies/terms-and-conditions' },
+      { name: 'Other Policies', href: '/policies/other' },
+      { name: 'Cancellation & Return', href: '/policies/cancellation-return' },
+      { name: 'Shipping & Delivery', href: '/policies/shipping-delivery' },
+    ],
   },
 ];
 
@@ -46,9 +81,9 @@ const socialLinks = [
                 <h4 className="font-bold text-brand-blue mb-4">{group.title}</h4>
                 <ul className="space-y-3">
                   {group.links.map((link) => (
-                    <li key={link}>
-                      <Link href="#" className="hover:text-brand-orange transition-colors duration-300">
-                        {link}
+                    <li key={link.name}>
+                      <Link href={link.href} className="hover:text-brand-orange transition-colors duration-300">
+                        {link.name}
                       </Link>
                     </li>
                   ))}
@@ -103,8 +138,8 @@ const socialLinks = [
                   src="/logo1.png"
                   alt="Vande bharat logo"
                   width={200}
-                  height={200}
-                  className="h-12"
+                  height={50} // Adjusted height for better aspect ratio
+                  className="h-12 w-auto" // Set height and auto width
                   />
               </Link>
               <p className="text-sm text-gray-500">2025 Vande Bharat Mart. All Rights Reserved.</p>
@@ -126,4 +161,4 @@ const socialLinks = [
   );
 };
 
-export default Footer
+export default Footer;

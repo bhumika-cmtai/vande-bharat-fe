@@ -2,6 +2,7 @@ import React from 'react';
 import { MotionDiv } from '@/components/motion/MotionDiv';
 import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 import { ArrowRight, Star, Heart, ShoppingBag } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ProductCollectionGrid() {
   const collections = [
@@ -191,6 +192,7 @@ export default function ProductCollectionGrid() {
                     whileTap={{ scale: 0.95 }}
                     className="group/btn"
                   >
+                    <Link href="/shop">
                     <button className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-800 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 group-hover:border-green-200">
                       <ShoppingBag className="w-4 h-4 mr-2" />
                       {collection.buttonText}
@@ -202,10 +204,11 @@ export default function ProductCollectionGrid() {
                           ease: "easeInOut"
                         }}
                         className="ml-2"
-                      >
+                        >
                         <ArrowRight className="w-4 h-4" />
                       </MotionDiv>
                     </button>
+                        </Link>
                   </MotionDiv>
                 </MotionDiv>
               </div>
@@ -236,10 +239,12 @@ export default function ProductCollectionGrid() {
             whileHover={{ scale: 1.02 }}
             className="inline-block"
           >
+            <Link href="/shop">
             <button className="bg-gradient-to-r from-[var(--brand-green)] to-green-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
               View All Collections
               <ArrowRight className="w-5 h-5 ml-2 inline" />
             </button>
+            </Link>
           </MotionDiv>
         </MotionDiv>
       </div>
