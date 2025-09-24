@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/lib/redux/store"
 import { fetchProducts } from "@/lib/redux/slices/productSlice"
 
-import ProductCard from "@/components/ProductCard"
+import {ProductCard} from "@/components/ProductCard"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ProductGridSkeleton from "@/components/skeleton/ProductGridSkeleton"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
@@ -50,7 +50,7 @@ const CountdownTimer = () => {
 // --- Sale Header Component ---
 const SaleHeader = () => (
     <div className="relative w-full bg-black">
-        <div className="absolute inset-0 opacity-20"><Image src="https://images.unsplash.com/photo-1508056830983- unvexb21d582?q=80&w=2070" alt="Abstract background" fill className="object-cover" /></div>
+        <div className="absolute inset-0 opacity-20"><Image src="/facewash2.png" alt="Abstract background" fill className="object-cover" /></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 py-12 md:py-16">
             <p className="font-semibold tracking-widest text-xs md:text-sm uppercase text-red-400">LIMITED TIME OFFER</p>
             <h1 className="text-4xl md:text-7xl font-serif font-bold my-3 md:my-4">Mid-Season Sale</h1>
@@ -110,16 +110,7 @@ export default function SalePageClient() {
         return sorted;
     }, [sortOption, saleProducts]);
 
-    const mappedProducts = useMemo(() => sortedProducts.map(p => ({
-        _id: p._id,
-        name: p.name,
-        slug: p.slug,
-        images: p.images,
-        tags: p.tags,
-        price: p.sale_price ?? p.price,
-        base_price: p.sale_price ? p.price : undefined,
-        originalProduct: p,
-    })), [sortedProducts]);
+    // Use full Product objects directly to satisfy ProductCard typing
 
     const handlePageChange = (page: number) => {
         const params = new URLSearchParams(searchParams);
@@ -136,8 +127,11 @@ export default function SalePageClient() {
                         <span className="text-sm font-semibold">Filter:</span>
                         <div className="flex gap-1 bg-gray-100 p-1 rounded-full">
                             <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
-                            <button onClick={() => setCategoryFilter('Clothing')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Clothing' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Clothing</button>
-                            <button onClick={() => setCategoryFilter('Decorative')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Decorative' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Decorative</button>
+                            <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button>
+                            <button onClick={() => setCategoryFilter('skin-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'skin-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>skin-care</button>
+                            <button onClick={() => setCategoryFilter('hair-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'hair-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Hair-care</button>
+                            <button onClick={() => setCategoryFilter('Personal-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Personal-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Personal-care</button>
+                            <button onClick={() => setCategoryFilter('Wellness')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Wellness' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Wellness</button>
                         </div>
                     </div>
 
@@ -162,9 +156,9 @@ export default function SalePageClient() {
                         <ProductGridSkeleton count={8} />
                     ) : error ? (
                         <div className="text-center py-20 text-red-500">Failed to load sale products.</div>
-                    ) : mappedProducts.length > 0 ? (
+                    ) : sortedProducts.length > 0 ? (
                         <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-                            {mappedProducts.map((product) => (
+                            {sortedProducts.map((product) => (
                                 <ProductCard key={product._id} product={product} />
                             ))}
                         </motion.div>

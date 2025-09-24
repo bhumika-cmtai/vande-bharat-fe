@@ -53,7 +53,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
       const productSnapshot = {
         ...product,
         // Ensure we have the current stock information
-        stock_quantity: selectedVariant ? selectedVariant.stock_quantity : (product.stock_quantity || product.stock || 0)
+        stock_quantity: selectedVariant ? selectedVariant.stock_quantity : (product.stock_quantity )
       };
       
       // Create a snapshot of the variant with current stock information

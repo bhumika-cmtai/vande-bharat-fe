@@ -12,7 +12,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import ProductDetailsSkeleton from "@/components/skeleton/ProductPageSkeleton";
+import ProductDetailsSkeleton from "@/components/skeleton/productSkeleton";
 import { useToast } from "@/hooks/use-toast";
 
 // --- Redux & Context Integration ---
@@ -426,8 +426,8 @@ const ProductDetailsPage = () => {
                     <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700">
                         <p><span className="font-semibold">Category:</span> {product.category}</p>
                         {product.gender && <p><span className="font-semibold">For:</span> {product.gender}</p>}
-                        {product.fit && <p><span className="font-semibold">Fit:</span> {product.fit}</p>}
-                        {product.careInstructions && <p><span className="font-semibold">Care:</span> {product.careInstructions}</p>}
+                        {/* {product.fit && <p><span className="font-semibold">Fit:</span> {product.fit}</p>} */}
+                        {/* {product.careInstructions && <p><span className="font-semibold">Care:</span> {product.careInstructions}</p>} */}
                     </div>
                 </div>
             </div>

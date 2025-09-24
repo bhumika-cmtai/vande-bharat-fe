@@ -14,7 +14,7 @@ import { AppDispatch, RootState } from "@/lib/redux/store"
 import { fetchProducts } from "@/lib/redux/slices/productSlice"
 
 // --- Component Imports ---
-import ProductCard from "@/components/ProductCard"
+import {ProductCard} from "@/components/ProductCard"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ProductGridSkeleton from "@/components/skeleton/ProductGridSkeleton"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
@@ -23,7 +23,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 const CollectionHeader = () => (
     <div className="relative h-[200px] md:h-[300px] w-full bg-gray-200">
         <Image
-            src="https://images.unsplash.com/photo-1523381294911-8d3cead13475?q=80&w=2070"
+            src="/about.jpg"
             alt="Best Seller Banner"
             fill
             className="object-cover object-center"
@@ -117,10 +117,13 @@ export default function BestSellersPageClient() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-4 border-b">
                     <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm font-semibold">Filter:</span>
-                        <div className="flex gap-1 bg-gray-100 p-1 rounded-full">
-                            <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
-                            <button onClick={() => setCategoryFilter('Clothing')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Clothing' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Clothing</button>
-                            <button onClick={() => setCategoryFilter('Decorative')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Decorative' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Decorative</button>
+                        <div className="flex gap-1 bg-gray-200 p-1 rounded-full">
+                        <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
+                            <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button>
+                            <button onClick={() => setCategoryFilter('skin-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'skin-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>skin-care</button>
+                            <button onClick={() => setCategoryFilter('hair-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'hair-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Hair-care</button>
+                            <button onClick={() => setCategoryFilter('Personal-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Personal-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Personal-care</button>
+                            <button onClick={() => setCategoryFilter('Wellness')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Wellness' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Wellness</button>
                         </div>
                     </div>
 
@@ -146,12 +149,9 @@ export default function BestSellersPageClient() {
                         <ProductGridSkeleton count={8} />
                     ) : error ? (
                         <div className="text-center py-20 text-red-500">Failed to load best sellers.</div>
-                    ) : mappedProducts.length > 0 ? (
-                        <motion.div
-                            layout
-                            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8"
-                        >
-                            {mappedProducts.map((product) => (
+                    ) : sortedProducts.length > 0 ? (
+                        <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
+                            {sortedProducts.map((product) => (
                                 <ProductCard key={product._id} product={product} />
                             ))}
                         </motion.div>

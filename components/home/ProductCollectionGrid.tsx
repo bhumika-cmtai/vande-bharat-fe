@@ -12,7 +12,7 @@ export default function ProductCollectionGrid() {
       buttonText: "Shop Now",
       className: "row-span-2",
       bgColor: "bg-[var(--brand-green-100)]",
-      overlay: "from-green-100/80 to-green-200/60"
+      overlay: "from-green-100/80 to-green-200/80"
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ export default function ProductCollectionGrid() {
       buttonText: "Explore",
       className: "col-span-2",
       bgColor: "bg-white",
-      overlay: "from-white/90 to-green-50/80",
+      overlay: "from-orange-100/80 to-orange-200/80",
       featured: true
     },
     {
@@ -31,7 +31,7 @@ export default function ProductCollectionGrid() {
       buttonText: "Shop Now",
       className: "",
       bgColor: "bg-[var(--brand-green-100)]",
-      overlay: "from-green-50/90 to-green-100/70"
+      overlay: "from-green-100/40 to-green-200/40"
     },
     {
       id: 4,
@@ -40,7 +40,7 @@ export default function ProductCollectionGrid() {
       buttonText: "Shop Now", 
       className: "",
       bgColor: "bg-[var(--brand-green-100)]",
-      overlay: "from-green-100/85 to-green-200/65"
+      overlay: "from-green-100/40 to-green-200/40"
     }
   ];
 

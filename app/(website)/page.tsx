@@ -12,6 +12,7 @@ import { ProductCarousel } from '@/components/home/ProductCarousel';
 import ProductFeaturesSection from '@/components/home/ProductFeatureSection';
 import ProductCollectionGrid from '@/components/home/ProductCollectionGrid';
 import ProductShowcaseSection from '@/components/home/ProductShowcaseSection';
+import { ContactForm } from '@/components/home/ContactForm';
 
 export default function HomePage() {
   return (
@@ -68,6 +69,7 @@ export default function HomePage() {
         />
         {/* 12 */}
         <Testimonials />
+        <ContactForm />
       </div>
     </main>
   );

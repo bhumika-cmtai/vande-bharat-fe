@@ -20,7 +20,7 @@ export default function AboutPage() {
             className="object-cover scale-105 hover:scale-110 transition-transform duration-[3000ms]"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/70 via-brand-green/50 to-brand-blue/60" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/70 via-[var(--brand-green-100)]/20 to-[var(--brand-blue-100)]/20" />
           
           {/* Floating Elements */}
           <div className="absolute inset-0">
@@ -116,7 +116,7 @@ export default function AboutPage() {
             <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
               Bringing the authentic essence of India's nature to your doorstep.
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-green to-brand-orange mx-auto mt-6 rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-orange)] mx-auto mt-6 rounded-full"></div>
           </MotionDiv>
         </MotionDiv>
       </section>
@@ -125,8 +125,8 @@ export default function AboutPage() {
       <section className="relative bg-gradient-to-br from-white via-green-50/30 to-blue-50/20 py-20 md:py-32">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-brand-green rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-brand-orange rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+          <div className="absolute top-20 left-20 w-72 h-72 bg-[var(--brand-green)] rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-[var(--brand-orange)] rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="container mx-auto px-6 relative z-10">
@@ -153,7 +153,7 @@ export default function AboutPage() {
                 }}
                 className="absolute -top-4 -right-4"
               >
-                <Sparkles className="w-8 h-8 text-brand-orange opacity-60" />
+                <Sparkles className="w-8 h-8 text-[var(--brand-orange)] opacity-60" />
               </MotionDiv>
             </div>
             
@@ -198,7 +198,7 @@ export default function AboutPage() {
               repeat: Infinity,
               ease: "linear"
             }}
-            className="absolute top-20 left-10 w-32 h-32 border-2 border-brand-green/20 rounded-full"
+            className="absolute top-20 left-10 w-32 h-32 border-2 border-[var(--brand-green-100)]/20 rounded-full"
           />
           <MotionDiv
             animate={{
@@ -209,7 +209,7 @@ export default function AboutPage() {
               repeat: Infinity,
               ease: "linear"
             }}
-            className="absolute bottom-20 right-16 w-24 h-24 border-2 border-brand-orange/20 rounded-full"
+            className="absolute bottom-20 right-16 w-24 h-24 border-2 border-[var(--brand-orange-100)]/20 rounded-full"
           />
         </div>
         
@@ -245,7 +245,7 @@ export default function AboutPage() {
                   className="object-cover group-hover:scale-110 transition-transform duration-1000"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-brand-green/20 group-hover:to-brand-green/10 transition-all duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[var(--brand-green-100)]/20 group-hover:to-[var(--brand-green-100)]/10 transition-all duration-700" />
                 
                 {/* Floating badge */}
                 <MotionDiv
@@ -257,7 +257,7 @@ export default function AboutPage() {
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
-                  className="absolute -top-4 -right-4 bg-brand-orange text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
+                  className="absolute -top-4 -right-4 bg-[var(--brand-orange)] text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
                 >
                   Pure & Natural
                 </MotionDiv>
@@ -283,7 +283,7 @@ export default function AboutPage() {
                 <h3 className="text-4xl md:text-5xl font-bold text-brand-dark mb-6 leading-tight">
                   Our Mission
                 </h3>
-                <div className="absolute -left-4 top-0 w-2 h-16 bg-gradient-to-b from-brand-green to-brand-orange rounded-full"></div>
+                <div className="absolute -left-4 top-0 w-2 h-16 bg-gradient-to-b from-[var(--brand-green)] to-[var(--brand-orange)] rounded-full"></div>
               </div>
               
               <MotionDiv
@@ -331,7 +331,7 @@ export default function AboutPage() {
                   className="object-cover group-hover:scale-110 transition-transform duration-1000"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-brand-blue/20 group-hover:to-brand-blue/10 transition-all duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[var(--brand-blue-100)]/20 group-hover:to-[var(--brand-blue-100)]/10 transition-all duration-700" />
                 
                 {/* Floating badge */}
                 <MotionDiv
@@ -344,7 +344,7 @@ export default function AboutPage() {
                     ease: "easeInOut",
                     delay: 1
                   }}
-                  className="absolute top-4 left-4 bg-brand-blue text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
+                  className="absolute top-4 left-4 bg-[var(--brand-blue)] text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
                 >
                   Sustainable Future
                 </MotionDiv>
@@ -370,7 +370,7 @@ export default function AboutPage() {
                 <h3 className="text-4xl md:text-5xl font-bold text-brand-dark mb-6 leading-tight">
                   Our Vision
                 </h3>
-                <div className="absolute -left-4 top-0 w-2 h-16 bg-gradient-to-b from-brand-blue to-brand-green rounded-full"></div>
+                <div className="absolute -left-4 top-0 w-2 h-16 bg-gradient-to-b from-[var(--brand-blue)] to-[var(--brand-green)] rounded-full"></div>
               </div>
               
               <MotionDiv
@@ -410,7 +410,7 @@ export default function AboutPage() {
               <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
                 Our Core Values
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-brand-green via-brand-orange to-brand-blue mx-auto rounded-full"></div>
+              <div className="w-32 h-1 bg-gradient-to-r from-[var(--brand-green)] via-[var(--brand-orange)] to-[var(--brand-blue)] mx-auto rounded-full"></div>
             </div>
             <p className="text-xl text-gray-600 mt-6 max-w-2xl mx-auto">
               The principles that guide everything we do
@@ -448,12 +448,12 @@ export default function AboutPage() {
                 transition={{ duration: 0.5 }}
                 className="relative mx-auto mb-6"
               >
-                <div className="flex items-center justify-center mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-brand-green to-emerald-400 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-center mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-[var(--brand-green)] to-emerald-400 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
                   <Leaf className="w-10 h-10"/>
                 </div>
-                <div className="absolute inset-0 bg-brand-green/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-[var(--brand-green-100)]/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
               </MotionDiv>
-              <h3 className="font-bold text-2xl text-brand-dark mb-4 group-hover:text-brand-green transition-colors duration-300">
+              <h3 className="font-bold text-2xl text-brand-dark mb-4 group-hover:text-[var(--brand-green)] transition-colors duration-300">
                 Purity
               </h3>
               <p className="text-gray-600 leading-relaxed text-lg">
@@ -486,12 +486,12 @@ export default function AboutPage() {
                 transition={{ duration: 0.5 }}
                 className="relative mx-auto mb-6"
               >
-                <div className="flex items-center justify-center mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-brand-orange to-orange-400 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-center mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-[var(--brand-orange)] to-orange-400 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
                   <Heart className="w-10 h-10"/>
                 </div>
-                <div className="absolute inset-0 bg-brand-orange/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-[var(--brand-orange-100)]/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
               </MotionDiv>
-              <h3 className="font-bold text-2xl text-brand-dark mb-4 group-hover:text-brand-orange transition-colors duration-300">
+              <h3 className="font-bold text-2xl text-brand-dark mb-4 group-hover:text-[var(--brand-orange)] transition-colors duration-300">
                 Community
               </h3>
               <p className="text-gray-600 leading-relaxed text-lg">
@@ -524,12 +524,12 @@ export default function AboutPage() {
                 transition={{ duration: 0.5 }}
                 className="relative mx-auto mb-6"
               >
-                <div className="flex items-center justify-center mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-brand-blue to-blue-400 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-center mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-[var(--brand-blue)] to-blue-400 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
                   <Globe className="w-10 h-10"/>
                 </div>
-                <div className="absolute inset-0 bg-brand-blue/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-[var(--brand-blue-100)]/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300"></div>
               </MotionDiv>
-              <h3 className="font-bold text-2xl text-brand-dark mb-4 group-hover:text-brand-blue transition-colors duration-300">
+              <h3 className="font-bold text-2xl text-brand-dark mb-4 group-hover:text-[var(--brand-blue)] transition-colors duration-300">
                 Sustainability
               </h3>
               <p className="text-gray-600 leading-relaxed text-lg">

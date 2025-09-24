@@ -22,7 +22,7 @@ export interface Testimonial {
       id: '1',
       name: 'Priya S.',
       date: '14 August',
-      avatarUrl: 'https://source.unsplash.com/mEZ3PoFGs_k/100x100',
+      avatarUrl: '/testimonial/testimonial1.jpeg',
       rating: 5,
       title: 'Authenticity at its Best!',
       comment: "I've been using their organic basmati rice for a month, and the quality is outstanding. It reminds me of the authentic taste from my village. It's pure, aromatic, and absolutely delicious."
@@ -31,7 +31,7 @@ export interface Testimonial {
       id: '2',
       name: 'Rohan M.',
       date: '22 July',
-      avatarUrl: 'https://source.unsplash.com/iuyg1PBe_hI/100x100',
+      avatarUrl: '/testimonial/testimonial2.jpeg',
       rating: 5,
       title: 'Amazing Ayurvedic Shampoo',
       comment: "The herbal shampoo is a game-changer. It has controlled my hair fall and leaves my hair feeling so soft and healthy without any harsh chemicals. Highly recommended!"
@@ -40,7 +40,7 @@ export interface Testimonial {
       id: '3',
       name: 'Anjali K.',
       date: '05 July',
-      avatarUrl: 'https://source.unsplash.com/6_eAlN-A_so/100x100',
+      avatarUrl: '/testimonial/testimonial3.jpeg',
       rating: 4,
       title: 'Great Quality Spices',
       comment: "The turmeric powder has such a vibrant color and strong aroma. You can tell it's pure and not adulterated. It has elevated the taste of my cooking. Will definitely buy more."
@@ -49,7 +49,7 @@ export interface Testimonial {
       id: '4',
       name: 'Vikram P.',
       date: '18 June',
-      avatarUrl: 'https://source.unsplash.com/C8Ta0gwPbQg/100x100',
+      avatarUrl: '/testimonial/testimonial4.jpeg',
       rating: 5,
       title: 'Fast and Reliable Delivery',
       comment: "I was pleasantly surprised by how quickly my order arrived. The packaging was excellent, and all the products were fresh. A great online shopping experience."

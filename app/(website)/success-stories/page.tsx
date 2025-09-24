@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { MotionDiv } from '@/components/motion/MotionDiv';
 import { staggerContainer, fadeInUp, scaleInUp } from '@/lib/motion/motionVariants';
 import { Quote, Star, TrendingUp, Users, Award, Heart } from 'lucide-react';
+import Link from 'next/link';
 
 // Success Stories Page Component
 export default function SuccessStoriesPage() {
@@ -66,7 +67,7 @@ export default function SuccessStoriesPage() {
             className="object-cover scale-105 hover:scale-110 transition-transform duration-[3000ms]"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-green/80 via-brand-blue/60 to-brand-orange/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-green)]/80  to-[var(--brand-blue)]/70" />
           
           {/* Floating Success Icons */}
           <div className="absolute inset-0">
@@ -126,7 +127,7 @@ export default function SuccessStoriesPage() {
             <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
               Real transformations, Real people, Real results with Vande Bharat Mart
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-brand-orange to-brand-green mx-auto mt-6 rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-[var(--brand-orange)] to-[var(--brand-green)] mx-auto mt-6 rounded-full"></div>
           </MotionDiv>
         </MotionDiv>
       </section>
@@ -157,11 +158,11 @@ export default function SuccessStoriesPage() {
               >
                 <MotionDiv
                   whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-                  className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-brand-green to-brand-blue rounded-full text-white mb-4 shadow-lg"
+                  className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-blue)] rounded-full text-white mb-4 shadow-lg"
                 >
                   <stat.icon className="w-8 h-8" />
                 </MotionDiv>
-                <h3 className="text-3xl md:text-4xl font-bold text-brand-dark mb-2 group-hover:text-brand-green transition-colors">
+                <h3 className="text-3xl md:text-4xl font-bold text-[var(--brand-dark)] mb-2 group-hover:text-[var(--brand-green)] transition-colors">
                   {stat.number}
                 </h3>
                 <p className="text-gray-600 font-medium">{stat.label}</p>
@@ -181,10 +182,10 @@ export default function SuccessStoriesPage() {
             viewport={{ once: true, amount: 0.5 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--brand-dark)] mb-4">
               Customer Transformation Stories
             </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-brand-green via-brand-orange to-brand-blue mx-auto rounded-full"></div>
+            <div className="w-32 h-1 bg-gradient-to-r from-[var(--brand-green)] via-[var(--brand-orange)] to-[var(--brand-blue)] mx-auto rounded-full"></div>
             <p className="text-xl text-gray-600 mt-6 max-w-2xl mx-auto">
               Real people sharing their journey with our natural products
             </p>
@@ -213,7 +214,7 @@ export default function SuccessStoriesPage() {
               >
                 {/* Background Pattern */}
                 <div className="absolute top-0 right-0 w-32 h-32 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Quote className="w-full h-full text-brand-green" />
+                  <Quote className="w-full h-full text-[var(--brand-green)]" />
                 </div>
                 
                 {/* Customer Info */}
@@ -233,7 +234,7 @@ export default function SuccessStoriesPage() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h4 className="font-bold text-lg text-brand-dark">{story.name}</h4>
+                    <h4 className="font-bold text-lg text-[var(--brand-dark)]">{story.name}</h4>
                     <p className="text-gray-600">{story.location}</p>
                     <div className="flex items-center mt-1">
                       {[...Array(story.rating)].map((_, i) => (
@@ -244,7 +245,7 @@ export default function SuccessStoriesPage() {
                 </div>
 
                 {/* Category Badge */}
-                <div className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-brand-green/20 to-brand-blue/20 rounded-full text-sm font-semibold text-brand-dark mb-4">
+                <div className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[var(--brand-green)]/20 to-[var(--brand-blue)]/20 rounded-full text-sm font-semibold text-[var(--brand-dark)] mb-4">
                   {story.category}
                 </div>
 
@@ -254,7 +255,7 @@ export default function SuccessStoriesPage() {
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
                 >
-                  <Quote className="w-8 h-8 text-brand-green/40 mb-4" />
+                  <Quote className="w-8 h-8 text-[var(--brand-green)]/40 mb-4" />
                   <p className="text-gray-700 leading-relaxed text-lg italic">
                     "{story.story}"
                   </p>
@@ -266,7 +267,7 @@ export default function SuccessStoriesPage() {
       </section>
 
       {/* === Call to Action === */}
-      <section className="relative bg-gradient-to-br from-brand-dark via-brand-green to-brand-blue py-20 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[var(--brand-dark)] via-[var(--brand-green)] to-[var(--brand-blue)] py-20 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-yellow-300 rounded-full mix-blend-overlay filter blur-xl animate-pulse delay-1000"></div>
@@ -290,9 +291,11 @@ export default function SuccessStoriesPage() {
               whileTap={{ scale: 0.95 }}
               className="inline-block"
             >
-              <button className="bg-white text-brand-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-100 transition-colors shadow-xl">
+              <Link href="/shop">
+              <button className="bg-white text-[var(--brand-dark)] px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-100 transition-colors shadow-xl">
                 Shop Now & Transform Your Life
               </button>
+              </Link>
             </MotionDiv>
           </MotionDiv>
         </div>

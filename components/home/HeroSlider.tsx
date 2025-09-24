@@ -138,7 +138,7 @@ const HeroSlider = () => {
           {slide.subtitle}
         </motion.p>
         <motion.div variants={fadeInUp}>
-          <Button size="lg" className="bg-gradient-to-r from-brand-orange to-brand-blue text-lg hover:opacity-90 transition-opacity">
+          <Button size="lg" className="bg-[var(--primary-button-theme)] text-lg hover:bg-[var(--secondary-button-theme)] ">
             {slide.buttonText}
           </Button>
         </motion.div>

@@ -8,7 +8,7 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/lib/redux/store"
 import { fetchProducts } from "@/lib/redux/slices/productSlice"
-import ProductCard from "@/components/ProductCard"
+import {ProductCard} from "@/components/ProductCard"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ProductGridSkeleton from "@/components/skeleton/ProductGridSkeleton"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
@@ -17,7 +17,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 const CollectionHeader = () => (
     <div className="relative h-[200px] md:h-[300px] w-full bg-gray-200">
         <Image
-            src="https://i.pinimg.com/1200x/ce/fa/bb/cefabbcebea8d7e10f383ba5fd81ec98.jpg"
+            src="/hero2.jpg"
             alt="New Arrivals Banner"
             fill
             className="object-cover object-center"
@@ -107,9 +107,12 @@ export default function NewArrivalsPageClient() {
                     <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm font-semibold">Filter:</span>
                         <div className="flex gap-1 bg-gray-200 p-1 rounded-full">
-                            <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-black shadow-sm text-white font-semibold' : 'text-gray-600'}`}>All</button>
-                            <button onClick={() => setCategoryFilter('Clothing')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Clothing' ? 'bg-black shadow-sm text-white font-semibold' : 'text-gray-600'}`}>Clothing</button>
-                            <button onClick={() => setCategoryFilter('Decorative')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Decorative' ? 'bg-black shadow-sm text-white font-semibold' : 'text-gray-600'}`}>Decorative</button>
+                        <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
+                            <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button>
+                            <button onClick={() => setCategoryFilter('skin-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'skin-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>skin-care</button>
+                            <button onClick={() => setCategoryFilter('hair-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'hair-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Hair-care</button>
+                            <button onClick={() => setCategoryFilter('Personal-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Personal-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Personal-care</button>
+                            <button onClick={() => setCategoryFilter('Wellness')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Wellness' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Wellness</button>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -134,9 +137,9 @@ export default function NewArrivalsPageClient() {
                         <ProductGridSkeleton count={8} />
                     ) : error ? (
                         <div className="text-center py-20 text-red-500">Failed to load new arrivals.</div>
-                    ) : mappedProducts.length > 0 ? (
+                    ) :sortedProducts.length > 0 ? (
                         <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-                            {mappedProducts.map((product) => (
+                            {sortedProducts.map((product) => (
                                 <ProductCard key={product._id} product={product} />
                             ))}
                         </motion.div>

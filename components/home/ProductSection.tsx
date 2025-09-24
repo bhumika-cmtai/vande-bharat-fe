@@ -44,7 +44,7 @@ export function ProductSection({ title, subtitle, filterParams, className }: Pro
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {Array.from({ length: filterParams.limit || 4 }).map((_, index) => (
             <ProductCardSkeleton key={index} />
           ))}
@@ -66,7 +66,7 @@ export function ProductSection({ title, subtitle, filterParams, className }: Pro
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
       >
         {products.map((product) => (
           <MotionDiv variants={fadeInUp} key={product._id}>
