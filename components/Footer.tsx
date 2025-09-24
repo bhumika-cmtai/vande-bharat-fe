@@ -137,7 +137,7 @@ const socialLinks = [
                  <Image
                   src="/logo1.png"
                   alt="Vande bharat logo"
-                  width={200}
+                  width={80}
                   height={50} // Adjusted height for better aspect ratio
                   className="h-12 w-auto" // Set height and auto width
                   />
