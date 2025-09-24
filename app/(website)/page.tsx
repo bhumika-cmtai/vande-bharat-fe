@@ -9,6 +9,9 @@ import { AllProducts } from '@/components/home/AllProducts';
 import { Testimonials } from '@/components/home/Testimonials';
 import { PromoBanner } from '@/components/home/PromoBanner';
 import { ProductCarousel } from '@/components/home/ProductCarousel';
+import ProductFeaturesSection from '@/components/home/ProductFeatureSection';
+import ProductCollectionGrid from '@/components/home/ProductCollectionGrid';
+import ProductShowcaseSection from '@/components/home/ProductShowcaseSection';
 
 export default function HomePage() {
   return (
@@ -20,6 +23,10 @@ export default function HomePage() {
       {/* 2 */}
         
         <CategorySlider /> 
+        <ProductShowcaseSection />
+        <ProductFeaturesSection />
+        <ProductCollectionGrid />
+        
       {/* 3 */}
 
         <ProductSection 

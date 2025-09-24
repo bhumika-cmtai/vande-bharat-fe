@@ -7,9 +7,6 @@ import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { MotionDiv } from '../motion/MotionDiv';
 import { fadeInUp } from '@/lib/motion/motionVariants';
 
-
-
-
 export interface Testimonial {
     id: string;
     name: string;

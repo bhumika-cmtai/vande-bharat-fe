@@ -57,7 +57,7 @@ export const FeatureGrid = () => {
             </MotionDiv>
 
             {/* 2. "Why Choose Us" Accordion Card */}
-            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-blue)] p-8 rounded-2xl shadow-lg flex flex-col">
+            <MotionDiv variants={fadeInUp} className="bg-gray-100 p-8 rounded-2xl shadow-lg flex flex-col">
               <h2 className="text-3xl font-bold text-brand-dark mb-4">
                 Why Choose Us?
               </h2>
@@ -74,7 +74,7 @@ export const FeatureGrid = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
             {/* 3. Authentic Product Card */}
-            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-orange)]-100/60 p-8 rounded-2xl shadow-lg flex flex-col group">
+            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-orange-100)] p-8 rounded-2xl shadow-lg flex flex-col group">
               <h3 className="font-bold text-xl text-brand-dark mb-2">100% Authentic Products</h3>
               <p className="text-gray-600 flex-grow">A guarantee of purity with every item, sourced directly from nature's lap.</p>
               <Link href="/about">
@@ -85,7 +85,7 @@ export const FeatureGrid = () => {
             </MotionDiv>
 
             {/* 4. Easy Returns Card */}
-            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-green)] p-8 rounded-2xl shadow-lg flex flex-col group">
+            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-green-100)] p-8 rounded-2xl shadow-lg flex flex-col group">
               <h3 className="font-bold text-xl text-brand-dark mb-2">Free & Easy Returns</h3>
               <p className="text-gray-600 flex-grow">Our hassle-free policy ensures a worry-free and satisfying shopping experience.</p>
                <Link href="/returns">
@@ -96,7 +96,7 @@ export const FeatureGrid = () => {
             </MotionDiv>
 
             {/* 5. Secure Payments Card */}
-            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-blue)] p-8 rounded-2xl shadow-lg flex flex-col group">
+            <MotionDiv variants={fadeInUp} className="bg-[var(--brand-blue-100)] p-8 rounded-2xl shadow-lg flex flex-col group">
               <h3 className="font-bold text-xl text-brand-dark mb-2">Secure Payments</h3>
               <p className="text-gray-600 flex-grow">Shop with confidence using our secure, 100% encrypted payment gateways.</p>
                <Link href="/faq">
