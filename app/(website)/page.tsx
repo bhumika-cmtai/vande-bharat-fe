@@ -33,7 +33,7 @@ export default function HomePage() {
         <ProductSection 
           title="Featured Products"
           subtitle="Fresh from our farms to your home."
-          filterParams={{ tags: 'Sale', limit: 4 }}
+          filterParams={{ tags: 'featured', limit: 4 }}
         />
       {/* 4 */}
 
@@ -44,7 +44,7 @@ export default function HomePage() {
         <ProductSection 
           title="Pure & Personal Care"
           subtitle="Nourish your body with the goodness of nature."
-          filterParams={{ category: 'Personal Care', limit: 4 }}
+          filterParams={{ category: 'skin-care', limit: 4 }}
         />
         {/* 6 */}
         <PromoBanner />
@@ -65,7 +65,7 @@ export default function HomePage() {
         <ProductSection 
           title="Healthy Grains & Flours"
           subtitle="The foundation of a wholesome Indian meal."
-          filterParams={{ category: 'Grains', limit: 4 }}
+          filterParams={{ category: 'food', limit: 4 }}
         />
         {/* 12 */}
         <Testimonials />

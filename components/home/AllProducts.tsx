@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Product } from '@/lib/types/product';
-import { getProducts } from '@/lib/data';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/lib/redux/store'; // Make sure to import your store types
+import { fetchProducts } from '@/lib/redux/slices/productSlice'; // Import the thunk
 import { ProductCard } from '../ProductCard';
 import { ProductCardSkeleton } from '../skeleton/ProductCardSkeleton';
 import { MotionDiv } from '../motion/MotionDiv';
@@ -10,33 +11,38 @@ import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 import { Button } from '../ui/button';
 import { AnimatePresence } from 'framer-motion';
 
+// The categories remain the same, mapping button text to backend category values
 const filterCategories = [
     { name: 'All Products', value: 'all' },
-    { name: 'Food Product', value: 'Grains' }, // "Food Product" button ab "Grains" category ke products dikhayega
+    { name: 'Food Product', value: 'Grains' },
     { name: 'Personal Care', value: 'Personal Care' },
-    { name: 'Skin Care', value: 'Skin Care' }, // "Skin Care" abhi "Personal Care" ke products dikhayega
+    { name: 'Skin Care', value: 'Skin Care' },
     { name: 'Wellness', value: 'Wellness' },
 ];
 
 export const AllProducts = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
+    // We still need local state to manage which button is currently active
     const [selectedCategory, setSelectedCategory] = useState('all');
 
-    useEffect(() => {
-        const loadProducts = async () => {
-            setLoading(true);
-            const filterParams = {
-                limit: 6,
-                category: selectedCategory === 'all' ? undefined : selectedCategory,
-            };
-            const fetchedProducts = await getProducts(filterParams);
-            setProducts(fetchedProducts);
-            setLoading(false);
-        };
+    // Connect to the Redux store
+    const dispatch = useDispatch<AppDispatch>();
+    const { items: products, loading } = useSelector((state: RootState) => state.product);
 
-        loadProducts();
-    }, [selectedCategory]);
+    // This effect runs on component mount and whenever the selectedCategory changes
+    useEffect(() => {
+        // Prepare the query parameters for the API call
+        const filterParams: { limit: number; category?: string } = {
+            limit: 6,
+        };
+        
+        // If the selected category is not 'all', add it to the params
+        if (selectedCategory !== 'all') {
+            filterParams.category = selectedCategory;
+        }
+
+        // Dispatch the action to fetch products from the backend
+        dispatch(fetchProducts(filterParams));
+    }, [dispatch, selectedCategory]); // Dependencies: re-run when dispatch or category changes
 
     return (
         <section className="bg-gray-50/70 py-20">
@@ -51,10 +57,11 @@ export const AllProducts = () => {
                         Our All Products
                     </h2>
                     <p className="text-md text-gray-600 mt-2">
-                        These products can rotate weekly or based on seasonality and demand.
+                        Explore our curated selection of natural and authentic products.
                     </p>
                 </MotionDiv>
 
+                {/* Filter buttons remain the same, they just update the local state */}
                 <MotionDiv 
                     variants={staggerContainer}
                     initial="hidden"
@@ -79,15 +86,17 @@ export const AllProducts = () => {
                     ))}
                 </MotionDiv>
                 
+                {/* The AnimatePresence wrapper provides smooth transitions between categories */}
                 <AnimatePresence mode="wait">
                     <MotionDiv
-                        key={selectedCategory}
+                        key={selectedCategory} // The key is crucial for AnimatePresence to detect changes
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                     >
+                        {/* The rendering logic now uses the `loading` and `products` state from Redux */}
                         {loading ? (
                             Array.from({ length: 6 }).map((_, index) => (
                                 <ProductCardSkeleton key={index} />

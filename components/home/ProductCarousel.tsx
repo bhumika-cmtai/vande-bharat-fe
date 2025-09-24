@@ -1,39 +1,39 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { Product } from '@/lib/types/product';
-import { getProducts } from '@/lib/data';
-import { MiniProductCard } from '../MiniProductCard'; // Naya mini card
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/lib/redux/store'; // Import your store types
+import { fetchProducts } from '@/lib/redux/slices/productSlice'; // Import the thunk
+import { MiniProductCard } from '../MiniProductCard';
 import { MotionDiv, motion } from '../motion/MotionDiv';
 import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const ProductCarousel = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [scrollProgress, setScrollProgress] = useState(0);
+    // Connect to the Redux store to get state and dispatch actions
+    const dispatch = useDispatch<AppDispatch>();
+    const { items: products, loading } = useSelector((state: RootState) => state.product);
+
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    // Fetch new arrivals for the carousel
+    // Fetch latest products when the component mounts
     useEffect(() => {
-        const loadProducts = async () => {
-            const fetchedProducts = await getProducts({ tags: '', limit: 8 });
-            setProducts(fetchedProducts);
-            setLoading(false);
-        };
-        loadProducts();
-    }, []);
+        // Dispatch the fetchProducts action with a limit of 8
+        // Assuming your backend returns the latest products by default when sorted
+        dispatch(fetchProducts({ limit: 8, sortBy: 'createdAt', order: 'desc' }));
+    }, [dispatch]); // Dependency array ensures this runs only once
     
     // Scroll functions for navigation arrows
     const scrollLeft = () => {
         if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+            // Scroll by the width of one card + gap
+            scrollRef.current.scrollBy({ left: -264, behavior: 'smooth' }); // 240px width + 24px gap
         }
     };
 
     const scrollRight = () => {
         if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+            scrollRef.current.scrollBy({ left: 264, behavior: 'smooth' });
         }
     };
 
@@ -66,11 +66,15 @@ export const ProductCarousel = () => {
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.1 }}
-                            className="flex gap-6 overflow-x-hidden pb-4"
+                            // Added `scroll-smooth` for better scrolling behavior on touch devices
+                            className="flex gap-6 overflow-x-auto scroll-smooth pb-4" 
+                            style={{ scrollbarWidth: 'none', '-ms-overflow-style': 'none' }} // Hide scrollbar
                         >
-                            {/* Render products or skeletons */}
+                            {/* Render products or skeletons based on Redux state */}
                             {loading 
-                                ? Array.from({length: 4}).map((_, i) => <div key={i} className="w-60 h-80 bg-gray-200 rounded-2xl flex-shrink-0 animate-pulse" />)
+                                ? Array.from({length: 4}).map((_, i) => (
+                                    <div key={i} className="w-60 h-80 bg-gray-200 rounded-2xl flex-shrink-0 animate-pulse" />
+                                  ))
                                 : products.map((product) => (
                                     <div key={product._id} className="w-60 flex-shrink-0">
                                         <MiniProductCard product={product} />
@@ -80,24 +84,26 @@ export const ProductCarousel = () => {
                         </MotionDiv>
                         
                         {/* Navigation Arrows */}
-                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex gap-2">
-                            <motion.button
-                                onClick={scrollLeft}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors group"
-                            >
-                                <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-[var(--brand-dark)] transition-colors" />
-                            </motion.button>
-                            <motion.button
-                                onClick={scrollRight}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-12 h-12 bg-[var(--brand-dark)] rounded-full shadow-lg flex items-center justify-center hover:bg-[var(--brand-dark/90)] transition-colors group"
-                            >
-                                <ChevronRight className="w-5 h-5 text-white" />
-                            </motion.button>
-                        </div>
+                        {!loading && products.length > 4 && ( // Hide arrows if not needed
+                            <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 hidden lg:flex gap-2">
+                                <motion.button
+                                    onClick={scrollLeft}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors group"
+                                >
+                                    <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-[var(--brand-dark)] transition-colors" />
+                                </motion.button>
+                                <motion.button
+                                    onClick={scrollRight}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-12 h-12 bg-[var(--brand-dark)] rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 transition-colors group"
+                                >
+                                    <ChevronRight className="w-5 h-5 text-white" />
+                                </motion.button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

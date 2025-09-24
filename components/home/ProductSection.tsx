@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/lib/redux/store'; // Assuming you have these types in your store file
+import { fetchProducts } from '@/lib/redux/slices/productSlice'; // Import the async thunk
 import { Product } from '@/lib/types/product';
-import { getProducts } from '@/lib/data';
 import { ProductCard } from '@/components/ProductCard';
 import { ProductCardSkeleton } from '@/components/skeleton/ProductCardSkeleton';
 import { MotionDiv } from '../motion/MotionDiv';
@@ -15,31 +17,20 @@ interface ProductSectionProps {
   filterParams: {
     limit?: number;
     category?: string;
-    tags?: string; // Used for filtering by 'New', 'Sale', etc.
+    tags?: string;
   };
 }
 
 export function ProductSection({ title, subtitle, filterParams, className }: ProductSectionProps) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  
+  const { items: products, loading, error } = useSelector((state: RootState) => state.product);
+
+  const stableFilterParams = useMemo(() => JSON.stringify(filterParams), [filterParams]);
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setLoading(true); // Start loading
-        const fetchedProducts = await getProducts(filterParams);
-        setProducts(fetchedProducts); // Store the fetched products
-      } catch (err) {
-        setError('Failed to fetch products. Please try again later.');
-        console.error(err);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
-    
-    loadProducts(); // Call the function to start the fetch
-  }, [filterParams.category, filterParams.limit, filterParams.tags]); // Re-run only if these filters change
+    dispatch(fetchProducts(JSON.parse(stableFilterParams)));
+  }, [dispatch, stableFilterParams]); // Re-run the effect when the filters change
 
   const renderContent = () => {
     if (loading) {
