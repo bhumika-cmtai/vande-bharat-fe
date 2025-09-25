@@ -75,7 +75,7 @@ export const PromoBanner = () => {
             >
               <Image 
                 // Ek sundar Ayurvedic product ki image
-                src="/products/product1.png" // Yeh image 'public' folder mein honi chahiye
+                src="/tulsi1.jpg" // Yeh image 'public' folder mein honi chahiye
                 alt="Ayurvedic Wellness Product"
                 fill
                 className="object-contain drop-shadow-2xl"
