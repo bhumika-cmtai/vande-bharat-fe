@@ -3,40 +3,119 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { MotionDiv } from '../motion/MotionDiv';
-import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants'; // Path ko check kar lein
+import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 
-// Data for our categories
+// Data for our categories (no change here)
 const categories = [
-  { id: '1', name: 'Food Product', slug: 'food', imageUrl: '/hero1.jpg' }, // Use your own local images
+  { id: '1', name: 'Food Products', slug: 'food', imageUrl: '/hero1.jpg' },
   { id: '2', name: 'Personal Care', slug: 'personal-care', imageUrl: '/conditioner.jpg' },
   { id: '3', name: 'Skin Care', slug: 'skin-care', imageUrl: '/bodygel12.jpg' },
   { id: '4', name: 'Wellness', slug: 'wellness', imageUrl: '/tulsi1.jpg' },
 ];
 
+// Component to render the floating flags, now using CSS classes
+const flagPositions = [
+  // Flag 1: Top Left
+  {
+    top: '10%',
+    left: '15%',
+    animationDuration: '22s',
+    animationDelay: '0s',
+    opacity: 0.3,
+  },
+  // Flag 2: Top Right
+  {
+    top: '20%',
+    left: '80%',
+    animationDuration: '18s',
+    animationDelay: '2s',
+    opacity: 0.4,
+  },
+  // Flag 3: Mid Left
+  {
+    top: '55%',
+    left: '5%',
+    animationDuration: '25s',
+    animationDelay: '4s',
+    opacity: 0.25,
+  },
+  // Flag 4: Mid Right (Lower)
+  {
+    top: '75%',
+    left: '90%',
+    animationDuration: '20s',
+    animationDelay: '1s',
+    opacity: 0.35,
+  },
+  // Flag 5: Bottom Left
+  {
+    top: '85%',
+    left: '25%',
+    animationDuration: '19s',
+    animationDelay: '6s',
+    opacity: 0.2,
+  },
+  // Flag 6: Center Right
+  {
+    top: '40%',
+    left: '65%',
+    animationDuration: '24s',
+    animationDelay: '3s',
+    opacity: 0.4,
+  },
+];
+
+const FloatingFlags = () => (
+  <div className="absolute inset-0 -z-10 overflow-hidden">
+    {/* Map over the predefined array of flag data */}
+    {flagPositions.map((flag, i) => (
+      <div
+        key={i}
+        className="flag-floater animate-float" // Classes from globals.css
+        // Apply the fixed styles from our array
+        style={{
+          left: flag.left,
+          top: flag.top,
+          animationDuration: flag.animationDuration,
+          animationDelay: flag.animationDelay,
+          opacity: flag.opacity,
+        }}
+      />
+    ))}
+  </div>
+);
+
+
 export const CategorySlider = () => { 
   return (
-    <section className="container mx-auto px-6 py-12">
-      {/* Section Header */}
+    <section className="relative container mx-auto px-6 py-16 overflow-hidden">
+      {/* ===== FLOATING FLAGS BACKGROUND ===== */}
+      <FloatingFlags />
+
+      {/* Section Header (no change here) */}
       <MotionDiv
         variants={fadeInUp}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
-        className="text-center mb-12"
+        className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-brand-dark">
-          Shop By Category
+        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--brand-orange)] via-[var(--brand-blue)] to-[var(--brand-green)]">
+            Shop By Category
+          </span>
         </h2>
-        <p className="text-lg text-gray-600 mt-2">Explore our wide range of authentic products.</p>
+        <p className="text-lg text-gray-700 mt-3 font-medium">
+          Explore our wide range of authentic, nature-inspired products.
+        </p>
       </MotionDiv>
 
-      {/* Categories Grid - YEH MAIN CHANGE HAI */}
+      {/* Categories Grid (no change here) */}
       <MotionDiv
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        // Grid layout for perfect centering and spacing
         className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
       >
         {categories.map((category) => (
@@ -46,17 +125,24 @@ export const CategorySlider = () => {
             className="text-center"
           >
             <Link href={`/shop?category=${category.slug}`} className="group/item">
-              <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden shadow-subtle bg-gray-100 transition-all duration-300 ease-in-out group-hover/item:shadow-lifted group-hover/item:scale-105">
-                <Image
-                  src={category.imageUrl}
-                  alt={category.name}
-                  fill
-                  sizes="(max-width: 768px) 40vw, 20vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+              <div 
+                className="relative w-36 h-36 md:w-44 md:h-44 mx-auto rounded-full p-1.5 transition-all duration-300 ease-in-out group-hover/item:scale-105 group-hover/item:shadow-xl"
+                style={{ background: 'linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808)' }}
+              >
+                <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-100">
+                  <Image
+                    src={category.imageUrl}
+                    alt={category.name}
+                    fill
+                    sizes="(max-width: 768px) 40vw, 20vw"
+                    className="object-cover transition-transform duration-300 group-hover/item:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover/item:bg-black/0 transition-colors duration-300"></div>
+                </div>
               </div>
-              <p className="mt-4 font-semibold text-brand-dark">{category.name}</p>
+              <p className="mt-5 font-bold text-lg text-gray-800 transition-colors duration-300 group-hover/item:text-blue-800">
+                {category.name}
+              </p>
             </Link>
           </MotionDiv>
         ))}

@@ -350,3 +350,29 @@
 .animate-scroll-infinite {
   animation: scroll-infinite 25s linear infinite;
 }
+
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-25px) rotate(12deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.flag-floater {
+  position: absolute;
+  background-image: url('/indian-flag.jpg'); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 40px;  /* Fixed width */
+  height: 40px; /* Fixed height */
+}
+
+.animate-float {
+  animation: float 20s ease-in-out infinite;
+}

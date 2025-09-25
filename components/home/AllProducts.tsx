@@ -45,7 +45,7 @@ export const AllProducts = () => {
     }, [dispatch, selectedCategory]); // Dependencies: re-run when dispatch or category changes
 
     return (
-        <section className="bg-gray-50/70 py-20">
+        <section className="bg-[var(--brand-blue-100)]/20 py-20">
             <div className="container mx-auto px-6">
                 <MotionDiv
                     variants={fadeInUp}

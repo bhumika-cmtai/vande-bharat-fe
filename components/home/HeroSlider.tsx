@@ -162,7 +162,7 @@ const HeroSlider = () => {
             </motion.p>
             <motion.div>
             <Link href={slide.href}>
-                <Button size="lg" className="bg-orange-500 text-lg text-white hover:bg-orange-600 transition-colors duration-300 rounded-full px-8 py-6">
+                <Button size="lg" className="bg-[var(--primary-button-theme)] text-lg text-white hover:bg-[var(--secondary-button-theme)] transition-colors duration-300 rounded-full px-8 py-6">
                 {slide.buttonText}
                 </Button>
             </Link>

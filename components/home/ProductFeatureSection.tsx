@@ -3,6 +3,7 @@ import { MotionDiv } from '@/components/motion/MotionDiv';
 import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 import { Leaf, Heart, ShieldCheck, Award, Sparkles, Star } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProductFeaturesSection() {
   const features = [ 
@@ -72,7 +73,7 @@ export default function ProductFeaturesSection() {
   ];
 
   return (
-    <section className="relative bg-gradient-to-br from-white via-green-50/30 to-blue-50/20 py-20 md:py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-white via-green-50/30 to-blue-50/20 py-6 md:py-8 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-green-200/20 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
@@ -112,81 +113,55 @@ export default function ProductFeaturesSection() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Header Section */}
-        {/* <MotionDiv
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-blue-100 rounded-full text-sm font-semibold text-green-800 mb-4">
-            <Award className="w-4 h-4 mr-2" />
-            Made in India • 100% Authentic
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            Why Choose Our 
-            <span className="bg-gradient-to-r from-[var(--brand-green)] via-[var(--brand-blue)] to-[var(--brand-green)] bg-clip-text text-transparent"> Natural Products?</span>
-          </h2>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Experience the power of Ayurvedic wisdom combined with modern science. Our products are crafted with 
-            <span className="font-semibold text-green-700"> pure natural ingredients</span> to give you the best of India's heritage.
-          </p>
-          
-          <div className="w-32 h-1 bg-[var(--brand-orange)] mx-auto mt-6 rounded-full"></div>
-        </MotionDiv> */}
-
-        {/* Features Grid */}
-        <MotionDiv
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"
-        >
-
-        </MotionDiv>
 
 
         {/* CTA Section */}
         <MotionDiv
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-[var(--brand-orange)]/70 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-xl"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300 rounded-full mix-blend-overlay filter blur-xl"></div>
-            </div>
-            
-            <div className="relative z-10">
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                Experience the Power of Nature
-              </h3>
-              <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-                Join thousands of happy customers who have transformed their lives with our authentic Indian products
-              </p>
-              
-              <MotionDiv
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block"
-              >
-                <Link href="/shop">
-                  <button className="bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-50 transition-colors shadow-lg hover:shadow-xl">
-                    Shop Now 
-                  </button>
-                </Link>
-              </MotionDiv>
-            </div>
-          </div>
-        </MotionDiv>
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+  className="text-center mt-16"
+>
+  {/* The main container with the tricolor gradient background */}
+  <div className="rounded-3xl p-8 md:p-12 relative overflow-hidden bg-gradient-to-br from-orange-500/80 via-white to-green-600/80 shadow-lg">
+    
+    {/* Subtle Ashoka Chakra in the background */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        <Image
+          src="/ashok-chakra.jpg" // Make sure this SVG is in your /public folder
+          alt="Ashoka Chakra"
+          width={350}
+          height={350}
+          className="opacity-10"
+        />
+      </div>
+    
+    {/* The content, with a semi-transparent backdrop for readability */}
+    <div className="relative z-10 bg-white/30 backdrop-blur-sm p-6 md:p-8 rounded-2xl">
+      <h3 className="text-3xl md:text-4xl font-extrabold mb-4 text-gray-900 tracking-tight">
+        {/* New Patriotic Tagline */}
+        Authentically Indian. Naturally Pure.
+      </h3>
+      <p className="text-lg md:text-xl text-blue-800 font-semibold mb-8 max-w-3xl mx-auto">
+        From our soil to your soul, experience the true essence of Bharat.
+      </p>
+      
+      <MotionDiv
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="inline-block"
+      >
+        <Link href="/shop">
+          {/* Button themed with the Ashoka Chakra's navy blue */}
+          <button className="bg-blue-800 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300">
+            Explore Our Collection
+          </button>
+        </Link>
+      </MotionDiv>
+    </div>
+  </div>
+</MotionDiv>
       </div>
     </section>
   );

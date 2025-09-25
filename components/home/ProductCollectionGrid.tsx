@@ -46,7 +46,7 @@ export default function ProductCollectionGrid() {
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-br from-white via-green-50/30 to-blue-50/20">
+    <section className="py-10 md:py-32 bg-gradient-to-br from-white via-green-50/30 to-blue-50/20">
       <div className="container mx-auto px-6">
         {/* Header */}
         <MotionDiv
