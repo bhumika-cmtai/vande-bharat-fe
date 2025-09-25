@@ -20,6 +20,14 @@ interface ProductQueryParams {
   [key: string]: any;
 }
 
+interface SectionProducts {
+  [sectionKey: string]: {
+    products: Product[];
+    loading: boolean;
+    error: string | null;
+  };
+}
+
 interface ProductState {
   items: Product[];
   currentPage: number;
@@ -30,8 +38,10 @@ interface ProductState {
   selectedProduct: Product | null;
   productDetailsLoading: boolean;
   productDetailsError: string | null;
-  searchResults: Product[]; 
-  searchLoading: boolean; 
+  searchResults: Product[];
+  searchLoading: boolean;
+  // New: section-specific state
+  sections: SectionProducts;
 }
 
 // --- Initial State ---
@@ -48,7 +58,9 @@ const initialState: ProductState = {
   productDetailsError: null,
   searchResults: [],
   searchLoading: false,
+  sections: {},
 };
+
 
 interface CreateReviewParams {
   productId: string;
@@ -58,6 +70,32 @@ interface CreateReviewParams {
 }
 
 // --- Async Thunks for Products ---
+
+export const fetchSectionProducts = createAsyncThunk(
+  'products/fetchSectionProducts',
+  async ({ sectionKey, queryParams }: { sectionKey: string; queryParams: ProductQueryParams }, { rejectWithValue }) => {
+    try {
+      const params = new URLSearchParams();
+      Object.entries(queryParams).forEach(([key, value]) => {
+        if (value) params.append(key, String(value));
+      });
+      
+      const response = await axios.get(`${API_BASE_URL}/products?${params.toString()}`);
+      console.log("--response---")
+      console.log("sectionKey", sectionKey)
+      console.log("products", response.data.data)
+      return {
+        sectionKey,
+        products: response.data.data.products || []
+      };
+    } catch (error: any) {
+      return rejectWithValue({
+        sectionKey,
+        error: error.response?.data?.message || 'Failed to fetch products'
+      });
+    }
+  }
+);
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
@@ -172,6 +210,32 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // --- fetchProducts ---
+      .addCase(fetchSectionProducts.pending, (state, action) => {
+        const { sectionKey } = action.meta.arg;
+        // Initialize the section with loading state if it doesn't exist
+        state.sections[sectionKey] = {
+          products: state.sections[sectionKey]?.products || [], // Keep old products while loading
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(fetchSectionProducts.fulfilled, (state, action) => {
+        const { sectionKey, products } = action.payload;
+        // On success, update the specific section
+        state.sections[sectionKey] = {
+          products,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(fetchSectionProducts.rejected, (state, action) => {
+        const { sectionKey, error } = action.payload as { sectionKey: string; error: string };
+        state.sections[sectionKey] = {
+          products: state.sections[sectionKey]?.products || [], // Keep any stale products
+          loading: false,
+          error: error,
+        };
+      })
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true;
         state.error = null;

@@ -27,6 +27,7 @@ import { fetchSearchResults, clearSearchResults } from '@/lib/redux/slices/produ
 import { fetchCart } from '@/lib/redux/slices/cartSlice';
 import { fetchWishlist, selectTotalWishlistItems } from '@/lib/redux/slices/wishlistSlice';
 import { fetchCategories } from '@/lib/redux/slices/adminSlice';
+import TopBanner from './TopBanner';
 
 // --- FIX: Simplified data structure for main categories only ---
 const mainCategories = [
@@ -70,6 +71,7 @@ const Navbar = () => {
     }, [isAuthenticated, dispatch]);
 
     useEffect(() => {
+        // We use a small threshold (10px) to trigger the change
         const handleScroll = () => setIsScrolled(window.scrollY > 10);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -157,10 +159,19 @@ const Navbar = () => {
 
     return (
         <header className={`sticky top-0 z-50 transition-all duration-300 bg-white ${isScrolled ? 'shadow-md' : ''}`}>
-            {/* <div className="bg-gray-900 text-white text-center text-xs py-2">
-                <p>Free Shipping on All Orders Above ₹499</p>
-            </div> */}
+             {/* <AnimatePresence>
+                {!isScrolled && (
+                    <motion.div
+                        initial={{ y: 0, opacity: 1 }}
+                        exit={{ y: '-100%', opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    >
+                        <TopBanner />
+                    </motion.div>
+                )}
+            </AnimatePresence> */}
             
+            <div className={`sticky top-0 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
                     <div className="flex items-center gap-8">
@@ -239,6 +250,7 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </header>
     );

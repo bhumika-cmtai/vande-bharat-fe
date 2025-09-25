@@ -78,7 +78,7 @@ export const FeatureGrid = () => {
               <h3 className="font-bold text-xl text-brand-dark mb-2">100% Authentic Products</h3>
               <p className="text-gray-600 flex-grow">A guarantee of purity with every item, sourced directly from nature's lap.</p>
               <Link href="/about">
-                <Button variant="outline" className="mt-6 w-full group-hover:bg-brand-orange group-hover:text-white transition-colors">
+                <Button variant="outline" className="mt-6 w-full group-hover:bg-[var(--brand-orange)] group-hover:text-white transition-colors">
                   Learn More <ArrowRight className="ml-2 h-4 w-4"/>
                 </Button>
               </Link>
@@ -89,7 +89,7 @@ export const FeatureGrid = () => {
               <h3 className="font-bold text-xl text-brand-dark mb-2">Free & Easy Returns</h3>
               <p className="text-gray-600 flex-grow">Our hassle-free policy ensures a worry-free and satisfying shopping experience.</p>
                <Link href="/returns">
-                <Button variant="outline" className="mt-6 w-full group-hover:bg-brand-orange group-hover:text-white transition-colors">
+                <Button variant="outline" className="mt-6 w-full group-hover:bg-[var(--brand-orange)] group-hover:text-white transition-colors">
                   Our Policy <ArrowRight className="ml-2 h-4 w-4"/>
                 </Button>
               </Link>
@@ -100,7 +100,7 @@ export const FeatureGrid = () => {
               <h3 className="font-bold text-xl text-brand-dark mb-2">Secure Payments</h3>
               <p className="text-gray-600 flex-grow">Shop with confidence using our secure, 100% encrypted payment gateways.</p>
                <Link href="/faq">
-                <Button variant="outline" className="mt-6 w-full group-hover:bg-brand-orange group-hover:text-white transition-colors">
+                <Button variant="outline" className="mt-6 w-full group-hover:bg-[var(--brand-orange)] group-hover:text-white transition-colors">
                   See Details <ArrowRight className="ml-2 h-4 w-4"/>
                 </Button>
               </Link>
@@ -121,7 +121,7 @@ export const FeatureGrid = () => {
                     <p className="text-lg">Up to 25% Off</p>
                 </div>
                 {/* Sale Badge */}
-                <div className="absolute top-4 right-[-20px] bg-brand-orange text-white font-bold px-6 py-1 text-sm rotate-45">
+                <div className="absolute top-4 right-[-20px] bg-[var(--brand-orange)] text-white font-bold px-6 py-1 text-sm rotate-45">
                     SALE
                 </div>
             </MotionDiv>

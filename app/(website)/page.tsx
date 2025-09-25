@@ -1,5 +1,5 @@
 import HeroSlider from '@/components/home/HeroSlider';
-import { CategorySlider } from '@/components/home/CategorySlider'; // <-- 1. Import Karein
+import { CategorySlider } from '@/components/home/CategorySlider';
 import { ProductSection } from '@/components/home/ProductSection';
 import { Certifications } from '@/components/home/Certifications';
 import { WhyChooseUs } from '@/components/home/WhyChooseUs';
@@ -16,59 +16,66 @@ import { ContactForm } from '@/components/home/ContactForm';
 
 export default function HomePage() {
   return (
-    <main>
-      {/* 1 */}
+    <main className="min-h-screen">
+      {/* Hero Section */}
       <HeroSlider />
       
       <div className="py-16 md:py-24 space-y-20 md:space-y-28">
-      {/* 2 */}
-        
+        {/* Category Navigation */}
         <CategorySlider /> 
+        
+        {/* Product Showcase */}
         <ProductShowcaseSection />
         <ProductFeaturesSection />
         <ProductCollectionGrid />
         
-      {/* 3 */}
-
+        {/* Featured Products Section */}
         <ProductSection 
           title="Featured Products"
           subtitle="Fresh from our farms to your home."
           filterParams={{ tags: 'featured', limit: 4 }}
         />
-      {/* 4 */}
 
+        {/* Features Grid */}
         <FeatureGrid /> 
 
-
-      {/* 5 */}
+        {/* Skin Care Products */}
         <ProductSection 
           title="Pure & Personal Care"
           subtitle="Nourish your body with the goodness of nature."
           filterParams={{ category: 'skin-care', limit: 4 }}
         />
-        {/* 6 */}
+        
+        {/* Promotional Banner */}
         <PromoBanner />
-        {/* 7 */}
+        
+        {/* Product Carousel */}
         <ProductCarousel />
-        {/* 8 */}
+        
+        {/* New Arrivals */}
         <ProductSection 
           title="New Arrivals"
           subtitle="Our most popular customer picks this season."
-          filterParams={{ tags: 'New', limit: 8 }}
+          filterParams={{ limit: 4 }}
         />
-      {/* 9 */}
-      <AllProducts />
 
-      {/* 10 */}
+        {/* All Products */}
+        <AllProducts />
+
+        {/* Certifications */}
         <Certifications />
-        {/* 11 */}
+        
+        {/* Food Products */}
         <ProductSection 
           title="Healthy Grains & Flours"
           subtitle="The foundation of a wholesome Indian meal."
           filterParams={{ category: 'food', limit: 4 }}
         />
-        {/* 12 */}
+        
+        {/* Testimonials */}
         <Testimonials />
+        
+        {/* Contact Form */}
         <ContactForm />
       </div>
     </main>

@@ -5,7 +5,7 @@ import { Leaf, Heart, ShieldCheck, Award, Sparkles, Star } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProductFeaturesSection() {
-  const features = [
+  const features = [ 
     {
       icon: Leaf,
       title: "Natural Ingredients",
@@ -155,7 +155,7 @@ export default function ProductFeaturesSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           className="text-center mt-16"
         >
           <div className="bg-[var(--brand-orange)]/70 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">

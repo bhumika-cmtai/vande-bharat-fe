@@ -9,7 +9,7 @@ export default function ProductCollectionGrid() {
     {
       id: 1,
       title: "WELLNESS",
-      image: "/bodygel11.png",
+      image: "/bodygel11.jpg",
       buttonText: "Shop Now",
       className: "row-span-2",
       bgColor: "bg-[var(--brand-green-100)]",
@@ -28,7 +28,7 @@ export default function ProductCollectionGrid() {
     {
       id: 3,
       title: "SKIN CARE",
-      image: "/tulsi2.png", 
+      image: "/tulsi2.jpg", 
       buttonText: "Shop Now",
       className: "",
       bgColor: "bg-[var(--brand-green-100)]",
@@ -37,7 +37,7 @@ export default function ProductCollectionGrid() {
     {
       id: 4,
       title: "PERSONAL CARE",
-      image: "/facewash2.png",
+      image: "/facewash2.jpg",
       buttonText: "Shop Now", 
       className: "",
       bgColor: "bg-[var(--brand-green-100)]",

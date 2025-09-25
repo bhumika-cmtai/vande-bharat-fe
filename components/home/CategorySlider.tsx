@@ -7,13 +7,13 @@ import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants'; // Pat
 
 // Data for our categories
 const categories = [
-  { id: '1', name: 'Food Product', slug: 'food', imageUrl: '/hero3.jpg' }, // Use your own local images
-  { id: '2', name: 'Personal Care', slug: 'personal-care', imageUrl: '/care.jpg' },
-  { id: '3', name: 'Skin Care', slug: 'skin-care', imageUrl: '/skin-care.jpg' },
-  { id: '4', name: 'Wellness', slug: 'wellness', imageUrl: '/tea.jpg' },
+  { id: '1', name: 'Food Product', slug: 'food', imageUrl: '/hero1.jpg' }, // Use your own local images
+  { id: '2', name: 'Personal Care', slug: 'personal-care', imageUrl: '/conditioner.jpg' },
+  { id: '3', name: 'Skin Care', slug: 'skin-care', imageUrl: '/bodygel12.jpg' },
+  { id: '4', name: 'Wellness', slug: 'wellness', imageUrl: '/tulsi1.jpg' },
 ];
 
-export const CategorySlider = () => {
+export const CategorySlider = () => { 
   return (
     <section className="container mx-auto px-6 py-12">
       {/* Section Header */}
