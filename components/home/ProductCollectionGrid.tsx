@@ -53,7 +53,8 @@ export default function ProductCollectionGrid() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
+          // --- FASTER DURATION ---
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-blue-100 rounded-full text-sm font-semibold text-green-800 mb-4">
@@ -80,28 +81,31 @@ export default function ProductCollectionGrid() {
               variants={{
                 hidden: { 
                   opacity: 0, 
-                  y: 60,
-                  scale: 0.9
+                  y: 50, // Slightly reduced y-travel
+                  scale: 0.95 // Less dramatic scale
                 },
                 visible: { 
                   opacity: 1, 
                   y: 0,
                   scale: 1,
                   transition: { 
-                    duration: 0.8, 
-                    delay: index * 0.15,
+                    // --- FASTER DURATION & DELAY ---
+                    duration: 0.5, 
+                    delay: index * 0.1, // Reduced stagger delay
                     ease: [0.25, 0.46, 0.45, 0.94]
                   }
                 }
               }}
-              className={`group relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer ${collection.className} ${collection.bgColor}`}
+              // --- FASTER HOVER TRANSITION ---
+              className={`group relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer ${collection.className} ${collection.bgColor}`}
               style={{ minHeight: collection.className.includes('row-span-2') ? '600px' : collection.className.includes('col-span-2') ? '300px' : '280px' }}
             >
               {/* Background Image */}
               <div className="absolute inset-0">
                 <MotionDiv
                   whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  // --- FASTER HOVER SCALE ---
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                   className="w-full h-full"
                 >
                   <img 
@@ -112,20 +116,21 @@ export default function ProductCollectionGrid() {
                 </MotionDiv>
                 
                 {/* Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${collection.overlay} group-hover:opacity-90 transition-opacity duration-500`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${collection.overlay} group-hover:opacity-90 transition-opacity duration-300`} />
               </div>
 
               {/* Floating Elements */}
               <MotionDiv
                 animate={{
-                  y: [0, -10, 0],
-                  rotate: [0, 5, 0]
+                  y: [0, -8, 0], // Reduced movement
+                  rotate: [0, 4, 0] // Reduced rotation
                 }}
                 transition={{
-                  duration: 3,
+                  // --- FASTER LOOPING ANIMATION ---
+                  duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut",
-                  delay: index * 0.5
+                  delay: index * 0.4
                 }}
                 className="absolute top-4 right-4 opacity-30 group-hover:opacity-50 transition-opacity"
               >
@@ -140,7 +145,8 @@ export default function ProductCollectionGrid() {
                     <MotionDiv
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
+                      // --- FASTER DURATION & DELAY ---
+                      transition={{ duration: 0.4, delay: 0.15 }}
                       className="mb-4"
                     >
                       <span className="inline-flex items-center px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-green-700 shadow-lg">
@@ -153,7 +159,8 @@ export default function ProductCollectionGrid() {
                   <MotionDiv
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
+                    // --- FASTER DURATION & DELAY ---
+                    transition={{ duration: 0.4, delay: index * 0.05 + 0.1 }}
                   >
                     <h3 className={`font-bold text-gray-800 mb-2 leading-tight ${
                       collection.featured 
@@ -170,7 +177,8 @@ export default function ProductCollectionGrid() {
                     <MotionDiv
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.4 }}
+                      // --- FASTER DURATION & DELAY ---
+                      transition={{ duration: 0.4, delay: 0.2 }}
                       className="max-w-md mx-auto"
                     >
                       <p className="text-gray-600 leading-relaxed">
@@ -184,7 +192,8 @@ export default function ProductCollectionGrid() {
                 <MotionDiv
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
+                  // --- FASTER DURATION & DELAY ---
+                  transition={{ duration: 0.4, delay: index * 0.05 + 0.2 }}
                   className="self-center"
                 >
                   <MotionDiv
@@ -199,7 +208,8 @@ export default function ProductCollectionGrid() {
                       <MotionDiv
                         animate={{ x: [0, 4, 0] }}
                         transition={{
-                          duration: 1.5,
+                          // --- FASTER PULSING ARROW ---
+                          duration: 1.2,
                           repeat: Infinity,
                           ease: "easeInOut"
                         }}
@@ -208,7 +218,7 @@ export default function ProductCollectionGrid() {
                         <ArrowRight className="w-4 h-4" />
                       </MotionDiv>
                     </button>
-                        </Link>
+                    </Link>
                   </MotionDiv>
                 </MotionDiv>
               </div>
@@ -222,7 +232,7 @@ export default function ProductCollectionGrid() {
               />
 
               {/* Corner Accent */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </MotionDiv>
           ))}
         </MotionDiv>
@@ -232,7 +242,8 @@ export default function ProductCollectionGrid() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          // --- FASTER DURATION & DELAY ---
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="text-center mt-16"
         >
           <MotionDiv
