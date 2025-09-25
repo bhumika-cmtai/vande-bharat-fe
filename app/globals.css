@@ -337,3 +337,16 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(90deg, #4b5563, #6b7280);
 }
+
+@keyframes scroll-infinite {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% / 3)); /* Since we're using 3 copies */
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 25s linear infinite;
+}

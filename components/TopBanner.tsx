@@ -14,9 +14,13 @@ const TopBanner = () => {
     <div className="border-b border-gray-200">
       {/* ===== Top White Section ===== */}
       <div className="bg-white py-3 hidden md:block">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center gap-8">
-          
-          {/* Left Side: Flag & Text */}
+        {/* --- MODIFICATION: ---
+            1. Added `relative` to allow for absolute positioning of child elements.
+            2. Changed `justify-center` to `justify-start` to align the flag/text to the left.
+        */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative flex justify-start items-center">
+
+          {/* Left Side: Flag & Text (No changes here) */}
           <div className="flex items-center gap-4">
             <Image
               src="/indian-flag.jpg" // Note: You need to add this image to your /public folder
@@ -37,8 +41,14 @@ const TopBanner = () => {
             </div>
           </div>
 
-          {/* Center: Animated Logo */}
-          <div className="pl-8">
+          {/* --- MODIFICATION: ---
+              1. Wrapped the Image in a div with absolute positioning classes.
+              2. `absolute left-1/2 top-1/2` moves the top-left corner of the div to the center.
+              3. `-translate-x-1/2 -translate-y-1/2` shifts the div back by half its own width and height,
+                 perfectly centering it on the screen.
+              4. Removed the old `pl-8` class.
+          */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <Image
               src="/logogif.gif" // Note: Add your animated GIF to the /public folder
               alt="Vande Bharat Animated Logo"
@@ -50,7 +60,7 @@ const TopBanner = () => {
         </div>
       </div>
 
-      {/* ===== Bottom Red Strip ===== */}
+      {/* ===== Bottom Red Strip (No changes here) ===== */}
       <div className="bg-[var(--brand-orange)] text-white text-xs sm:text-sm py-2">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-3">

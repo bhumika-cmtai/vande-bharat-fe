@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 // --- UI IMPORTS ---
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger,SheetHeader, SheetTitle ,SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from './ui/dropdown-menu';
 import { toast } from 'sonner';
@@ -159,7 +159,7 @@ const Navbar = () => {
 
     return (
         <header className={`sticky top-0 z-50 transition-all duration-300 bg-white ${isScrolled ? 'shadow-md' : ''}`}>
-             {/* <AnimatePresence>
+             <AnimatePresence>
                 {!isScrolled && (
                     <motion.div
                         initial={{ y: 0, opacity: 1 }}
@@ -169,7 +169,7 @@ const Navbar = () => {
                         <TopBanner />
                     </motion.div>
                 )}
-            </AnimatePresence> */}
+            </AnimatePresence>
             
             <div className={`sticky top-0 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -223,6 +223,12 @@ const Navbar = () => {
                             <Sheet>
                                 <SheetTrigger asChild><Button variant="ghost" size="icon"><Menu size={24} /></Button></SheetTrigger>
                                 <SheetContent side="left" className="w-full max-w-sm p-6 overflow-y-auto">
+                                    {/* <SheetHeader>
+                                        <div className="flex justify-between items-center mb-8">
+                                            <SheetTitle className="text-xl font-semibold text-left">Menu</SheetTitle>
+                                            <SheetClose><X size={20} /></SheetClose>
+                                        </div>
+                                    </SheetHeader> */}
                                     <div className="flex justify-between items-center mb-8">
                                         <h2 className="text-xl font-semibold">Menu</h2>
                                         <SheetClose><X size={20} /></SheetClose>
