@@ -34,6 +34,7 @@ interface User {
   role: 'user' | 'admin';
   isVerified: boolean;
   wallet?: number; // Points available for redemption
+  firstorder: boolean;
 }
 
 interface UserState {

@@ -11,6 +11,8 @@ import wishlistReducer from './slices/wishlistSlice'
 import bulkOrderReducer from './slices/bulkOrderSlice';
 import orderReducer from './slices/orderSlice'
 import dashboardReducer from './slices/dashboardSlice'
+import blogReducer from './slices/blogSlice'
+import testimonialReducer from './slices/testimonialSlice'
 import { setupInterceptors } from '@/lib/api/auth'
 export const store = configureStore({
   reducer: {
@@ -24,7 +26,9 @@ export const store = configureStore({
     order: orderReducer,
     wishlist: wishlistReducer,
     bulkOrder: bulkOrderReducer,
-    dashboard: dashboardReducer
+    dashboard: dashboardReducer,
+    blog: blogReducer,
+    testimonials: testimonialReducer
   },
 });
 

@@ -33,7 +33,7 @@ export const Certifications = () => {
   const triplicatedCerts = [...certifications, ...certifications, ...certifications];
   
   return (
-    <section className="bg-white py-20">
+    <section className="bg-[var(--brand-orange-100)]/70 py-20">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <MotionDiv
@@ -60,13 +60,13 @@ export const Certifications = () => {
           }}
         >
           {/* Option 1: CSS Animation Approach */}
-          <div className="flex w-max animate-scroll-infinite group-hover:[animation-play-state:paused]">
+          <div className="flex w-max animate-scroll-infinite group-hover:[animation-play-state:paused]  py-4">
             {triplicatedCerts.map((cert, index) => (
               <div
                 key={`${cert.id}-${index}`}
                 className="flex-shrink-0 w-64 flex flex-col items-center justify-center mx-8"
               >
-                <div className="relative h-44 w-44 transition-all duration-300 hover:scale-110">
+                <div className="relative h-44 w-44 transition-all duration-300 hover:scale-110 ">
                   <Image
                     src={cert.imageUrl}
                     alt={cert.name}
@@ -75,50 +75,13 @@ export const Certifications = () => {
                     className="object-contain transition-all duration-300"
                   />
                 </div>
-                <p className="mt-2 font-medium text-gray-500 group-hover:text-brand-dark transition-colors">
+                <p className="mt-2 font-semibold text-[var(--brand-green)] group-hover:text-brand-dark transition-colors">
                   {cert.name}
                 </p>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Alternative: Framer Motion Approach */}
-        {/* 
-        <MotionDiv
-          className="flex w-max"
-          animate={{
-            x: [0, -100 * certifications.length * 16] // 16rem = w-64
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 20,
-              ease: "linear",
-            },
-          }}
-          whileHover={{ animationPlayState: 'paused' }}
-        >
-          {triplicatedCerts.map((cert, index) => (
-            <div
-              key={`${cert.id}-${index}`}
-              className="flex-shrink-0 w-64 flex flex-col items-center justify-center mx-8"
-            >
-              <div className="relative h-24 w-24">
-                <Image
-                  src={cert.imageUrl}
-                  alt={cert.name}
-                  fill
-                  sizes="10vw"
-                  className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                />
-              </div>
-              <p className="mt-2 font-medium text-gray-500">{cert.name}</p>
-            </div>
-          ))}
-        </MotionDiv>
-        */}
       </div>
     </section>
   );

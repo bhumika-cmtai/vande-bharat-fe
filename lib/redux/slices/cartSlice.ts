@@ -3,6 +3,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios'; // Import AxiosError for better type checking
 import apiClient from '@/lib/api/auth'; 
+import { Coupon } from './couponSlice';
 // Removed coupon import - using points system instead 
 
 interface LocalCartItem {
@@ -34,6 +35,8 @@ interface CartState {
   shippingCost: number;
   discountAmount: number;
   finalTotal: number;
+  appliedCoupon: Coupon | null; 
+  couponDiscount: number;
 }
 
 const initialState: CartState = {
@@ -46,6 +49,9 @@ const initialState: CartState = {
   shippingCost: 0,
   discountAmount: 0,
   finalTotal: 0,
+  appliedCoupon: null,
+  couponDiscount: 0,
+
 };
 
 interface ApiResponse {
@@ -138,6 +144,8 @@ const cartSlice = createSlice({
     clearLocalCartState: (state) => {
         state.items = [];
         state.appliedPoints = 0;
+        state.appliedCoupon = null; 
+        state.couponDiscount = 0;
         cartSlice.caseReducers.calculateTotals(state);
     },
     applyPoints: (state, action: PayloadAction<number>) => {
@@ -148,15 +156,38 @@ const cartSlice = createSlice({
       state.appliedPoints = 0;
       cartSlice.caseReducers.calculateTotals(state);
     },
+      applyCoupon: (state, action: PayloadAction<Coupon>) => {
+        const coupon = action.payload;
+        // Discount hamesha subTotal par calculate karein
+        const discountValue = (state.subTotal * coupon.discountPercentage) / 100;
+        
+        state.couponDiscount = discountValue;
+        state.appliedCoupon = coupon;
+        cartSlice.caseReducers.calculateTotals(state); // Totals ko recalculate karein
+    },
+    removeCoupon: (state) => {
+        if (state.appliedCoupon) {
+        }
+        state.couponDiscount = 0;
+        state.appliedCoupon = null;
+        cartSlice.caseReducers.calculateTotals(state); // Totals ko recalculate karein
+    },
     calculateTotals: (state) => {
       // Calculate subtotal from items
       const subTotal = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
       const totalItems = state.items.reduce((total, item) => total + item.quantity, 0);
       
       // Points discount: 1 point = 1 rupee
-      const discountAmount = state.appliedPoints;
+      // Points discount (1 point = 1 rupee, jaisa pehle tha)
+      const pointsDiscountValue = state.appliedPoints;
       
-      const shippingCost = subTotal > 2000 ? 0 : 99;
+      // Coupon discount state se aata hai
+      const couponDiscountValue = state.couponDiscount;
+      
+      // Total discount ab dono ka jod hai
+      const discountAmount = pointsDiscountValue + couponDiscountValue;
+      
+      const shippingCost = subTotal > 2000 ? 0 : 90; //temprory
       const finalTotal = Math.max(0, subTotal - discountAmount + shippingCost);
       
       state.subTotal = subTotal;
@@ -198,5 +229,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { clearLocalCartState, applyPoints, removePoints, calculateTotals } = cartSlice.actions;
+export const { clearLocalCartState, applyPoints, removePoints, calculateTotals, applyCoupon, removeCoupon, } = cartSlice.actions;
 export default cartSlice.reducer;

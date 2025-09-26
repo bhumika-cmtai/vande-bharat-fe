@@ -12,11 +12,13 @@ import {
   X, // Import the close icon
   LogOut,
   Percent,
+  Users2Icon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { logoutUserApi } from "@/lib/api/auth";
 import { logout } from "@/lib/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import { FaBlog } from "react-icons/fa";
 
 const navLinks = [
     { href: "/account/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -26,6 +28,8 @@ const navLinks = [
     { href: "/account/admin/contacts", label: "Contacts", icon: MessageSquare },
     { href: "/account/admin/coupon", label: "Manage Coupon", icon: TicketPercent },
     { href: "/account/admin/setting", label: "Settings", icon: Percent },
+    { href: "/account/admin/blogs", label: "Blogs", icon:FaBlog },
+    { href: "/account/admin/testimonials", label: "Testimonials", icon:Users2Icon },
     { href: "/logout", label: "Logout", icon: LogOut },
 ];
 

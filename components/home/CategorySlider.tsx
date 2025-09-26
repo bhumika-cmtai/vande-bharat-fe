@@ -7,10 +7,10 @@ import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
 
 // Data for our categories (no change here)
 const categories = [
-  { id: '1', name: 'Food Products', slug: 'food', imageUrl: '/hero1.jpg' },
-  { id: '2', name: 'Personal Care', slug: 'personal-care', imageUrl: '/conditioner.jpg' },
-  { id: '3', name: 'Skin Care', slug: 'skin-care', imageUrl: '/bodygel12.jpg' },
-  { id: '4', name: 'Wellness', slug: 'wellness', imageUrl: '/tulsi1.jpg' },
+  // { id: '1', name: 'Food Products', slug: 'food', imageUrl: '/hero1.jpg' },
+  { id: '1', name: 'Personal Care', slug: 'personal-care', imageUrl: '/conditioner.jpg' },
+  { id: '2', name: 'Skin Care', slug: 'skin-care', imageUrl: '/bodygel12.jpg' },
+  { id: '3', name: 'Wellness', slug: 'wellness', imageUrl: '/tulsi1.jpg' },
 ];
 
 // Component to render the floating flags, now using CSS classes
@@ -88,9 +88,13 @@ const FloatingFlags = () => (
 
 export const CategorySlider = () => { 
   return (
-    <section className="relative container mx-auto px-6 py-16 overflow-hidden">
+    <section className="relative container mx-auto px-6 py-10 overflow-hidden">
+      <div className='h-full w-full bg-[var(--brand-green-50)]/60 px-8 py-16 rounded-4xl'>
+
+      
+      {/* bg-gradient-to-br via-50% from-[var(--brand-orange)]/40 via-[var(--brand-blue)]/40 to-[var(--brand-green)]/34 */}
       {/* ===== FLOATING FLAGS BACKGROUND ===== */}
-      <FloatingFlags />
+      {/* <FloatingFlags /> */}
 
       {/* Section Header (no change here) */}
       <MotionDiv
@@ -101,11 +105,11 @@ export const CategorySlider = () => {
         className="text-center mb-16"
       >
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--brand-orange)] via-[var(--brand-blue)] to-[var(--brand-green)]">
+          <span className="text-[var(--brand-orange)]">
             Shop By Category
           </span>
         </h2>
-        <p className="text-lg text-gray-700 mt-3 font-medium">
+        <p className="text-lg text-gray-800 mt-3 font-medium">
           Explore our wide range of authentic, nature-inspired products.
         </p>
       </MotionDiv>
@@ -116,7 +120,7 @@ export const CategorySlider = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12"
       >
         {categories.map((category) => (
           <MotionDiv
@@ -147,6 +151,7 @@ export const CategorySlider = () => {
           </MotionDiv>
         ))}
       </MotionDiv>
+      </div>
     </section>
   );
 };

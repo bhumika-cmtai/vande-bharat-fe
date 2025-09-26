@@ -50,20 +50,15 @@ export default function ProductsPage() {
         error: (err) => err || 'Failed to create product.'
     });
   };
-
-  // --- THIS IS THE CORRECTED FUNCTION ---
-  // The function is now explicitly an async function that doesn't return a value,
-  // which satisfies the `Promise<void>` requirement.
+  
   const handleUpdate = async (formData: FormData): Promise<void> => {
     if (!currentProduct) {
       toast.error("No product selected for update.");
-      return; // Early return
+      return; 
     }
     
     const promise = dispatch(updateProduct({ productId: currentProduct._id, formData })).unwrap();
     
-    // We call toast.promise but we do not return its value.
-    // The function will implicitly return a promise that resolves to `void`.
     toast.promise(promise, {
         loading: 'Updating product...',
         success: (updatedProduct) => {

@@ -48,7 +48,7 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
         sectionKey,
         queryParams: {
           ...filterParams,
-          limit: filterParams.limit || 4
+          limit: filterParams.limit || 8 // Increased for better scrolling effect
         }
       }));
     }
@@ -59,7 +59,7 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
       sectionKey,
       queryParams: {
         ...filterParams,
-        limit: filterParams.limit || 4
+        limit: filterParams.limit || 8
       }
     }));
   }, [dispatch, sectionKey, filterParams]);
@@ -67,9 +67,11 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {Array.from({ length: filterParams.limit || 4 }).map((_, index) => (
-            <ProductCardSkeleton key={`skeleton-${sectionKey}-${index}`} />
+        <div className="flex gap-6 animate-pulse">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={`skeleton-${sectionKey}-${index}`} className="flex-shrink-0 w-72">
+              <ProductCardSkeleton />
+            </div>
           ))}
         </div>
       );
@@ -105,30 +107,32 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
       );
     }
 
+    // Create multiple copies of products for seamless loop
+    const duplicatedProducts = [...products, ...products, ...products];
+    const displayLimit = Math.min(filterParams.limit || 8, products.length);
+
     return (
-      <MotionDiv
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-      >
-        {products.slice(0, filterParams.limit || 4).map((product) => (
-          <MotionDiv variants={fadeInUp} key={`product-${sectionKey}-${product._id}`}>
-            <ProductCard product={product} />
-          </MotionDiv>
-        ))}
-      </MotionDiv>
+      <div className="overflow-hidden">
+        <div className="flex gap-6 animate-scroll-infinite hover:pause">
+          {duplicatedProducts.map((product, index) => (
+            <div 
+              key={`product-${sectionKey}-${product._id}-${index}`} 
+              className="flex-shrink-0 w-72"
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      </div>
     );
   };
 
   return (
-    // --- THEME UPDATE: Added relative positioning, bg color, and overflow hidden ---
-    <section className={`relative container mx-auto px-6 py-12 md:py-16 bg-[var(--brand-orange)]/10 rounded-3xl overflow-hidden ${className} `}>
-      {/* --- THEME UPDATE: Subtle Ashoka Chakra background watermark --- */}
+    <section className={`relative container mx-auto px-6 py-12 md:py-16 bg-[var(--brand-green)]/20 rounded-3xl overflow-hidden ${className} `}>
+      {/* Background watermark */}
       <div className="absolute inset-0 flex items-center justify-center z-0">
           <Image
-            src="/6292.jpg" // Make sure this is in your /public folder
+            src="/6292.jpg"
             alt="Vande Bharat Background"
             width={500}
             height={500}
@@ -136,7 +140,6 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
           />
       </div>
 
-      {/* --- THEME UPDATE: Added relative positioning to sit above the background --- */}
       <div className="relative z-10">
         <MotionDiv
           variants={fadeInUp}
@@ -145,11 +148,9 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
           viewport={{ once: true, amount: 0.5 }}
           className="text-center mb-12"
         >
-          {/* --- THEME UPDATE: Tricolor gradient text for the main title --- */}
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-blue-800 to-green-600">
             {title}
           </h2>
-          {/* --- THEME UPDATE: Themed subtitle text color --- */}
           {subtitle && (
             <p className="text-lg md:text-xl text-blue-800 font-medium max-w-3xl mx-auto leading-relaxed">
               {subtitle}
@@ -157,9 +158,18 @@ export function ProductSection({ title, subtitle, filterParams, className, viewA
           )}
         </MotionDiv>
 
-        {renderContent()}
+        {/* Horizontal scrolling container */}
+        <MotionDiv
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="mb-8"
+        >
+          {renderContent()}
+        </MotionDiv>
 
-        {/* --- THEME UPDATE: Optional "View All" button for sections like New Arrivals --- */}
+        {/* View All button */}
         {viewAllLink && (
           <MotionDiv
             initial={{ opacity: 0, y: 20 }}

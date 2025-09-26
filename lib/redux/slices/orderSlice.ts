@@ -127,7 +127,8 @@ export const fetchSingleOrder = createAsyncThunk<Order, string, { rejectValue: s
     try {
       // This can be used by both user and admin, so we use the user route by default
       const response = await apiClient.get(`/users/orders/${orderId}`);
-         (response.data.data) 
+      console.log("---response---")
+         console.log(response.data.data) 
       return response.data.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch order details');
@@ -137,13 +138,13 @@ export const fetchSingleOrder = createAsyncThunk<Order, string, { rejectValue: s
 
 export const placeCodOrder = createAsyncThunk<
   { order: Order },
-  {addressId: string; pointsToRedeem: number},
+  {addressId: string; pointsToRedeem: number; couponCode?: string},
   { rejectValue: string }
 >(
   'orders/placeCodOrder',
-  async ({ addressId,pointsToRedeem  }, { rejectWithValue }) => {
+  async ({ addressId,pointsToRedeem,couponCode  }, { rejectWithValue }) => {
     try {
-      const response = await apiClient.post('/users/order/cod', { addressId, pointsToRedeem  });
+      const response = await apiClient.post('/users/order/cod', { addressId, pointsToRedeem,couponCode });
       return response.data.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to place COD order');

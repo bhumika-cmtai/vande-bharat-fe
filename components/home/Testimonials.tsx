@@ -1,73 +1,81 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
-import { MotionDiv } from '../motion/MotionDiv';
-import { fadeInUp } from '@/lib/motion/motionVariants';
+import { ArrowLeft, ArrowRight, PlayCircle, Loader2 } from 'lucide-react';
+import { MotionDiv } from '../motion/MotionDiv'; // Path check kar lein
+import { fadeInUp } from '@/lib/motion/motionVariants'; // Path check kar lein
 
-export interface Testimonial {
-    id: string;
-    name: string;
-    date: string;
-    avatarUrl: string;
-    rating: number;
-    title: string;
-    comment: string;
-  }
-  
-  export const mockTestimonials: Testimonial[] = [
-    {
-      id: '1',
-      name: 'Priya S.',
-      date: '14 August',
-      avatarUrl: '/testimonial/testimonial1.jpeg',
-      rating: 5,
-      title: 'Authenticity at its Best!',
-      comment: "I've been using their organic basmati rice for a month, and the quality is outstanding. It reminds me of the authentic taste from my village. It's pure, aromatic, and absolutely delicious."
-    },
-    {
-      id: '2',
-      name: 'Rohan M.',
-      date: '22 July',
-      avatarUrl: '/testimonial/testimonial2.jpeg',
-      rating: 5,
-      title: 'Amazing Ayurvedic Shampoo',
-      comment: "The herbal shampoo is a game-changer. It has controlled my hair fall and leaves my hair feeling so soft and healthy without any harsh chemicals. Highly recommended!"
-    },
-    {
-      id: '3',
-      name: 'Anjali K.',
-      date: '05 July',
-      avatarUrl: '/testimonial/testimonial3.jpeg',
-      rating: 4,
-      title: 'Great Quality Spices',
-      comment: "The turmeric powder has such a vibrant color and strong aroma. You can tell it's pure and not adulterated. It has elevated the taste of my cooking. Will definitely buy more."
-    },
-    {
-      id: '4',
-      name: 'Vikram P.',
-      date: '18 June',
-      avatarUrl: '/testimonial/testimonial4.jpeg',
-      rating: 5,
-      title: 'Fast and Reliable Delivery',
-      comment: "I was pleasantly surprised by how quickly my order arrived. The packaging was excellent, and all the products were fresh. A great online shopping experience."
-    }
-  ];
+// --- Redux Imports ---
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/lib/redux/store';
+// Ab hum testimonialSlice se sab kuch import kar rahe hain
+import { fetchPublicTestimonials, VideoTestimonial } from '@/lib/redux/slices/testimonialSlice';
 
 export const Testimonials = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    
+    // --- Redux se data fetch karein ---
+    const { testimonials, loading, error } = useSelector((state: RootState) => ({
+        testimonials: state.testimonials.publicTestimonials,
+        loading: state.testimonials.publicLoading,
+        error: state.testimonials.publicError,
+    }));
+
     const [index, setIndex] = useState(0);
-    const testimonials = mockTestimonials;
+    const [direction, setDirection] = useState(0);
+    const [isPlaying, setIsPlaying] = useState<string | null>(null);
 
-    // Isse index humesha 0 se testimonials.length-1 ke beech rahega
+    // Component ke mount hone par testimonials fetch karein
+    useEffect(() => {
+        // Sirf tabhi fetch karein agar data pehle se nahi hai
+        if (testimonials.length === 0) {
+            dispatch(fetchPublicTestimonials());
+        }
+    }, [dispatch, testimonials.length]);
+
+    // --- Loading State ---
+    if (loading) {
+        return (
+            <section className="bg-gray-50/70 py-20 flex items-center justify-center min-h-[400px]">
+                <Loader2 className="w-12 h-12 animate-spin text-brand-dark" />
+            </section>
+        );
+    }
+
+    // --- Error State ---
+    if (error) {
+        return (
+            <section className="bg-red-50 py-20 text-center">
+                <h3 className="text-xl text-red-700">Oops! Could not load testimonials.</h3>
+                <p className="text-red-600">{error}</p>
+            </section>
+        );
+    }
+    
+    // --- Empty State (Agar fetch hone ke baad bhi data na ho) ---
+    if (!testimonials || testimonials.length === 0) {
+        // Agar koi testimonial nahi hai to section ko render hi na karein
+        return null; 
+    }
+
     const activeIndex = (index % testimonials.length + testimonials.length) % testimonials.length;
+    const canNavigate = testimonials.length > 1;
 
-    const goToPrev = () => setIndex(index - 1);
-    const goToNext = () => setIndex(index + 1);
+    const changeSlide = (newDirection: number) => {
+        if (!canNavigate) return;
+        setIsPlaying(null); // Slide badalte samay video band kar dein
+        setDirection(newDirection);
+        setIndex(prevIndex => prevIndex + newDirection);
+    };
+
+    const handlePlay = (_id: string) => {
+        setIsPlaying(_id);
+    };
 
     return (
-        <section className="bg-white py-20 overflow-hidden">
+        <section className="bg-gray-50/70 py-20 overflow-hidden">
             <div className="container mx-auto px-6">
                 {/* Section Header */}
                 <MotionDiv
@@ -75,77 +83,106 @@ export const Testimonials = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-brand-dark">
-                        Our Happy Clients
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+                        Voices of Our Community
                     </h2>
+                    <p className="text-lg text-gray-600 mt-2">
+                        See what our happy customers have to say about their experience.
+                    </p>
                 </MotionDiv>
                 
-                <div className="relative h-[420px] md:h-[350px] flex items-center justify-center">
+                {/* Main Carousel Container */}
+                <div className="relative h-[600px] flex items-center justify-center">
                     {/* Navigation Buttons */}
-                    <button onClick={goToPrev} className="absolute left-0 md:left-10 z-20 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors">
-                        <ArrowLeft className="w-6 h-6 text-gray-600"/>
+                    <button onClick={() => changeSlide(-1)} disabled={!canNavigate} className="absolute left-0 xl:left-20 z-20 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        <ArrowLeft className="w-6 h-6 text-gray-700"/>
                     </button>
-                    <button onClick={goToNext} className="absolute right-0 md:right-10 z-20 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors">
-                        <ArrowRight className="w-6 h-6 text-gray-600"/>
+                    <button onClick={() => changeSlide(1)} disabled={!canNavigate} className="absolute right-0 xl:right-20 z-20 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        <ArrowRight className="w-6 h-6 text-gray-700"/>
                     </button>
 
                     {/* Carousel Viewport */}
-                    <AnimatePresence>
-                        {[-1, 0, 1].map((position) => {
-                            const testimonialIndex = (activeIndex + position + testimonials.length) % testimonials.length;
-                            const testimonial = testimonials[testimonialIndex];
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        <AnimatePresence initial={false} custom={direction}>
+                            {[-1, 0, 1].map((position) => {
+                                // Agar sirf ek hi testimonial hai, to side wale cards na dikhayein
+                                if (testimonials.length < 3 && position !== 0) {
+                                    return null;
+                                }
 
-                            return (
-                                <motion.div
-                                    key={activeIndex + position}
-                                    initial={{ 
-                                        x: `${position * 110}%`, 
-                                        scale: position === 0 ? 1 : 0.8,
-                                        opacity: position === 0 ? 1 : 0.5,
-                                        zIndex: position === 0 ? 10 : 0
-                                    }}
-                                    animate={{ 
-                                        x: `${position * 55}%`,
-                                        scale: position === 0 ? 1 : 0.8,
-                                        opacity: position === 0 ? 1 : 0.5,
-                                        zIndex: position === 0 ? 10 : 0
-                                    }}
-                                    exit={{
-                                        x: `${position * 55}%`,
-                                        opacity: 0,
-                                        scale: 0.5
-                                    }}
-                                    transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-                                    className="absolute w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl border border-gray-100"
-                                >
-                                    {/* Card Header */}
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="flex items-center gap-4">
-                                            <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                                                <Image src={testimonial.avatarUrl} alt={testimonial.name} fill className="object-cover" />
+                                const testimonialIndex = (activeIndex + position + testimonials.length) % testimonials.length;
+                                const testimonial = testimonials[testimonialIndex];
+
+                                const isCenter = position === 0;
+                                const isPlayingThisVideo = isPlaying === testimonial._id;
+
+                                return (
+                                    <motion.div
+                                        key={activeIndex + position}
+                                        custom={direction}
+                                        variants={{
+                                            enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+                                            center: { x: `${position * 40}%`, scale: isCenter ? 1 : 0.7, zIndex: isCenter ? 10 : 0, opacity: isCenter ? 1 : 0.5 },
+                                            exit: (dir: number) => ({ x: dir < 0 ? '100%' : '-100%', opacity: 0 }),
+                                        }}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+                                        className="absolute w-[280px] h-[500px] rounded-3xl bg-gray-900 shadow-2xl overflow-hidden"
+                                    >
+                                        {/* Video or Thumbnail */}
+                                        <AnimatePresence>
+                                            {isPlayingThisVideo ? (
+                                                <motion.video
+                                                    key={testimonial.videoUrl}
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    exit={{ opacity: 0 }}
+                                                    src={testimonial.videoUrl}
+                                                    autoPlay={true}
+                                                    controls
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <motion.div
+                                                    key={testimonial.thumbnailUrl}
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    exit={{ opacity: 0 }}
+                                                    className="w-full h-full"
+                                                >
+                                                    <Image src={testimonial.thumbnailUrl} alt={testimonial.name} fill className="object-cover" />
+                                                    {/* Play Button Overlay */}
+                                                    {isCenter && (
+                                                        <div
+                                                            onClick={() => handlePlay(testimonial._id)}
+                                                            className="absolute inset-0 bg-black/30 flex items-center justify-center cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-300"
+                                                        >
+                                                            <PlayCircle className="w-16 h-16 text-white/80" />
+                                                        </div>
+                                                    )}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
+                                        {/* Customer Info Overlay */}
+                                        {!isPlayingThisVideo && (
+                                            <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
+                                                <p className="font-bold text-lg">{testimonial.name}</p>
+                                                <p className="text-sm opacity-80">{testimonial.location}</p>
+                                                <p className="text-xs mt-1 font-semibold bg-white/20 inline-block px-2 py-1 rounded-full">
+                                                    Reviewing: {testimonial.productName}
+                                                </p>
                                             </div>
-                                            <div>
-                                                <p className="font-bold text-brand-dark">{testimonial.name}</p>
-                                                <p className="text-sm text-gray-500">{testimonial.date}</p>
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-1">
-                                            {Array.from({ length: testimonial.rating }).map((_, i) => (
-                                                <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                                            ))}
-                                        </div>
-                                    </div>
-                                    {/* Card Body */}
-                                    <div>
-                                        <h3 className="text-xl font-bold text-brand-dark mb-2">{testimonial.title}</h3>
-                                        <p className="text-gray-600 leading-relaxed line-clamp-4">{testimonial.comment}</p>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
-                    </AnimatePresence>
+                                        )}
+                                    </motion.div>
+                                );
+                            })}
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
         </section>

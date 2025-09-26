@@ -43,10 +43,14 @@
   /* ================================================= */
   --brand-orange: #FF6A00;
   --brand-orange-100: #f1b991;
+  --brand-orange-500: #d25700;
   --brand-green: #16A34A;
   --brand-green-100: #9fd569;
+  --brand-green-50: rgb(188, 227, 149);
+
   --brand-blue: #0EA5E9;
   --brand-blue-100: #a2d7f0;
+  --brand-blue-500: #305CDE;
   --brand-dark: #0F172A;
   /* ================================================= */
 
@@ -376,3 +380,36 @@
 .animate-float {
   animation: float 20s ease-in-out infinite;
 }
+
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Move exactly half way to show duplicate set */
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 25s linear infinite;
+  width: fit-content;
+}
+
+/* Pause animation on hover for better user experience */
+.animate-scroll-infinite:hover {
+  animation-play-state: paused;
+}
+
+/* Smooth transition and no scrollbars */
+.product-scroll-container {
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.product-scroll-container::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+
+/* style for rich text editor */

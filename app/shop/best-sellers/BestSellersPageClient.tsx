@@ -14,12 +14,12 @@ import { AppDispatch, RootState } from "@/lib/redux/store"
 import { fetchProducts } from "@/lib/redux/slices/productSlice"
 
 // --- Component Imports ---
-import {ProductCard} from "@/components/ProductCard"
+import { ProductCard } from "@/components/ProductCard"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ProductGridSkeleton from "@/components/skeleton/ProductGridSkeleton"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
-// --- Collection Header Component ---
+// --- Collection Header Component (no change needed here) ---
 const CollectionHeader = () => (
     <div className="relative h-[200px] md:h-[300px] w-full bg-gray-200">
         <Image
@@ -42,7 +42,6 @@ export default function BestSellersPageClient() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    // Redux se data aur pagination info nikalein
     const { 
         items: bestSellerProducts, 
         loading, 
@@ -51,11 +50,9 @@ export default function BestSellersPageClient() {
         totalPages 
     } = useSelector((state: RootState) => state.product);
 
-    // Local state UI control ke liye
     const [sortOption, setSortOption] = useState('featured');
     const [categoryFilter, setCategoryFilter] = useState('all');
 
-    // Data Fetching Effect (ab page number par bhi depend karega)
     useEffect(() => {
         const page = searchParams.get('page') || '1';
         const queryParams: { tags: string, category?: string, page: string } = {
@@ -68,9 +65,8 @@ export default function BestSellersPageClient() {
         }
 
         dispatch(fetchProducts(queryParams));
-    }, [dispatch, categoryFilter, searchParams]); // searchParams dependency mein hai
+    }, [dispatch, categoryFilter, searchParams]);
 
-    // Client-side sorting
     const sortedProducts = useMemo(() => {
         const sorted = [...bestSellerProducts];
         switch (sortOption) {
@@ -83,25 +79,12 @@ export default function BestSellersPageClient() {
             case 'newest':
                 sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 break;
-            default: // 'featured'
+            default:
                 break;
         }
         return sorted;
     }, [sortOption, bestSellerProducts]);
     
-    // ProductCard ke liye data map karein
-    const mappedProducts = useMemo(() => sortedProducts.map(p => ({
-        _id: p._id,
-        name: p.name,
-        slug: p.slug,
-        images: p.images,
-        tags: p.tags,
-        price: p.sale_price ?? p.price,
-        base_price: p.sale_price ? p.price : undefined,
-        originalProduct: p,
-    })), [sortedProducts]);
-
-    // Page change handle karne ke liye function
     const handlePageChange = (page: number) => {
         const params = new URLSearchParams(searchParams);
         params.set('page', page.toString());
@@ -112,25 +95,30 @@ export default function BestSellersPageClient() {
         <>
             <CollectionHeader />
 
-            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
                 {/* --- Filter & Toolbar --- */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-4 border-b">
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-semibold">Filter:</span>
-                        <div className="flex gap-1 bg-gray-200 p-1 rounded-full">
-                        <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
-                            <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button>
-                            <button onClick={() => setCategoryFilter('skin-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'skin-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>skin-care</button>
-                            <button onClick={() => setCategoryFilter('hair-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'hair-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Hair-care</button>
-                            <button onClick={() => setCategoryFilter('Personal-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Personal-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Personal-care</button>
-                            <button onClick={() => setCategoryFilter('Wellness')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Wellness' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Wellness</button>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8 pb-4 border-b">
+                    
+                    {/* --- UPDATED: Filter Section with Horizontal Scroll --- */}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <span className="text-sm font-semibold flex-shrink-0">Filter By:</span>
+                        {/* Wrapper to enable horizontal scrolling on small screens */}
+                        <div className="overflow-x-auto scrollbar-hide">
+                            <div className="flex gap-1 bg-gray-200 p-1 rounded-full w-max">
+                                <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
+                                <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button>
+                                <button onClick={() => setCategoryFilter('skin-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'skin-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Skin Care</button>
+                                <button onClick={() => setCategoryFilter('hair-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'hair-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Hair Care</button>
+                                <button onClick={() => setCategoryFilter('Personal-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Personal-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Personal Care</button>
+                                <button onClick={() => setCategoryFilter('Wellness')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Wellness' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Wellness</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                         <span className="text-sm font-semibold">Sort By:</span>
                         <Select value={sortOption} onValueChange={setSortOption}>
-                            <SelectTrigger className="w-[160px] h-9 text-sm">
+                            <SelectTrigger className="w-full sm:w-[160px] h-9 text-sm">
                                 <SelectValue placeholder="Sorting" />
                             </SelectTrigger>
                             <SelectContent>
@@ -150,6 +138,7 @@ export default function BestSellersPageClient() {
                     ) : error ? (
                         <div className="text-center py-20 text-red-500">Failed to load best sellers.</div>
                     ) : sortedProducts.length > 0 ? (
+                        /* --- UPDATED: Responsive Grid Columns --- */
                         <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
                             {sortedProducts.map((product) => (
                                 <ProductCard key={product._id} product={product} />
@@ -164,7 +153,7 @@ export default function BestSellersPageClient() {
                     )}
                 </div>
 
-                {/* --- PAGINATION UI --- */}
+                {/* --- PAGINATION UI (already responsive) --- */}
                 {totalPages > 1 && !loading && (
                     <div className="mt-12">
                         <Pagination>

@@ -23,7 +23,8 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/70 via-[var(--brand-green-100)]/20 to-[var(--brand-blue-100)]/20" />
           
           {/* Floating Elements */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0">Our Journal
+
             <MotionDiv
               animate={{
                 y: [0, -20, 0],

@@ -110,6 +110,7 @@ const InvoiceTemplate = ({ order }: { order: Order }) => {
                 </div>
                 <div className="text-right space-y-1 text-sm">
                     <p><span className="font-semibold">Subtotal:</span> ₹{order.itemsPrice.toLocaleString()}</p>
+                    {order.discountAmount && <p><span className="font-semibold">Discount:</span> ₹{order.discountAmount.toLocaleString()}</p>}
                     <p><span className="font-semibold">Shipping Charges:</span> ₹{order.shippingPrice.toLocaleString()}</p>
                     <p><span className="font-semibold">Tax (Included):</span> ₹{order.taxPrice.toLocaleString()}</p>
                     <p className="font-bold text-base mt-2"><span className="font-bold">Grand Total:</span> ₹{order.totalPrice.toLocaleString()}</p>
@@ -193,7 +194,8 @@ export default function UserOrderDetailsPage() {
     if (!isAuthenticated) {
       router.push('/login');
     } else if (orderId) {
-      dispatch(fetchSingleOrder(orderId));
+      const response = dispatch(fetchSingleOrder(orderId));
+
     }
   }, [isAuthenticated, router, orderId, dispatch]);
 

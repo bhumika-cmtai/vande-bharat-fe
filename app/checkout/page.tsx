@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { fetchWalletConfig } from "@/lib/redux/slices/adminSlice"
 
 // --- UI Components & Hooks ---
 import { Button } from "@/components/ui/button"
@@ -13,15 +12,24 @@ import { Label } from "@/components/ui/label"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import { useToast } from "@/hooks/use-toast"
-import { ArrowLeft, CreditCard, Shield, MapPin, PlusCircle, CheckCircle, Loader2, Home, Briefcase, Gift } from "lucide-react"
+import { ArrowLeft, CreditCard, Shield, MapPin, PlusCircle, CheckCircle, Loader2, Home, Briefcase, Gift, Tag, Sparkles } from "lucide-react"
 
 // --- Redux Imports ---
 import { useDispatch, useSelector } from "react-redux"
 import { RootState, AppDispatch } from "@/lib/redux/store"
-import { fetchCart, clearLocalCartState, applyPoints, removePoints } from "@/lib/redux/slices/cartSlice"
+import { 
+  fetchCart, 
+  clearLocalCartState, 
+  applyPoints, 
+  removePoints,
+  applyCoupon,
+  removeCoupon
+} from "@/lib/redux/slices/cartSlice"
 import { fetchUserProfile, addUserAddress, NewAddressPayload, type Address } from "@/lib/redux/slices/userSlice"
 import { placeCodOrder, createRazorpayOrder, verifyRazorpayPayment } from "@/lib/redux/slices/orderSlice"
 import { selectIsAuthenticated } from "@/lib/redux/slices/authSlice"
+import { fetchCouponByName } from "@/lib/redux/slices/couponSlice"
+import { fetchWalletConfig } from "@/lib/redux/slices/adminSlice"
 
 // Custom hook to load external scripts like Razorpay
 const useScript = (src: string) => {
@@ -41,15 +49,23 @@ export default function CheckoutPage() {
   const { toast } = useToast();
 
   // --- Read all data directly from Redux slices ---
-  const { items, subTotal, shippingCost, discountAmount, finalTotal, appliedPoints, loading: cartLoading } = useSelector((state: RootState) => state.cart);
+  const { 
+    items, 
+    subTotal, 
+    shippingCost, 
+    discountAmount, 
+    finalTotal, 
+    appliedPoints, 
+    appliedCoupon,
+    couponDiscount,
+    loading: cartLoading 
+  } = useSelector((state: RootState) => state.cart);
+  
   const { user, addresses, status: userStatus } = useSelector((state: RootState) => state.user);
   const { walletConfig } = useSelector((state: RootState) => state.admin);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-
-  // Get user wallet points and wallet config
   const userWalletPoints = user?.wallet || 0;
   
-  // Get wallet configuration from admin settings
   const walletSettings = useMemo(() => {
     if (!walletConfig) return null;
     const firstRule = walletConfig.rewardRules?.[0];
@@ -67,34 +83,52 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [pointsInput, setPointsInput] = useState("");
   const [isApplyingPoints, setIsApplyingPoints] = useState(false);
+  const [couponInput, setCouponInput] = useState("");
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
 
   const initialAddressFormState = useMemo(() => ({
     fullName: user?.fullName || "",
-    phone: user?.phone || "",
+    phone: "", // Keep phone empty by default unless you have it on the user object
     street: "", city: "", state: "", postalCode: "", type: "Home" as const,
   }), [user]);
 
   const [newAddressFormData, setNewAddressFormData] = useState<NewAddressPayload>(initialAddressFormState);
-
-  const { shippingPrice, taxAmount, finalCheckoutTotal } = useMemo(() => {
-    const shippingPrice = 90; // Hardcoded 90, bilkul backend ki tarah
-
-    const taxableAmount = subTotal - discountAmount;
-    const taxAmount = taxableAmount * 0.03; // 3% tax, bilkul backend ki tarah
-
-    const finalCheckoutTotal = taxableAmount + shippingPrice + taxAmount;
-
-    return { shippingPrice, taxAmount, finalCheckoutTotal };
-  }, [subTotal, discountAmount]);
 
   // Initial data fetch
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchCart());
       dispatch(fetchUserProfile());
-      dispatch(fetchWalletConfig()); // Fetch wallet configuration
+      dispatch(fetchWalletConfig());
     }
   }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    // Check all conditions: user is logged in, it's their first order, cart is not empty, and no coupon is already applied.
+    if (isAuthenticated && user?.firstorder && items.length > 0 && !appliedCoupon) {
+      
+      const autoApplyFirstOrderCoupon = async () => {
+        toast({ title: "Checking for a special welcome offer..." });
+        try {
+          // Verify that the "FIRST" coupon exists and is active
+          const verifiedCoupon = await dispatch(fetchCouponByName('FIRST')).unwrap(); // Use your first order coupon code
+          // If successful, apply it to the cart
+          dispatch(applyCoupon(verifiedCoupon));
+          toast({
+            title: "Welcome Offer Applied!",
+            description: "Your first order discount has been automatically added.",
+          });
+        } catch (error) {
+          // Fail silently if the coupon doesn't exist or there's an error.
+          // This prevents a bad experience if the admin forgets to create the coupon.
+          console.error("Could not auto-apply 'FIRST' coupon:", error);
+        }
+      };
+
+      autoApplyFirstOrderCoupon();
+    }
+  }, [dispatch, isAuthenticated, user, items.length, appliedCoupon]);
+
 
   // Set default selected address once addresses are loaded
   useEffect(() => {
@@ -111,18 +145,53 @@ export default function CheckoutPage() {
 
   // Redirect if cart is empty after loading
   useEffect(() => {
-    if (!cartLoading && items.length === 0) {
+    if (!cartLoading && items.length === 0 && userStatus !== 'loading') {
       toast({ title: "Your cart is empty!", description: "Redirecting you to the cart page..." });
       const timer = setTimeout(() => router.push('/cart'), 2000);
       return () => clearTimeout(timer);
     }
-  }, [items.length, cartLoading, router, toast]);
+  }, [items.length, cartLoading, userStatus, router, toast]);
+
+  useEffect(() => {
+    const handlePaymentDiscount = async () => {
+      // Condition 1: User selects Razorpay
+      if (selectedPaymentMethod === 'razorpay') {
+        // Prevent applying if another coupon (or this one) is already applied
+        if (appliedCoupon) return;
+        
+        try {
+          // Fetch the special 'RZPAY' coupon from the backend
+          const razorpayCoupon = await dispatch(fetchCouponByName('RZPAY')).unwrap();
+          dispatch(applyCoupon(razorpayCoupon));
+          toast({
+            title: "✨ Special Offer Applied!",
+            description: "A discount for paying online has been added.",
+          });
+        } catch (error) {
+          console.error("RZPAY coupon not found or failed to apply:", error);
+          // Fail silently without showing an error to the user
+        }
+      } 
+      // Condition 2: User switches away from Razorpay back to COD
+      else if (selectedPaymentMethod === 'cod') {
+        // Only remove the coupon if the applied one is the special 'RZPAY' coupon
+        if (appliedCoupon?.code === 'RZPAY') {
+          dispatch(removeCoupon());
+          toast({
+            title: "Online payment offer removed.",
+            variant: "default",
+          });
+        }
+      }
+    };
+
+    handlePaymentDiscount();
+  }, [selectedPaymentMethod, dispatch, appliedCoupon]);
+
 
   const handleNewAddressInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setNewAddressFormData({ ...newAddressFormData, [e.target.name]: e.target.value });
   };
-
-
 
   const handleAddNewAddress = async () => {
     const requiredFields: (keyof NewAddressPayload)[] = ['fullName', 'phone', 'street', 'city', 'state', 'postalCode'];
@@ -130,92 +199,75 @@ export default function CheckoutPage() {
       toast({ title: "Please fill all required fields.", variant: "destructive" });
       return;
     }
-
-    // `toast.promise` ki jagah `try...catch` ka use karein
     try {
-      // API call ko await karein. .unwrap() error throw karega agar API fail hui.
-      // Hum TypeScript ko bata rahe hain ki result 'Address[]' hoga.
       const addedAddresses: Address[] = await dispatch(addUserAddress(newAddressFormData)).unwrap();
-
-      // Success logic
       toast({ title: "Address added successfully!" });
       setShowNewAddressForm(false);
       setNewAddressFormData(initialAddressFormState);
       if (addedAddresses && addedAddresses.length > 0) {
-        // Naye add kiye gaye address ko select karein
         setSelectedAddressId(addedAddresses[addedAddresses.length - 1]._id);
       }
-
     } catch (err: any) {
-      // Error logic: Agar .unwrap() fail hua, to yeh block chalega
       toast({
         title: "Failed to add address",
-        description: String(err), // Error ko string mein convert karein
+        description: String(err),
         variant: "destructive"
       });
     }
   };
 
-
   // Points application handlers
-  const handleApplyPoints = async () => {
+  const handleApplyPoints = () => {
     const pointsToApply = parseInt(pointsInput);
-
-    if (!pointsInput.trim() || isNaN(pointsToApply) || pointsToApply <= 0) {
-      toast({
-        title: "Invalid Points",
-        description: "Please enter a valid number of points.",
-        variant: "destructive"
-      });
-      return;
+    if (isNaN(pointsToApply) || pointsToApply <= 0) {
+        toast({ title: "Invalid points value", variant: "destructive" });
+        return;
     }
-
     if (pointsToApply > userWalletPoints) {
-      toast({
-        title: "Insufficient Points",
-        description: `You only have ${userWalletPoints} points available.`,
-        variant: "destructive"
-      });
-      return;
+        toast({ title: "Insufficient points", variant: "destructive" });
+        return;
     }
-
-    // Calculate maximum points that can be applied based on wallet settings
-    const maxPointsValue = walletSettings ? subTotal : subTotal;
-    const maxPointsToApply = walletSettings ? Math.floor(maxPointsValue / walletSettings.rupeesPerPoint) : subTotal;
-    
-    if (pointsToApply > maxPointsToApply) {
-      toast({
-        title: "Points Exceed Limit",
-        description: `You can only apply up to ${maxPointsToApply} points (₹${maxPointsValue}).`,
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsApplyingPoints(true);
-    try {
-      dispatch(applyPoints(pointsToApply));
-      setPointsInput("");
-      
-      // Calculate discount amount based on wallet settings
-      const discountAmount = walletSettings ? pointsToApply * walletSettings.rupeesPerPoint : pointsToApply;
-      
-      toast({
-        title: "Points Applied",
-        description: `${pointsToApply} points (₹${discountAmount}) applied to your order.`,
-      });
-    } finally {
-      setIsApplyingPoints(false);
-    }
+    dispatch(applyPoints(pointsToApply));
+    setPointsInput("");
+    toast({ title: "Points Applied!" });
   };
 
   const handleRemovePoints = () => {
     dispatch(removePoints());
-    toast({
-      title: "Points Removed",
-      description: "Points discount has been removed from your order.",
-    });
+    toast({ title: "Points Removed" });
   };
+
+  // Coupon application handlers
+  const handleApplyCoupon = async () => {
+    if (!couponInput.trim()) {
+      toast({ title: "Please enter a coupon code.", variant: "destructive" });
+      return;
+    }
+    setIsApplyingCoupon(true);
+    try {
+      const verifiedCoupon = await dispatch(fetchCouponByName(couponInput)).unwrap();
+      // --- Special check for 'FIRST' coupon ---
+      if (verifiedCoupon.code.toUpperCase() === 'FIRST' && !user?.firstorder) {
+          toast({
+              title: "Coupon Not Applicable",
+              description: "This coupon is valid only for your first order.",
+              variant: "destructive"
+          });
+      } else {
+        dispatch(applyCoupon(verifiedCoupon));
+      }
+      setCouponInput("");
+    }catch (error: any) {
+      toast({ title: "Invalid or Inactive Coupon", description: error, variant: "destructive" });
+    } finally {
+      setIsApplyingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    dispatch(removeCoupon());
+  };
+
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -227,7 +279,7 @@ export default function CheckoutPage() {
     setIsProcessing(true);
     const orderDetails = { 
       addressId: selectedAddressId, 
-      // couponCode: appliedCoupon?.code,
+      couponCode: appliedCoupon?.code, // Pass coupon code to the backend
       pointsToRedeem: appliedPoints 
     };
 
@@ -250,12 +302,11 @@ export default function CheckoutPage() {
           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
           amount: razorpayOrder.amount,
           currency: "INR",
-          name: "Your Store Name",
+          name: "Vande Bharat Mart",
           description: "Order Payment",
           order_id: razorpayOrder.orderId,
           handler: async function (response: any) {
             try {
-              ("---verify call krva rhe hai yahan----")
               const result = await dispatch(verifyRazorpayPayment({
                 ...orderDetails,
                 razorpay_order_id: response.razorpay_order_id,
@@ -269,8 +320,8 @@ export default function CheckoutPage() {
               toast({ title: "Payment Verification Failed", description: verifyError, variant: "destructive" });
             }
           },
-          prefill: { name: user?.fullName, email: user?.email, contact: user?.phone },
-          theme: { color: "#000000" }
+          prefill: { name: user?.fullName, email: user?.email },
+          theme: { color: "#1f2937" }
         };
         // @ts-ignore
         const rzp = new window.Razorpay(options);
@@ -337,16 +388,12 @@ export default function CheckoutPage() {
                           }`}
                         onClick={() => setSelectedAddressId(address._id)}
                       >
-                        {selectedAddressId === address._id && (
-                          <CheckCircle className="absolute top-2 right-2 h-5 w-5 text-black" />
-                        )}
+                        {selectedAddressId === address._id && (<CheckCircle className="absolute top-2 right-2 h-5 w-5 text-black" />)}
                         <div className="space-y-1">
                           <div className="flex items-center space-x-2">
                             <p className="font-semibold">{address.fullName}</p>
                             <span className="text-xs bg-gray-100 px-2 py-1 rounded">{address.type}</span>
-                            {address.isDefault && (
-                              <span className="text-xs bg-black text-white px-2 py-1 rounded">Default</span>
-                            )}
+                            {address.isDefault && (<span className="text-xs bg-black text-white px-2 py-1 rounded">Default</span>)}
                           </div>
                           <p className="text-sm text-gray-600">{address.street}</p>
                           <p className="text-sm text-gray-600">{address.city}, {address.state} - {address.postalCode}</p>
@@ -405,6 +452,10 @@ export default function CheckoutPage() {
                   <div onClick={() => setSelectedPaymentMethod('razorpay')} className={`flex items-center space-x-3 p-4 border rounded-xl cursor-pointer transition-all ${selectedPaymentMethod === 'razorpay' ? 'border-black ring-2 ring-black bg-gray-50' : 'border-gray-200 hover:border-gray-400'}`}>
                     <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">R</div><span className="flex-1 font-medium">Pay Online (Razorpay)</span>{selectedPaymentMethod === 'razorpay' && <CheckCircle className="h-5 w-5 text-black" />}
                   </div>
+                  <div className="mt-2 pl-9 text-sm text-green-700 font-semibold flex items-center gap-1">
+                        <Sparkles size={14} />
+                        <span>Special discount applied for online payment!</span>
+                    </div>
                 </div>
               </div>
             </div>
@@ -431,7 +482,7 @@ export default function CheckoutPage() {
               </div>
               <hr className="my-6" />
 
-              {/* Wallet Points Section - Only show for authenticated users */}
+              {/* Wallet Points Section */}
               {isAuthenticated && userWalletPoints > 0 && (
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-2">
@@ -439,89 +490,76 @@ export default function CheckoutPage() {
                     <Label>Redeem Points</Label>
                   </div>
                   <div className="p-4 bg-gradient-to-r from-[#D09D13]/10 to-[#D09D13]/5 rounded-lg border border-[#D09D13]/20">
-                    <p className="text-sm text-gray-600 mb-3">
-                      You have <span className="font-bold text-[#D09D13]">{userWalletPoints.toLocaleString()}</span> points available
-                    </p>
-                    <p className="text-xs text-gray-500 mb-3">
-                      {walletSettings ? 
-                        `1 point = ₹${walletSettings.rupeesPerPoint} discount` : 
-                        '1 point = ₹1 discount'
-                      }
-                    </p>
-
+                    <p className="text-sm text-gray-600 mb-3">You have <span className="font-bold text-[#D09D13]">{userWalletPoints.toLocaleString()}</span> points available</p>
+                    {walletSettings && <p className="text-xs text-gray-500 mb-3">1 point = ₹{walletSettings.rupeesPerPoint} discount</p>}
                     {appliedPoints > 0 ? (
                       <div className="space-y-2">
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600">Applied Points:</span>
-                          <span className="font-semibold text-[#D09D13]">{appliedPoints.toLocaleString()}</span>
-                        </div>
-                        <Button
-                          type="button"
-                          onClick={handleRemovePoints}
-                          variant="outline"
-                          size="sm"
-                          className="w-full text-red-600 border-red-200 hover:bg-red-50"
-                        >
-                          Remove Points
-                        </Button>
+                        <div className="flex justify-between items-center text-sm"><span className="text-gray-600">Applied Points:</span><span className="font-semibold text-[#D09D13]">{appliedPoints.toLocaleString()}</span></div>
+                        <Button type="button" onClick={handleRemovePoints} variant="outline" size="sm" className="w-full text-red-600 border-red-200 hover:bg-red-50">Remove Points</Button>
                       </div>
                     ) : (
-                      <div className="space-y-3">
-                        <div className="flex space-x-2">
-                          <Input
-                            type="number"
-                            placeholder="Enter points"
-                            value={pointsInput}
-                            onChange={(e) => setPointsInput(e.target.value)}
-                            disabled={isApplyingPoints}
-                            min="1"
-                            max={walletSettings ? 
-                              Math.min(userWalletPoints, Math.floor(subTotal / walletSettings.rupeesPerPoint)) : 
-                              Math.min(userWalletPoints, subTotal)
-                            }
-                            className="flex-1"
-                          />
-                          <Button
-                            type="button"
-                            onClick={handleApplyPoints}
-                            variant="outline"
-                            disabled={isApplyingPoints || !pointsInput.trim()}
-                            className="bg-[#D09D13] hover:bg-[#b48a10] text-white border-[#D09D13]"
-                          >
-                            {isApplyingPoints ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}
-                          </Button>
-                        </div>
+                      <div className="flex space-x-2">
+                        <Input type="number" placeholder="Enter points" value={pointsInput} onChange={(e) => setPointsInput(e.target.value)} disabled={isApplyingPoints} min="1" max={userWalletPoints} className="flex-1" />
+                        <Button type="button" onClick={handleApplyPoints} disabled={isApplyingPoints || !pointsInput.trim()} className="bg-[#D09D13] hover:bg-[#b48a10] text-white border-[#D09D13]">{isApplyingPoints ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}</Button>
                       </div>
                     )}
                   </div>
                 </div>
               )}
 
-              <div className="space-y-3">
-                <div className="flex justify-between"><span className="text-gray-600">Subtotal</span><span>₹{subTotal.toLocaleString()}</span></div>
+              {/* Coupon Section */}
+              <div className="space-y-3 mb-6">
+                        <div className="flex items-center gap-2">
+                            <Tag size={20} className="text-green-600" />
+                            <Label>Apply Coupon</Label>
+                        </div>
+                        
+                        {/* Case 1: First order coupon is auto-applied */}
+                        {appliedCoupon?.code.toUpperCase() === 'FIRST' ? (
+                            <div className="p-4 bg-green-100/60 rounded-lg border border-green-200 text-center">
+                                <p className="font-semibold text-green-800">Your "FIRST" order discount has been automatically applied!</p>
+                            </div>
+                        ) : (
+                        // Case 2: Normal coupon logic (apply or remove)
+                        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            {appliedCoupon ? (
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-gray-600">Applied Coupon:</span>
+                                        <span className="font-semibold text-green-700 bg-green-100 px-2 py-1 rounded">{appliedCoupon.code}</span>
+                                    </div>
+                                    <Button type="button" onClick={handleRemoveCoupon} variant="outline" size="sm" className="w-full text-red-600 border-red-200 hover:bg-red-50">Remove Coupon</Button>
+                                </div>
+                            ) : (
+                                <div className="flex space-x-2">
+                                    <Input type="text" placeholder="Enter coupon code" value={couponInput} onChange={(e) => setCouponInput(e.target.value.toUpperCase())} disabled={isApplyingCoupon} className="flex-1" />
+                                    <Button type="button" onClick={handleApplyCoupon} disabled={isApplyingCoupon || !couponInput.trim()} className="bg-black hover:bg-gray-800 text-white">{isApplyingCoupon ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}</Button>
+                                </div>
+                            )}
+                        </div>
+                        )}
+                    </div>
 
-                {appliedPoints > 0 && (
-                  <div className="flex justify-between text-[#D09D13]">
-                    <span>Points Discount</span>
-                    <span>- ₹{(walletSettings ? appliedPoints * walletSettings.rupeesPerPoint : appliedPoints).toLocaleString()}</span>
+              {/* Price Details */}
+              <div className="space-y-3">
+                <div className="flex justify-between"><span className="text-gray-600">Subtotal</span><span>₹{subTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                {discountAmount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Total Discount</span>
+                    <span>- ₹{discountAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 )}
-
-                <div className="flex justify-between"><span className="text-gray-600">Shipping</span><span>₹{shippingPrice.toLocaleString()}</span></div>
-
-                {/* --- NAYI TAX LINE ADD KI GAYI HAI --- */}
-                <div className="flex justify-between"><span className="text-gray-600">Taxes (3%)</span><span>₹{taxAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
-
+                <div className="flex justify-between"><span className="text-gray-600">Shipping</span><span>₹{shippingCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                 <hr className="my-4" />
-
-                {/* --- TOTAL PRICE AB NAYE CALCULATION SE AAYEGA --- */}
-                <div className="flex justify-between text-lg font-bold"><span>Total</span><span className="text-black">₹{finalCheckoutTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total</span>
+                  <span className="text-black">₹{finalTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
               </div>
 
               <Button type="submit" disabled={isProcessing || !selectedAddressId} className="w-full py-3 h-12 mt-6 font-semibold text-base bg-black text-white hover:bg-gray-800">
-                {isProcessing ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</>) : (`Place Order - ₹${finalTotal.toLocaleString()}`)}
+                {isProcessing ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</>) : (`Place Order - ₹${finalTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`)}
               </Button>
-
               <div className="flex items-center justify-center space-x-2 mt-3 text-sm text-gray-600"><Shield className="h-4 w-4" /><span>Secure SSL Encrypted Payment</span></div>
             </div>
           </motion.div>

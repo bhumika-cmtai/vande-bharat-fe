@@ -45,7 +45,7 @@ export const AllProducts = () => {
     }, [dispatch, selectedCategory]); // Dependencies: re-run when dispatch or category changes
 
     return (
-        <section className="bg-[var(--brand-blue-100)]/20 py-20">
+        <section className="bg-[var(--brand-blue-100)]/70 py-20">
             <div className="container mx-auto px-6">
                 <MotionDiv
                     variants={fadeInUp}
@@ -53,7 +53,7 @@ export const AllProducts = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-[var(--brand-dark)]">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[var(--brand-orange-500)]">
                         Our All Products
                     </h2>
                     <p className="text-md text-gray-600 mt-2">

@@ -54,13 +54,13 @@ export default function NotFound() {
               <span>Go Home</span>
             </Button>
           </Link>
-          <Link href="/collections/women">
+          <Link href="/">
             <Button
               variant="outline"
               className="flex items-center space-x-2 border-orange-500 text-orange-500 hover:bg-orange-50 px-6 py-3 rounded-xl bg-transparent"
             >
               <Search className="h-4 w-4" />
-              <span>Browse Collection</span>
+              <span>Browse Products</span>
             </Button>
           </Link>
         </motion.div>

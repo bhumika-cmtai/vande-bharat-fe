@@ -16,7 +16,7 @@ export const PromoBanner = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         // Main Card
-        className="relative bg-green-100 rounded-3xl overflow-hidden"
+        className="relative overflow-hidden bg-gradient-to-br from-orange-500/80 via-white to-green-600/80 shadow-lg rounded-3xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 p-8 md:p-12">
           
@@ -39,7 +39,7 @@ export const PromoBanner = () => {
               <Link href="/shop">
                 <Button 
                   size="lg" 
-                  className="rounded-full group bg-white border-2 border-gray-300 text-[var(--brand-dark)] hover:bg-[var(--brand-dark)] hover:text-white hover:border-[var(--brand-dark)] transition-all duration-300 shadow-md"
+                  className="rounded-full group bg-white border-2 border-gray-300 text-[var(--brand-dark)] hover:bg-[var(--primary-button-theme)] hover:text-white hover:border-[var(--secondary-button-theme)] transition-all duration-300 shadow-md"
                 >
                   Shop Now
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

@@ -149,7 +149,7 @@ export default function ShopPageClient() {
                 <Button onClick={handleClearFilters} variant="link" className='mt-2'>Clear Filters</Button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-8">
                 {products.map(product => <ProductCard key={product._id} product={product} />)}
               </div>
             )}

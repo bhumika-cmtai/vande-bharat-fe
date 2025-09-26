@@ -67,13 +67,11 @@ export const setupInterceptors = (store: AppStore) => {
       // Accessing the store from the parameter.
       const state: RootState = store.getState();
       const accessToken = state.auth.accessToken;
-
-        ("Request interceptor called for URL:", config.url);
-        ("Access token in interceptor:", !!accessToken);
+      console.log("--------this is accesstoken-------------")
+      console.log(accessToken)
 
       if (accessToken) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
-          ("Authorization header set:", config.headers['Authorization']);
       } else {
           ("No access token found, skipping Authorization header");
       }

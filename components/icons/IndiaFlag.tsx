@@ -7,9 +7,9 @@ export const IndiaFlag = ({ className }: { className?: string }) => (
     className={className}
     aria-label="Indian Flag"
   >
-    <rect width="900" height="600" fill="#F93" />
+    <rect width="900" height="600" fill="#128807" />
     <rect width="900" height="400" fill="#FFF" />
-    <rect width="900" height="200" fill="#128807" />
+    <rect width="900" height="200" fill="#F93" />
     <g transform="translate(450,300)">
       <circle r="90" fill="#000080" />
       <circle r="80" fill="#FFF" />

@@ -1,40 +1,41 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 
+// ===== UPDATED DATA: Now with English text =====
 const slides = [
   {
     id: 1,
-    imageUrl: '/hero2.jpg',
-    title: 'Embrace Purity, Embrace Nature',
+    videoUrl: '/videos/indianflag2.mp4', // Place your video in /public/videos/
+    title: "Embrace Nature's Purity",
     subtitle: 'Discover our 100% Organic & Ayurvedic collection.',
     buttonText: 'Shop Now',
     href: '/shop'
   },
   {
     id: 2,
-    imageUrl: '/hero1.jpg',
-    title: 'Fresh Harvest, Best Prices',
-    subtitle: 'Get up to 30% off on all grains and flours.',
-    buttonText: 'Explore Deals',
-    href: '/shop/sale'
+    videoUrl: '/videos/indianflag1.mp4', // Place your video in /public/videos/
+    title: 'Reveal Your Natural Glow',
+    subtitle: 'Enhance your beauty with our skincare and personal care range.',
+    buttonText: 'View Collection',
+    href: '/shop?category=skin-care'
   },
   {
     id: 3,
-    imageUrl: '/hero3.jpg',
-    title: 'Straight from the Heart of India',
-    subtitle: 'Authentic products supporting local communities.',
+    videoUrl: '/videos/india.mp4', // Place your video in /public/videos/
+    title: 'Rooted in Tradition, Crafted for Today',
+    subtitle: 'Authentic Indian products that support your wellness journey.',
     buttonText: 'Our Story',
     href: '/about'
   },
 ];
 
-// ===== ANIMATION FIX 1: FASTER & SMOOTHER SLIDE TRANSITION =====
+
+// Animation variants remain the same (already optimized)
 const sliderVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? '100%' : '-100%',
@@ -52,39 +53,13 @@ const sliderVariants = {
   }),
 };
 
-// ===== ANIMATION FIX 2: FASTER TEXT ANIMATION =====
-// Stagger (delay between items) ko kam kiya gaya hai taaki text ek saath appear ho.
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.1, // Pehle yeh zyada tha, ab 0.1s hai
-    },
-  },
-};
-
-// Text ke upar aane ka distance (y) aur duration kam kiya gaya hai.
-const fadeInUp = {
-  hidden: {
-    opacity: 0,
-    y: 30, // Thoda kam distance
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5, // Duration 0.5s kar di hai, for quick appearance
-      ease: 'easeOut'
-    },
-  },
-};
-
 const HeroSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
   const goToSlide = (newIndex: number) => {
-    if (newIndex === activeIndex) return; // Agar same slide par click ho to kuch na karein
+    if (newIndex === activeIndex) return;
     setDirection(newIndex > activeIndex ? 1 : -1);
     setActiveIndex(newIndex);
   };
@@ -101,13 +76,11 @@ const HeroSlider = () => {
     setActiveIndex(newIndex);
   };
 
-  // Autoplay ko behtar banaya gaya
   useEffect(() => {
     const resetAutoplay = () => {
       if (autoplayRef.current) clearInterval(autoplayRef.current);
-      // ===== ANIMATION FIX 3: AUTOPLAY DURATION ADJUSTED =====
-      // Autoplay ko 4 seconds kiya gaya, taaki user ko padhne ka time mile aur animation frantic na lage.
-      autoplayRef.current = setInterval(goToNext, 4000); 
+      // Autoplay duration is slightly longer for video
+      autoplayRef.current = setInterval(goToNext, 10000); 
     };
     
     resetAutoplay();
@@ -115,12 +88,12 @@ const HeroSlider = () => {
     return () => {
       if (autoplayRef.current) clearInterval(autoplayRef.current);
     };
-  }, [activeIndex]); // Jab bhi slide change ho, timer reset ho.
+  }, [activeIndex]);
 
   const slide = slides[activeIndex];
 
   return (
-    <div className="relative h-[70vh] md:h-[85vh] w-full overflow-hidden">
+    <div className="relative h-[70vh] md:h-[85vh] w-full overflow-hidden bg-black">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={activeIndex}
@@ -130,42 +103,51 @@ const HeroSlider = () => {
           initial="enter"
           animate="center"
           exit="exit"
-          // Slide transition ko bhi thoda fast kiya gaya hai.
-          transition={{ type: 'tween', duration: 0.5, ease: 'easeInOut' }}
+          transition={{ type: 'tween', duration: 0.7, ease: 'easeInOut' }}
         >
-          <Image
-            src={slide.imageUrl}
-            alt={slide.title}
-            fill
-            priority={slide.id === 1}
-            className="object-cover"
-            sizes="100vw"
+          {/* Video player implementation */}
+          <video
+            key={slide.id} // The key is important for re-rendering the video on slide change
+            src={slide.videoUrl}
+            autoPlay
+            muted
+            loop
+            playsInline // Important for iOS devices
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
       {/* Text Content */}
       <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white p-4">
         <motion.div
-            key={`text-${activeIndex}`} // Text ke liye bhi alag key, taaki woh bhi re-animate ho
-            // variants={staggerContainer}
+            key={`text-${activeIndex}`}
             initial="hidden"
             animate="visible"
             className="max-w-4xl"
+            variants={{
+                visible: { transition: { staggerChildren: 0.1 } }
+            }}
         >
-            <motion.h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
-            {slide.title}
+            <motion.h1 
+                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight"
+            >
+                {slide.title}
             </motion.h1>
-            <motion.p  className="text-lg md:text-2xl mb-8 max-w-2xl mx-auto">
-            {slide.subtitle}
+            <motion.p 
+                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+                className="text-lg md:text-2xl mb-8 max-w-2xl mx-auto"
+            >
+                {slide.subtitle}
             </motion.p>
-            <motion.div>
-            <Link href={slide.href}>
-                <Button size="lg" className="bg-[var(--primary-button-theme)] text-lg text-white hover:bg-[var(--secondary-button-theme)] transition-colors duration-300 rounded-full px-8 py-6">
-                {slide.buttonText}
-                </Button>
-            </Link>
+            <motion.div variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
+                <Link href={slide.href}>
+                    <Button size="lg" className="bg-white text-gray-900 text-lg hover:bg-gray-200 transition-colors duration-300 rounded-full px-8 py-6 font-bold">
+                        {slide.buttonText}
+                    </Button>
+                </Link>
             </motion.div>
         </motion.div>
       </div>
