@@ -94,7 +94,7 @@ export default function DirectorMessagePage() {
             }}
             className="relative"
           >
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-yellow-100 to-green-100 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold text-[var(--brand-orange-500)] leading-tight">
               Director's Message
             </h1>
             {/* Glowing effect */}
@@ -116,7 +116,7 @@ export default function DirectorMessagePage() {
               }
             }}
           >
-            <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-medium text-orange-300 leading-relaxed">
               A personal note from our founder on our journey of natural wellness.
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-orange)] mx-auto mt-6 rounded-full"></div>
@@ -152,8 +152,8 @@ export default function DirectorMessagePage() {
             >
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-all duration-700">
                 <Image
-                  src="/director-profile.jpg"
-                  alt="Dr. vande bharat - Director and Founder"
+                  src="/director-profile.png"
+                  alt="Narendra Singh - Director and Founder"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-1000"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -173,7 +173,7 @@ export default function DirectorMessagePage() {
                   className="absolute -bottom-4 -right-4 bg-[var(--brand-orange)] text-white px-6 py-3 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2"
                 >
                   <Award className="w-4 h-4" />
-                  Ayurveda Expert
+                  
                 </MotionDiv>
               </div>
               
@@ -200,10 +200,10 @@ export default function DirectorMessagePage() {
             >
               <div className="relative">
                 <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4 leading-tight">
-                  Dr. vande bharat
+                  Narendra Singh
                 </h2>
                 <p className="text-xl text-[var(--brand-green)] font-semibold mb-2">Founder & Director</p>
-                <p className="text-lg text-gray-600">Ph.D. in Ayurvedic Medicine, 25+ Years Experience</p>
+                {/* <p className="text-lg text-gray-600">Ph.D. in Ayurvedic Medicine, 25+ Years Experience</p> */}
                 <div className="absolute -left-4 top-0 w-2 h-20 bg-gradient-to-b from-[var(--brand-green)] to-[var(--brand-orange)] rounded-full"></div>
               </div>
               
@@ -318,7 +318,7 @@ export default function DirectorMessagePage() {
               >
                 <div className="inline-block bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/40">
                   <div className="text-3xl font-bold text-[var(--brand-green)] mb-2" style={{ fontFamily: 'cursive' }}>
-                    Dr. Rajesh Sharma
+                    Narendra Singh
                   </div>
                   <div className="text-lg text-gray-600">Founder & Director</div>
                   <div className="w-24 h-1 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-orange)] mx-auto mt-4 rounded-full"></div>
