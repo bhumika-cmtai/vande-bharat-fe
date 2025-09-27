@@ -326,7 +326,7 @@ export default function AboutPage() {
             >
               <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-all duration-700">
                 <Image
-                  src="/about2.jpg"
+                  src="/facewash2.jpg"
                   alt="A smiling farmer in a field"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-1000"
