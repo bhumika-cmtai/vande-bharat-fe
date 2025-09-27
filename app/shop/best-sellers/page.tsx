@@ -6,7 +6,7 @@ import BestSellersPageClient from './BestSellersPageClient'; // Naye component k
 // Yeh ek Server Component hai
 export default function BestSellersPage() {
   return (
-    <div className="bg-white">
+    <div className="bg-[var(--brand-orange)]/5">
       <Navbar />
       <Suspense fallback={<BestSellersPageFallback />}>
         <BestSellersPageClient />

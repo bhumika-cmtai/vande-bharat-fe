@@ -207,7 +207,7 @@ export default function CartPage() {
 
     // View for Cart with Items
     return (
-        <div className="min-h-screen bg-[var(--theme-background)]">
+        <div className="min-h-screen bg-[var(--brand-orange)]/5">
             <Navbar />
             <main className="container mx-auto px-4 py-12">
                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
@@ -217,9 +217,9 @@ export default function CartPage() {
                     <h1 className="text-4xl font-serif font-bold text-gray-800 mb-8">My Bag ({totalItems})</h1>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-3 gap-12">
+                <div className="grid lg:grid-cols-3 gap-12 ">
                     {/* Item List Column */}
-                    <div className="lg:col-span-2 bg-[var(--theme-card-background)] rounded-2xl shadow-sm p-6">
+                    <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6">
                         <div className="grid grid-cols-12 text-xs font-semibold text-gray-500 uppercase pb-4 border-b">
                             <div className="col-span-12 md:col-span-6">Product</div>
                             <div className="col-span-6 md:col-span-3 text-center">Quantity</div>
@@ -241,7 +241,7 @@ export default function CartPage() {
 
                     {/* Order Summary Column */}
                     <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="lg:col-span-1">
-                        <div className="bg-[var(--theme-card-background)] rounded-2xl shadow-sm p-6 sticky top-28">
+                        <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-28">
                             <h2 className="text-2xl font-serif font-bold text-gray-800 mb-6">Order Summary</h2>
                             <div className="space-y-3 mb-6 text-gray-700">
                                 <div className="flex justify-between items-center"><span className="text-gray-500">Subtotal</span><span className="font-semibold">₹{subTotal.toLocaleString()}</span></div>

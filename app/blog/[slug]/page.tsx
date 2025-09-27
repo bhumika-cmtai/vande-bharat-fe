@@ -95,7 +95,7 @@ export default function BlogDetailPage() {
   });
 
   return (
-    <main className="overflow-hidden bg-gradient-to-br from-green-50/20 via-white to-blue-50/20">
+    <main className="overflow-hidden bg-gradient-to-br from-green-100 via-white to-blue-200">
       <MotionDiv variants={staggerContainer} initial="hidden" animate="visible">
         {/* === Hero Section with Featured Image === */}
         <section className="relative h-[50vh] md:h-[60vh] flex items-center justify-center text-white">

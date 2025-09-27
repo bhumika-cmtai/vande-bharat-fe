@@ -4,6 +4,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios'; // Import AxiosError for better type checking
 import apiClient from '@/lib/api/auth'; 
 import { Coupon } from './couponSlice';
+import { fetchTaxConfig } from './taxSlice';
+
 // Removed coupon import - using points system instead 
 
 interface LocalCartItem {
@@ -34,6 +36,8 @@ interface CartState {
   subTotal: number;
   shippingCost: number;
   discountAmount: number;
+  taxAmount: number; // --- NEW: To store the calculated tax amount ---
+  taxRate: number;
   finalTotal: number;
   appliedCoupon: Coupon | null; 
   couponDiscount: number;
@@ -48,6 +52,8 @@ const initialState: CartState = {
   subTotal: 0,
   shippingCost: 0,
   discountAmount: 0,
+  taxAmount: 0, // --- NEW: Initialize tax amount ---
+  taxRate: 0, // --- NEW: Initialize tax rate ---
   finalTotal: 0,
   appliedCoupon: null,
   couponDiscount: 0,
@@ -188,17 +194,28 @@ const cartSlice = createSlice({
       const discountAmount = pointsDiscountValue + couponDiscountValue;
       
       const shippingCost = subTotal > 2000 ? 0 : 90; //temprory
-      const finalTotal = Math.max(0, subTotal - discountAmount + shippingCost);
+      const taxAmount = subTotal * state.taxRate;
+      console.log("----taxAmount----")
+      console.log(state.taxRate)
+      const finalTotal = Math.max(0, subTotal - discountAmount + shippingCost + taxAmount );
       
       state.subTotal = subTotal;
       state.totalItems = totalItems;
       state.discountAmount = discountAmount;
       state.shippingCost = shippingCost;
       state.finalTotal = finalTotal;
+      state.taxAmount = taxAmount; // --- NEW: Set the calculated tax amount in state ---
+      state.finalTotal = finalTotal
     },
   },
   extraReducers: (builder) => {
     builder
+    .addCase(fetchTaxConfig.fulfilled, (state, action: PayloadAction<number>) => {
+      // When fetchTaxConfig is successful, its payload is the rate (e.g., 0.03)
+      state.taxRate = action.payload;
+      // After updating the rate, immediately recalculate the cart totals.
+      cartSlice.caseReducers.calculateTotals(state);
+    })
       .addMatcher(
         (action) => action.type.startsWith('cart/') && action.type.endsWith('/pending'),
         (state) => {
@@ -225,8 +242,8 @@ const cartSlice = createSlice({
           }
           cartSlice.caseReducers.calculateTotals(state);
         }
-      );
-  },
+      ); 
+    },
 });
 
 export const { clearLocalCartState, applyPoints, removePoints, calculateTotals, applyCoupon, removeCoupon, } = cartSlice.actions;

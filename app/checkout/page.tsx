@@ -23,13 +23,15 @@ import {
   applyPoints, 
   removePoints,
   applyCoupon,
-  removeCoupon
+  removeCoupon,
+  
 } from "@/lib/redux/slices/cartSlice"
 import { fetchUserProfile, addUserAddress, NewAddressPayload, type Address } from "@/lib/redux/slices/userSlice"
 import { placeCodOrder, createRazorpayOrder, verifyRazorpayPayment } from "@/lib/redux/slices/orderSlice"
 import { selectIsAuthenticated } from "@/lib/redux/slices/authSlice"
 import { fetchCouponByName } from "@/lib/redux/slices/couponSlice"
 import { fetchWalletConfig } from "@/lib/redux/slices/adminSlice"
+import { fetchTaxConfig } from "@/lib/redux/slices/taxSlice"
 
 // Custom hook to load external scripts like Razorpay
 const useScript = (src: string) => {
@@ -58,6 +60,7 @@ export default function CheckoutPage() {
     appliedPoints, 
     appliedCoupon,
     couponDiscount,
+    taxAmount,
     loading: cartLoading 
   } = useSelector((state: RootState) => state.cart);
   
@@ -97,6 +100,7 @@ export default function CheckoutPage() {
   // Initial data fetch
   useEffect(() => {
     if (isAuthenticated) {
+      dispatch(fetchTaxConfig());
       dispatch(fetchCart());
       dispatch(fetchUserProfile());
       dispatch(fetchWalletConfig());
@@ -361,7 +365,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--brand-orange)]/5">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center space-x-4 mb-8">
@@ -549,12 +553,16 @@ export default function CheckoutPage() {
                     <span>- ₹{discountAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 )}
+                {taxAmount > 0 && (
+                   <div className="flex justify-between"><span className="text-gray-600">Tax</span><span>₹{taxAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                )}
                 <div className="flex justify-between"><span className="text-gray-600">Shipping</span><span>₹{shippingCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                 <hr className="my-4" />
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
                   <span className="text-black">₹{finalTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
+                
               </div>
 
               <Button type="submit" disabled={isProcessing || !selectedAddressId} className="w-full py-3 h-12 mt-6 font-semibold text-base bg-black text-white hover:bg-gray-800">

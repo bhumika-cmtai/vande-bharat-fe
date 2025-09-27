@@ -10,6 +10,7 @@ export default function ProductCollectionGrid() {
       id: 1,
       title: "WELLNESS",
       image: "/bodygel11.jpg",
+      slug: 'wellness',
       buttonText: "Shop Now",
       className: "row-span-2",
       bgColor: "bg-[var(--brand-green-100)]",
@@ -19,6 +20,7 @@ export default function ProductCollectionGrid() {
       id: 3,
       title: "SKIN CARE",
       image: "/tulsi2.jpg", 
+      slug: 'skin-care', 
       buttonText: "Shop Now",
       className: "",
       bgColor: "bg-[var(--brand-green-100)]",
@@ -28,6 +30,7 @@ export default function ProductCollectionGrid() {
       id: 4,
       title: "PERSONAL CARE",
       image: "/facewash2.jpg",
+      slug: 'personal-care',
       buttonText: "Shop Now", 
       className: "",
       bgColor: "bg-[var(--brand-green-100)]",
@@ -99,7 +102,7 @@ export default function ProductCollectionGrid() {
                   whileTap={{ scale: 0.95 }}
                   className="group/btn"
                 >
-                  <Link href="/shop">
+                  <Link href={`/shop?category=wellness`}>
                     <button className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-800 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-100 border border-white/50 group-hover:border-green-200">
                       <ShoppingBag className="w-4 h-4 mr-2" />
                       {collections[0].buttonText}
@@ -238,7 +241,7 @@ export default function ProductCollectionGrid() {
                     whileTap={{ scale: 0.95 }}
                     className="group/btn"
                   >
-                    <Link href="/shop">
+                    <Link href={`/shop?category=${collection.slug}`}>
                       <button className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-800 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-100 border border-white/50 group-hover:border-green-200">
                         <ShoppingBag className="w-4 h-4 mr-2" />
                         {collection.buttonText}

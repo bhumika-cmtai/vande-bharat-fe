@@ -85,7 +85,7 @@ const FloatingFlags = () => (
   </div>
 );
 
-
+ 
 export const CategorySlider = () => { 
   return (
     <section className="relative container mx-auto px-6 py-10 overflow-hidden">

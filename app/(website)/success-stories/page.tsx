@@ -67,7 +67,7 @@ export default function SuccessStoriesPage() {
             className="object-cover scale-105 hover:scale-110 transition-transform duration-[3000ms]"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-green)]/80  to-[var(--brand-blue)]/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-green)]/80 via-[var(--brand-orange)]/60  to-[var(--brand-blue)]/70" />
           
           {/* Floating Success Icons */}
           <div className="absolute inset-0">
@@ -267,7 +267,7 @@ export default function SuccessStoriesPage() {
       </section>
 
       {/* === Call to Action === */}
-      <section className="relative bg-gradient-to-br from-[var(--brand-dark)] via-[var(--brand-green)] to-[var(--brand-blue)] py-20 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[var(--brand-orange)]/60 via-[var(--brand-blue)]/60 to-[var(--brand-green)]/60 py-20 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-yellow-300 rounded-full mix-blend-overlay filter blur-xl animate-pulse delay-1000"></div>

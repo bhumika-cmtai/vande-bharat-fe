@@ -17,7 +17,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 const CollectionHeader = () => (
     <div className="relative h-[200px] md:h-[300px] w-full bg-gray-200">
         <Image
-            src="/hero2.jpg"
+            src="/new-arrivals.jpg"
             alt="New Arrivals Banner"
             fill
             className="object-cover object-center"
@@ -108,7 +108,7 @@ export default function NewArrivalsPageClient() {
                         <span className="text-sm font-semibold">Filter:</span>
                         <div className="flex gap-1 bg-gray-200 p-1 rounded-full">
                         <button onClick={() => setCategoryFilter('all')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'all' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>All</button>
-                            <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button>
+                            {/* <button onClick={() => setCategoryFilter('food')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'food' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Food</button> */}
                             <button onClick={() => setCategoryFilter('skin-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'skin-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>skin-care</button>
                             <button onClick={() => setCategoryFilter('hair-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'hair-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Hair-care</button>
                             <button onClick={() => setCategoryFilter('Personal-care')} className={`px-4 py-1.5 text-sm rounded-full transition-colors ${categoryFilter === 'Personal-care' ? 'bg-white shadow-sm text-black font-semibold' : 'text-gray-600'}`}>Personal-care</button>

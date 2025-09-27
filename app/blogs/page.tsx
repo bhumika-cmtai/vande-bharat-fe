@@ -93,7 +93,7 @@ export default function BlogPage() {
   }, [dispatch, blogs.length]);
 
   return (
-    <main className="overflow-hidden bg-gradient-to-br from-green-50/20 via-white to-blue-50/20">
+    <main className="overflow-hidden bg-gradient-to-r from-green-100 via-white to-blue-200">
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center text-white">
         <div className="absolute inset-0 z-0">

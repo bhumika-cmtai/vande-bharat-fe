@@ -108,13 +108,14 @@ export const FeatureGrid = () => {
             
             {/* 6. Promotional Card */}
             <MotionDiv variants={fadeInUp} className="relative rounded-2xl overflow-hidden shadow-lg group min-h-[250px] sm:col-span-2 lg:col-span-1">
+              <Link href="/shop/sale">
                <Image
                   src="/hero3.jpg" // public folder mein ek promotional image daalein
                   alt="Monsoon Wellness Sale"
                   fill
                   className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
+                  />
                 <div className="absolute inset-0 bg-black/30"></div>
                 <div className="absolute bottom-6 left-6 text-white">
                     <h3 className="text-2xl font-bold">Monsoon Wellness</h3>
@@ -124,6 +125,7 @@ export const FeatureGrid = () => {
                 <div className="absolute top-4 right-[-20px] bg-[var(--brand-orange)] text-white font-bold px-6 py-1 text-sm rotate-45">
                     SALE
                 </div>
+                  </Link>
             </MotionDiv>
           </div>
         </MotionDiv>

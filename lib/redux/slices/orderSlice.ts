@@ -30,6 +30,7 @@ export interface OrderItem {
   size?: string;
   color?: string;
   _id: string;
+  
 }
 
 export interface ShippingAddress {
@@ -60,6 +61,17 @@ export interface Order {
   orderStatus: 'Pending' | 'Paid' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   paymentMethod: 'COD' | 'Razorpay';
   createdAt: string;
+  cancellationDetails?: {
+    cancelledBy: 'User' | 'Admin';
+    reason: string;
+    cancellationDate: string; // JSON converts Date to string
+  };
+  refundDetails?: {
+    refundId: string;
+    amount: number;
+    status: string;
+    createdAt: string; // JSON converts Date to string
+  };
 }
 
 interface OrderState {
@@ -231,6 +243,24 @@ export const cancelOrderAsAdmin = createAsyncThunk<Order, { orderId: string; rea
   }
 );
 
+export const cancelOrder = createAsyncThunk<
+  Order, // It returns the updated order object on success
+  { orderId: string; reason?: string }, // It takes orderId and an optional reason
+  { rejectValue: string }
+>(
+  'orders/cancelOrder',
+  async ({ orderId, reason }, { rejectWithValue }) => {
+    try {
+      // We use a PATCH request as defined in the backend controller
+      const response = await apiClient.patch(`users/orders/cancel/${orderId}`, { reason });
+      return response.data.data; // The backend returns the updated order
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to cancel the order.');
+    }
+  }
+);
+
+
 
 export const updateOrderStatus = createAsyncThunk<
   Order, // Returns the updated order
@@ -383,6 +413,31 @@ const orderSlice = createSlice({
       })
       .addCase(cancelOrderAsAdmin.rejected, (state, action) => {
         // The component will show a toast with this error
+        state.error = action.payload as string;
+      })
+      .addCase(cancelOrder.pending, (state) => {
+        // We don't set a global loading state to keep the UI responsive.
+        // The button itself can show a loading spinner.
+        state.error = null;
+      })
+      .addCase(cancelOrder.fulfilled, (state, action: PayloadAction<Order>) => {
+        const updatedOrder = action.payload;
+        
+        // Find the index of the cancelled order in the orders list
+        const index = state.orders.findIndex(order => order._id === updatedOrder._id);
+        
+        // If found, update it in the list
+        if (index !== -1) {
+          state.orders[index] = updatedOrder;
+        }
+
+        // If the cancelled order is the one currently being viewed, update it too
+        if (state.currentOrder?._id === updatedOrder._id) {
+          state.currentOrder = updatedOrder;
+        }
+      })
+      .addCase(cancelOrder.rejected, (state, action) => {
+        // The component will show a toast with this error message.
         state.error = action.payload as string;
       });
   },

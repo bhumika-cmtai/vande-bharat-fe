@@ -413,3 +413,7 @@
 
 
 /* style for rich text editor */
+h2{
+  font-size: 28px;
+  font-weight: bold;
+}

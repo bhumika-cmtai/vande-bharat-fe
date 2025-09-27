@@ -11,7 +11,7 @@ import Link from "next/link";
 // --- Redux Imports ---
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
-import { fetchAllOrders, cancelOrderAsAdmin } from "@/lib/redux/slices/orderSlice";
+import { fetchAllOrders, cancelOrderAsAdmin, cancelOrder  } from "@/lib/redux/slices/orderSlice";
 
 // Helper to format date and time
 const formatDateTime = (dateString: string) => {
@@ -36,6 +36,7 @@ export default function AdminOrdersPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { orders, loading, error, pagination } = useSelector((state: RootState) => state.order);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isCancelling, setIsCancelling] = useState<string | null>(null); 
 
   useEffect(() => {
     // Fetch orders for the current page. The limit is hardcoded to 10 here.
@@ -43,11 +44,16 @@ export default function AdminOrdersPage() {
   }, [dispatch, currentPage]);
 
   const handleCancelOrder = async (orderId: string) => {
+    setIsCancelling(orderId); // Set loading state for this specific button
     try {
-      await dispatch(cancelOrderAsAdmin({ orderId })).unwrap();
+      // Dispatch the new generic `cancelOrder` thunk
+      await dispatch(cancelOrder({ orderId })).unwrap();
       toast.success("Order has been successfully cancelled.");
     } catch (err: any) {
+      // `unwrap()` will throw the error from `rejectWithValue`
       toast.error(err || "Failed to cancel the order.");
+    } finally {
+      setIsCancelling(null); // Reset loading state
     }
   };
   
@@ -117,9 +123,13 @@ export default function AdminOrdersPage() {
                         <Button 
                           variant="destructive" 
                           size="sm"
-                          disabled={['Cancelled', 'Delivered'].includes(order.orderStatus)}
+                          disabled={['Cancelled', 'Delivered', 'Shipped'].includes(order.orderStatus)|| isCancelling === order._id}
                         >
-                          Cancel
+                          {isCancelling === order._id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            'Cancel'
+                          )}
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>

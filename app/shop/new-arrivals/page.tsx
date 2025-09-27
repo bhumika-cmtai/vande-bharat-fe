@@ -5,7 +5,7 @@ import NewArrivalsPageClient from './NewArrivalsPageClient'; // Naye component k
 
 export default function NewArrivalsPage() {
   return (
-    <div className="bg-gray-50">
+    <div className="bg-[var(--brand-orange)]/5">
       <Navbar />
       <Suspense fallback={<NewArrivalsPageFallback />}>
         <NewArrivalsPageClient />

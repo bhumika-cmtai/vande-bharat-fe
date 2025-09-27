@@ -8,7 +8,7 @@ import { Leaf, Heart, Globe, Sparkles, Star } from 'lucide-react'; // Icons for 
 // About Us Page Component
 export default function AboutPage() {
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden bg-[var(--brand-orange)]/10">
       {/* === Hero Section === */}
       <section className="relative h-[70vh] flex items-center justify-center text-white">
         <div className="absolute inset-0 z-0">
@@ -23,7 +23,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/70 via-[var(--brand-green-100)]/20 to-[var(--brand-blue-100)]/20" />
           
           {/* Floating Elements */}
-          <div className="absolute inset-0">Our Journal
+          <div className="absolute inset-0">
 
             <MotionDiv
               animate={{

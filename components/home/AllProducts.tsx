@@ -14,10 +14,10 @@ import { AnimatePresence } from 'framer-motion';
 // The categories remain the same, mapping button text to backend category values
 const filterCategories = [
     { name: 'All Products', value: 'all' },
-    { name: 'Food Product', value: 'Grains' },
-    { name: 'Personal Care', value: 'Personal Care' },
-    { name: 'Skin Care', value: 'Skin Care' },
-    { name: 'Wellness', value: 'Wellness' },
+    // { name: 'Food Product', value: 'Grains' },
+    { name: 'Personal Care', value: 'personal-care' },
+    { name: 'Skin Care', value: 'skin-care' },
+    { name: 'Wellness', value: 'wellness' },
 ];
 
 export const AllProducts = () => {
@@ -52,7 +52,7 @@ export const AllProducts = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
-                >
+                > 
                     <h2 className="text-3xl md:text-4xl font-bold text-[var(--brand-orange-500)]">
                         Our All Products
                     </h2>

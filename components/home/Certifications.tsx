@@ -5,16 +5,16 @@ import { MotionDiv } from '../motion/MotionDiv';
 import { scaleInUp } from '@/lib/motion/motionVariants';
 
 const certifications = [
-  { id: 'gmp', name: 'GMP Certified', imageUrl: '/certifications/gmp.jpg' },
-  { id: 'iso', name: 'ISO 2200', imageUrl: '/certifications/iso2200.jpg' },
-  { id: 'iso', name: 'ISO 9001', imageUrl: '/certifications/iso9001.jpg' }, //
-  { id: 'haccp', name: 'HACCP', imageUrl: '/certifications/haccp.jpg' },
-  { id: '100% NATURAL', name: '100% NATURAL', imageUrl: '/certifications/natural100.jpg' },//
-  { id: 'msme', name: 'MSME', imageUrl: '/certifications/msme.jpg' },
-  { id: 'fssai', name: 'FSSAI', imageUrl: '/certifications/fssai.jpg' },
-  { id: 'APEDA', name: 'APEDA', imageUrl: '/certifications/apeda.jpg' },//
-  { id: 'startupindia', name: 'Startup India', imageUrl: '/certifications/startupindia.jpg' },
-  { id: 'IMPORT EXPORT', name: 'IMPORT EXPORT', imageUrl: '/certifications/importexport.jpg' }
+  { id: 'gmp', name: 'GMP Certified', imageUrl: '/certifications/gmp.png' },
+  { id: 'iso', name: 'ISO 2200', imageUrl: '/certifications/iso2200.png' },
+  { id: 'iso', name: 'ISO 9001', imageUrl: '/certifications/iso9001.png' }, //
+  { id: 'haccp', name: 'HACCP', imageUrl: '/certifications/haccp.png' },
+  { id: '100% NATURAL', name: '100% NATURAL', imageUrl: '/certifications/natural100.png' },//
+  { id: 'msme', name: 'MSME', imageUrl: '/certifications/msme.png' },
+  { id: 'fssai', name: 'FSSAI', imageUrl: '/certifications/fssai.png' },
+  { id: 'APEDA', name: 'APEDA', imageUrl: '/certifications/apeda.png' },//
+  { id: 'startupindia', name: 'Startup India', imageUrl: '/certifications/startupindia.png' },
+  { id: 'IMPORT EXPORT', name: 'IMPORT EXPORT', imageUrl: '/certifications/importexport.png' }
 ];
 
 // Series as Numbers 
