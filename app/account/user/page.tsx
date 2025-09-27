@@ -21,7 +21,8 @@ import {
   MapPin,
   ChevronRight,
   Gift,
-  Loader2 // For loading state
+  Loader2, // For loading state
+  MessageSquare
 } from 'lucide-react';
 import Navbar  from '@/components/Navbar';
 import Footer  from '@/components/Footer';
@@ -165,6 +166,13 @@ export default function ProfilePage() {
               title="My Addresses"
               subtitle="Manage your shipping and billing addresses"
             />
+
+            <ProfileLink
+                href="/account/user/grievances"
+                icon={MessageSquare}
+                title="My Grievances"
+                subtitle="Track your support tickets and responses"
+              />
           </div>
         </div>
       </main>
