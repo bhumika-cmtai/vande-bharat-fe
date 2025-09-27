@@ -88,7 +88,7 @@ export const FeatureGrid = () => {
             <MotionDiv variants={fadeInUp} className="bg-[var(--brand-green-100)] p-8 rounded-2xl shadow-lg flex flex-col group">
               <h3 className="font-bold text-xl text-brand-dark mb-2">Free & Easy Returns</h3>
               <p className="text-gray-600 flex-grow">Our hassle-free policy ensures a worry-free and satisfying shopping experience.</p>
-               <Link href="/returns">
+               <Link href="/policies/cancellation-return">
                 <Button variant="outline" className="mt-6 w-full hover:bg-[var(--brand-orange)] hover:text-white transition-colors">
                   Our Policy <ArrowRight className="ml-2 h-4 w-4"/>
                 </Button>
@@ -99,7 +99,7 @@ export const FeatureGrid = () => {
             <MotionDiv variants={fadeInUp} className="bg-[var(--brand-blue-100)] p-8 rounded-2xl shadow-lg flex flex-col group">
               <h3 className="font-bold text-xl text-brand-dark mb-2">Secure Payments</h3>
               <p className="text-gray-600 flex-grow">Shop with confidence using our secure, 100% encrypted payment gateways.</p>
-               <Link href="/faq">
+               <Link href="/policies/terms-and-conditions">
                 <Button variant="outline" className="mt-6 w-full hover:bg-[var(--brand-orange)] hover:text-white transition-colors">
                   See Details <ArrowRight className="ml-2 h-4 w-4"/>
                 </Button>
