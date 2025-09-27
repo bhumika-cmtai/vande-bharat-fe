@@ -1,14 +1,94 @@
 "use client";
 
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { MotionDiv } from '@/components/motion/MotionDiv';
-import { staggerContainer, fadeInUp, scaleInUp } from '@/lib/motion/motionVariants';
-import { FilePenLine, MailCheck, Search, CheckCircle, User, Mail, Phone, ShoppingBag, Type } from 'lucide-react';
+import { staggerContainer, fadeInUp } from '@/lib/motion/motionVariants';
+import { FilePenLine, MailCheck, Search, CheckCircle, Loader2 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+// --- Redux & UI Imports ---
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/lib/redux/store';
+import { createGrievance, NewGrievancePayload } from '@/lib/redux/slices/grievanceSlice';
+// import { useToast } from '@/hooks/use-toast'; // Assuming you have a custom toast hook
+import {toast} from 'sonner'
+
 // Grievance Cell Page Component
 export default function GrievancePage() {
+  const dispatch = useDispatch<AppDispatch>();
+  // const { toast } = useToast();
+  
+  // --- Selectors to get user data and submission status ---
+  const { user } = useSelector((state: RootState) => state.user); // Assuming user slice holds user info
+  const { status: grievanceStatus, error } = useSelector((state: RootState) => state.grievance);
+
+  // --- State for the form ---
+  const initialFormState: NewGrievancePayload = {
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    orderId: '',
+    natureOfGrievance: 'Other', // Default value
+    description: '',
+  };
+  const [formData, setFormData] = useState<NewGrievancePayload>(initialFormState);
+
+  // --- Effect to pre-fill form if user is logged in ---
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        fullName: user.fullName || '',
+        email: user.email || '',
+      }));
+    }
+  }, [user]);
+
+  // --- Handlers for form interactions ---
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic validation
+    if (!formData.fullName || !formData.email || !formData.description) {
+      toast.error("Missing Information", {
+        description: "Please fill out all required fields.",
+      });
+      return;
+    }
+
+    try {
+      // Dispatch the action and wait for the result
+      const result = await dispatch(createGrievance(formData)).unwrap();
+      
+      toast.success("Grievance Submitted Successfully!",{
+        description: `Your ticket ID is ${result.ticketId}. We will get back to you shortly.`,}
+      );
+
+      // Reset the form, but keep user's name and email
+      setFormData({
+        ...initialFormState,
+        fullName: user?.fullName || '',
+        email: user?.email || '',
+      });
+
+    } catch (err: any) {
+      
+      toast.error("Submission Failed", {
+        description: String(err),
+      });
+    }
+  };
+
   const grievanceProcess = [
     {
       step: 'Step 1: Submission',
@@ -40,7 +120,7 @@ export default function GrievancePage() {
     <main className="overflow-hidden bg-gray-50">
         <Navbar />
       {/* === Hero Section === */}
-      <section className="relative h-[60vh] flex items-center justify-center text-white bg-slate-800">
+      <section className="relative h-[60vh] flex items-center justify-center text-white bg-[var(--brand-orange)]/40">
         <div className="absolute inset-0 z-0">
           <Image
             src="/grievance-hero.jpg" // A professional, abstract, or office-related image
@@ -60,12 +140,12 @@ export default function GrievancePage() {
           className="relative z-10 text-center px-4"
         >
           <MotionDiv variants={fadeInUp}>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-gray-200 to-blue-100 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold bg-blue-500 bg-clip-text text-transparent leading-tight">
               Grievance Redressal Mechanism
             </h1>
           </MotionDiv>
           <MotionDiv variants={fadeInUp}>
-            <p className="mt-6 text-lg md:text-xl max-w-3xl mx-auto font-light text-gray-300 leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl max-w-3xl mx-auto font-light text-blue-500/70 leading-relaxed">
               Our commitment to a fair and transparent process for resolving your concerns.
             </p>
           </MotionDiv>
@@ -90,7 +170,7 @@ export default function GrievancePage() {
       </section>
 
       {/* === Step-by-Step Process Section === */}
-      <section className="py-20 md:py-24 bg-gray-50">
+      <section className="py-20 md:py-24 bg-green-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-brand-dark">How It Works: Our 4-Step Process</h2>
@@ -140,7 +220,7 @@ export default function GrievancePage() {
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold text-gray-800">Name:</h4>
-                      <p className="text-gray-600">Mr. Arjun Desai</p>
+                      <p className="text-gray-600">Mr. Narendra Singh</p>
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-800">Designation:</h4>
@@ -170,49 +250,57 @@ export default function GrievancePage() {
                 transition={{ duration: 0.8 }}
               >
                 <h2 className="text-3xl font-bold text-brand-dark mb-6">Submit Your Grievance</h2>
-                <form className="space-y-6 p-8 bg-gray-50 border border-gray-200 rounded-lg">
+                <form onSubmit={handleSubmit} className="space-y-6 p-8 bg-gray-50 border border-gray-200 rounded-lg">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                      <input type="text" id="fullName" name="fullName" required className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" />
+                      <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                      <input type="text" id="fullName" name="fullName" required value={formData.fullName} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                      <input type="email" id="email" name="email" required className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" />
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                      <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" />
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number (Optional)</label>
-                      <input type="tel" id="phone" name="phone" className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" />
+                      <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">Phone Number (Optional)</label>
+                      <input type="tel" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" />
                     </div>
                     <div>
                       <label htmlFor="orderId" className="block text-sm font-medium text-gray-700 mb-1">Order ID</label>
-                      <input type="text" id="orderId" name="orderId" required className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" placeholder="e.g., VBM123456" />
+                      <input type="text" id="orderId" name="orderId" value={formData.orderId} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition" placeholder="e.g., VBM123456" />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="grievanceType" className="block text-sm font-medium text-gray-700 mb-1">Nature of Grievance</label>
-                    <select id="grievanceType" name="grievanceType" required className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition bg-white">
-                      <option>Select an issue type</option>
-                      <option>Order Delivery Issue</option>
-                      <option>Product Quality Concern</option>
-                      <option>Refund/Return Request</option>
-                      <option>Payment Related Issue</option>
-                      <option>Website Technical Problem</option>
-                      <option>Other</option>
+                    <label htmlFor="natureOfGrievance" className="block text-sm font-medium text-gray-700 mb-1">Nature of Grievance *</label>
+                    <select id="natureOfGrievance" name="natureOfGrievance" required value={formData.natureOfGrievance} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition bg-white">
+                      <option value="Order Issue">Order Issue</option>
+                      <option value="Product Issue">Product Issue</option>
+                      <option value="Delivery Issue">Delivery Issue</option>
+                      <option value="Payment Issue">Payment Issue</option>
+                      <option value="Website/App Issue">Website/App Issue</option>
+                      <option value="Feedback">Feedback</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Detailed Description of Grievance</label>
-                    <textarea id="description" name="description" required className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition"></textarea>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Detailed Description *</label>
+                    <textarea id="description" name="description" required rows={5} value={formData.description} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--brand-blue)] transition"></textarea>
                   </div>
                   <div>
-                    <button type="submit" className="w-full px-8 py-4 bg-[var(--brand-blue)] text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-300 shadow-lg">
-                      Submit Grievance
+                    <button type="submit" disabled={grievanceStatus === 'loading'} className="w-full flex items-center justify-center px-8 py-4 bg-[var(--brand-blue)] text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-300 shadow-lg disabled:bg-blue-300 disabled:cursor-not-allowed">
+                      {grievanceStatus === 'loading' ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Submitting...
+                        </>
+                      ) : (
+                        'Submit Grievance'
+                      )}
                     </button>
                   </div>
                 </form>
+
               </MotionDiv>
             </div>
           </div>

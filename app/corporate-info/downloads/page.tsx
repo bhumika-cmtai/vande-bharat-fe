@@ -1,14 +1,39 @@
 "use client";
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { MotionDiv } from '@/components/motion/MotionDiv';
 import { staggerContainer, fadeInUp, scaleInUp } from '@/lib/motion/motionVariants';
-import { Download, BookOpen, FileText, Info } from 'lucide-react'; // Icons for our downloads section
+import { Download, BookOpen, FileText, Info, Eye } from 'lucide-react';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import PdfModal from '@/components/PdfModal';
 
 // Downloads Page Component
 export default function DownloadsPage() {
+  // State for managing the modal
+  const [modalFileUrl, setModalFileUrl] = useState(null);
+
+  // Function to open the modal
+  const openModal = (fileUrl) => {
+    setModalFileUrl(fileUrl);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setModalFileUrl(null);
+  };
+
+  // Function to handle direct download
+  const handleDownload = (fileUrl) => {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileUrl.split('/').pop() || 'document.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // Sample data for product catalogs
   const productCatalogs = [
     {
@@ -62,18 +87,19 @@ export default function DownloadsPage() {
   return (
     <main className="overflow-hidden bg-[var(--brand-orange)]/10">
       <Navbar />
+      
       {/* === Hero Section === */}
       <section className="relative h-[70vh] flex items-center justify-center text-white">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/downloads-hero.jpg" // Replace with a relevant background image
+            src="/downloads-hero.jpg"
             alt="A person browsing through a product catalog"
             fill
             priority
             className="object-cover scale-105 hover:scale-110 transition-transform duration-[3000ms]"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/70 via-[var(--brand-green-100)]/20 to-[var(--brand-blue-100)]/20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-orange)]/70 via-[var(--brand-green-100)]/20 to-[var(--brand-blue)]/40" />
         </div>
         
         <MotionDiv
@@ -95,7 +121,7 @@ export default function DownloadsPage() {
               }
             }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-yellow-100 to-green-100 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold text-[var(--brand-orange-500)] leading-tight">
               Resource Hub
             </h1>
           </MotionDiv>
@@ -113,7 +139,7 @@ export default function DownloadsPage() {
               }
             }}
           >
-            <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-light text-gray-500 leading-relaxed">
               Explore our catalogs, user guides, and brand resources.
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-orange)] mx-auto mt-6 rounded-full"></div>
@@ -166,15 +192,24 @@ export default function DownloadsPage() {
                   </div>
                 </div>
                 <div className="p-6 bg-gray-50/50 text-center">
-                   <a
-                    href={doc.fileUrl}
-                    download
-                    className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[var(--brand-blue)] hover:bg-blue-700 transition-colors"
-                    aria-label={`Download ${doc.title}`}
-                  >
-                    <Download className="w-5 h-5 mr-2" />
-                    Download
-                  </a>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button
+                      onClick={() => openModal(doc.fileUrl)}
+                      className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[var(--brand-blue)] hover:bg-blue-700 transition-colors"
+                      aria-label={`Preview ${doc.title}`}
+                    >
+                      <Eye className="w-5 h-5 mr-2" />
+                      Preview
+                    </button>
+                    <button
+                      onClick={() => handleDownload(doc.fileUrl)}
+                      className="inline-flex items-center justify-center px-6 py-3 border border-[var(--brand-blue)] text-base font-medium rounded-full shadow-sm text-[var(--brand-blue)] bg-white hover:bg-gray-50 transition-colors"
+                      aria-label={`Download ${doc.title}`}
+                    >
+                      <Download className="w-5 h-5 mr-2" />
+                      Download
+                    </button>
+                  </div>
                 </div>
               </MotionDiv>
             ))}
@@ -227,21 +262,34 @@ export default function DownloadsPage() {
                   </div>
                 </div>
                 <div className="p-6 bg-gray-50 text-center">
-                   <a
-                    href={guide.fileUrl}
-                    download
-                    className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[var(--brand-green)] hover:bg-emerald-700 transition-colors"
-                    aria-label={`Download ${guide.title}`}
-                  >
-                    <Download className="w-5 h-5 mr-2" />
-                    Download Now
-                  </a>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button
+                      onClick={() => openModal(guide.fileUrl)}
+                      className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[var(--brand-green)] hover:bg-emerald-700 transition-colors"
+                      aria-label={`Preview ${guide.title}`}
+                    >
+                      <Eye className="w-5 h-5 mr-2" />
+                      Preview
+                    </button>
+                    <button
+                      onClick={() => handleDownload(guide.fileUrl)}
+                      className="inline-flex items-center justify-center px-6 py-3 border border-[var(--brand-green)] text-base font-medium rounded-full shadow-sm text-[var(--brand-green)] bg-white hover:bg-gray-50 transition-colors"
+                      aria-label={`Download ${guide.title}`}
+                    >
+                      <Download className="w-5 h-5 mr-2" />
+                      Download
+                    </button>
+                  </div>
                 </div>
               </MotionDiv>
             ))}
           </MotionDiv>
         </div>
       </section>
+
+      {/* Render the PDF Modal */}
+      <PdfModal fileUrl={modalFileUrl} onClose={closeModal} />
+
       <Footer />
     </main>
   );

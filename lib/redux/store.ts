@@ -15,6 +15,7 @@ import blogReducer from './slices/blogSlice'
 import testimonialReducer from './slices/testimonialSlice'
 import { setupInterceptors } from '@/lib/api/auth'
 import taxReducer from './slices/taxSlice'
+import grievanceReducer from './slices/grievanceSlice'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -30,7 +31,8 @@ export const store = configureStore({
     dashboard: dashboardReducer,
     blog: blogReducer,
     testimonials: testimonialReducer,
-    tax: taxReducer
+    tax: taxReducer,
+    grievance: grievanceReducer
   },
 });
 

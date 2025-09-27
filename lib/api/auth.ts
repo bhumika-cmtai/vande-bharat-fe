@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 // IMPORTANT: Hum yahan se sirf 'TYPES' import kar rahe hain, store ki actual file nahi.
 import type { AppStore, RootState } from '@/lib/redux/store';
 import { logout } from '@/lib/redux/slices/authSlice';
+import { toast } from 'sonner'; 
 
 export interface Address {
   _id: string;
@@ -92,6 +93,10 @@ export const setupInterceptors = (store: AppStore) => {
     async (error: AxiosError) => {
       if (error.response && error.response.status === 401) {
         console.error("Authentication Error (401): Token expired or invalid. Logging out.");
+        toast.error("Session Expired", {
+          description: "Your session has expired. Please log in again to continue.",
+          duration: 2000,
+        });
         
         // Store ko parameter se use karke action dispatch kar rahe hain.
         // Using the store from the parameter to dispatch an action.

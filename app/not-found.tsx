@@ -32,15 +32,7 @@ export default function NotFound() {
           Page Not Found
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-gray-600 mb-8"
-        >
-          The jewelry piece you're looking for seems to have been misplaced. Let's help you find something beautiful
-          instead.
-        </motion.p>
+        
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,7 +46,7 @@ export default function NotFound() {
               <span>Go Home</span>
             </Button>
           </Link>
-          <Link href="/">
+          <Link href="/shop">
             <Button
               variant="outline"
               className="flex items-center space-x-2 border-orange-500 text-orange-500 hover:bg-orange-50 px-6 py-3 rounded-xl bg-transparent"

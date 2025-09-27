@@ -63,10 +63,10 @@ export default function ProhibitionsPage() {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="bg-red-900 text-white">
+        <section className="bg-gradient-to-r from-green-100 via-blue-100 to-orange-100 text-[var(--brand-orange-500)]">
            <div className="container mx-auto px-6 py-20 text-center">
                 <h1 className="text-4xl md:text-6xl font-bold">Website Prohibitions</h1>
-                <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-red-100">
+                <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-500">
                     To maintain a safe, lawful, and respectful environment for our community.
                 </p>
            </div>
@@ -85,7 +85,7 @@ export default function ProhibitionsPage() {
         </section>
 
         {/* Prohibitions Grid */}
-        <section className="py-16 md:py-20 bg-gray-50">
+        <section className="py-16 md:py-20 bg-orange-50">
           <div className="container mx-auto px-6">
             <MotionDiv
               variants={staggerContainer}

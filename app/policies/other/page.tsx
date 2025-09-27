@@ -60,18 +60,18 @@ export default function OtherPoliciesPage() {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="bg-gray-800 text-white">
+        <section className="bg-gradient-to-br from-green-600/60 via-gray-100 to-blue-600/30 text-white">
            <div className="container mx-auto px-6 py-20 text-center">
                 <FileText className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                <h1 className="text-4xl md:text-6xl font-bold">Our Policy Hub</h1>
-                <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+                <h1 className="text-4xl md:text-6xl font-bold text-[var(--brand-orange-500)]/80">Our Policy Hub</h1>
+                <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">
                     Your central resource for understanding the guidelines that govern our platform.
                 </p>
            </div>
         </section>
 
         {/* Introduction */}
-        <section className="py-16 md:py-20">
+        <section className="py-16 md:py-20 bg-amber-100">
             <div className="container mx-auto px-6">
                  <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-brand-dark mb-4">Transparency and Trust</h2>
@@ -83,19 +83,19 @@ export default function OtherPoliciesPage() {
         </section>
 
         {/* Policies Grid */}
-        <section className="py-16 md:py-20 bg-gray-50">
+        <section className="py-16 md:py-20 bg-orange-50">
           <div className="container mx-auto px-6">
             <MotionDiv
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 "
             >
               {policyLinks.map((item, index) => (
                 <MotionDiv key={index} variants={fadeInUp}>
                   <Link href={item.href}>
-                    <div className="group bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 border border-gray-100 transition-all duration-300 h-full flex flex-col">
+                    <div className="group bg-orange-300/50 p-8 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 border border-gray-100 transition-all duration-300 h-full flex flex-col">
                       <div className="flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-full bg-gray-100 mb-5 group-hover:bg-blue-50 transition-colors">
                         {item.icon}
                       </div>
@@ -113,7 +113,7 @@ export default function OtherPoliciesPage() {
         </section>
         
         {/* Contact CTA Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-blue-50">
             <div className="container mx-auto px-6 text-center">
                 <div className="max-w-3xl mx-auto">
                     <h2 className="text-3xl font-bold text-brand-dark mb-4">Still Have Questions?</h2>

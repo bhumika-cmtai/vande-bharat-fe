@@ -60,7 +60,7 @@ export default function PolicyObligationPage() {
     <main className="overflow-hidden bg-gray-50">
       {/* === Hero Section === */}
       <Navbar />
-      <section className="relative h-[60vh] flex items-center justify-center text-white bg-slate-800">
+      <section className="relative h-[60vh] flex items-center justify-center  bg-gradient-to-r from-orange-100  via-blue-100 to-green-100">
         <div className="absolute inset-0 z-0">
           <Image
             src="/policy-hero.jpg" // A professional, abstract image suggesting trust
@@ -80,12 +80,12 @@ export default function PolicyObligationPage() {
           className="relative z-10 text-center px-4"
         >
           <MotionDiv variants={fadeInUp}>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-gray-200 to-green-100 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r text-orange-600  leading-tight">
               Our Policies & Obligations
             </h1>
           </MotionDiv>
           <MotionDiv variants={fadeInUp}>
-            <p className="mt-6 text-lg md:text-xl max-w-3xl mx-auto font-light text-gray-300 leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl max-w-3xl mx-auto font-light text-gray-500 leading-relaxed">
               A clear framework of our commitments, built on trust, transparency, and integrity.
             </p>
           </MotionDiv>
@@ -110,7 +110,7 @@ export default function PolicyObligationPage() {
       </section>
 
       {/* === Core Obligations Grid === */}
-      <section className="py-20 md:py-24 bg-gray-50">
+      <section className="py-20 md:py-24 bg-green-100">
         <div className="container mx-auto px-6">
           <MotionDiv
             variants={staggerContainer}
@@ -150,13 +150,13 @@ export default function PolicyObligationPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.7 }}
-                className="bg-gradient-to-r from-[var(--brand-green)]/80 to-[var(--brand-blue)]/80 p-10 rounded-xl shadow-xl"
+                className="bg-gradient-to-r from-[var(--brand-green)]/40 to-[var(--brand-blue)]/40 p-10 rounded-xl shadow-xl"
             >
                 <h2 className="text-3xl font-bold text-white mb-4">Have Questions?</h2>
                 <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
                     If you have any questions regarding our policies or obligations, please do not hesitate to reach out to our support team.
                 </p>
-                <Link href="/contact-us" className="inline-block px-10 py-4 bg-white text-[var(--brand-blue)] font-bold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg">
+                <Link href="/#contact-us" className="inline-block px-10 py-4 bg-white text-[var(--brand-blue)] font-bold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg">
                     Contact Us
                 </Link>
             </MotionDiv>

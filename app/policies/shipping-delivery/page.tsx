@@ -30,7 +30,7 @@ export default function ShippingDeliveryPage() {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 via-green-50 to-orange-50 text-brand-dark">
+        <section className="bg-gradient-to-r from-orange-100 via-blue-100 to-green-100 text-brand-dark">
            <div className="container mx-auto px-6 py-20 text-center">
                 <Truck className="h-16 w-16 mx-auto mb-4 text-gray-400" />
                 <h1 className="text-4xl md:text-6xl font-bold">Shipping & Delivery</h1>
@@ -45,7 +45,7 @@ export default function ShippingDeliveryPage() {
             <div className="container mx-auto px-6">
                  <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     {highlights.map((item, index) => (
-                        <div key={index} className="bg-gray-50 p-8 rounded-lg border border-gray-100">
+                        <div key={index} className="bg-green-50 p-8 rounded-lg border border-gray-100">
                             <div className="flex items-center justify-center mx-auto h-16 w-16 rounded-full bg-white mb-4 shadow-sm">
                                 {item.icon}
                             </div>
@@ -58,7 +58,7 @@ export default function ShippingDeliveryPage() {
         </section>
 
         {/* Main Policy Content */}
-        <section className="py-16 md:py-20 bg-gray-50">
+        <section className="py-16 md:py-20 bg-blue-50">
             <div className="container mx-auto px-6">
                 <div className="max-w-4xl mx-auto">
                     
@@ -117,7 +117,7 @@ export default function ShippingDeliveryPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-16 md:py-20 bg-white">
+        <section className="py-16 md:py-20 bg-orange-50">
             <div className="container mx-auto px-6 max-w-4xl">
                  <h2 className="text-3xl font-bold text-brand-dark mb-8 text-center">Frequently Asked Questions</h2>
                  <div className="space-y-6">

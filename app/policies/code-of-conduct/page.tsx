@@ -83,9 +83,9 @@ export default function ModelCodeOfConductPage() {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-green-50 via-blue-50 to-orange-50 text-brand-dark">
+        <section className="bg-gradient-to-r from-green-100 via-blue-100 to-orange-100 text-brand-dark">
            <div className="container mx-auto px-6 py-20 text-center">
-                <h1 className="text-4xl md:text-6xl font-bold">Model Code of Conduct</h1>
+                <h1 className="text-4xl md:text-6xl font-bold text-orange-700">Model Code of Conduct</h1>
                 <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">
                     Our shared commitment to upholding the highest standards of ethics and integrity.
                 </p>
@@ -105,7 +105,7 @@ export default function ModelCodeOfConductPage() {
         </section>
 
         {/* Core Principles Grid */}
-        <section className="py-16 md:py-20 bg-gray-50">
+        <section className="py-16 md:py-20 bg-orange-50">
           <div className="container mx-auto px-6">
              <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-brand-dark">Our Core Principles</h2>
@@ -139,13 +139,13 @@ export default function ModelCodeOfConductPage() {
         {/* Reporting Violations Section */}
         <section className="py-16 md:py-20 bg-white">
             <div className="container mx-auto px-6">
-                <div className="max-w-4xl mx-auto bg-gray-50 border border-gray-200 rounded-lg p-10 text-center">
+                <div className="max-w-4xl mx-auto bg-green-50 border border-gray-200 rounded-lg p-10 text-center">
                     <AlertTriangle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-                    <h2 className="text-3xl font-bold text-brand-dark mb-4">Upholding Our Standards</h2>
+                    <h2 className="text-3xl font-bold text-brand-dark mb-4 ">Upholding Our Standards</h2>
                     <p className="text-lg text-gray-600 leading-relaxed mb-6">
                         We all have a responsibility to uphold this Code of Conduct. If you witness or suspect any behavior that violates these principles, we strongly encourage you to report it. All reports will be handled with confidentiality and investigated promptly.
                     </p>
-                    <a href="/grievance-cell" className="inline-block px-10 py-4 bg-[var(--brand-blue)] text-white font-bold rounded-full hover:bg-blue-700 transition-all duration-300 shadow-lg">
+                    <a href="/corporate-info/grievance-cell" className="inline-block px-10 py-4 bg-[var(--brand-blue)] text-white font-bold rounded-full hover:bg-blue-700 transition-all duration-300 shadow-lg">
                         Report a Violation
                     </a>
                 </div>

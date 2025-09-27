@@ -46,7 +46,7 @@ export default function AchievementsPage() {
             }}
             className="relative"
           >
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-yellow-100 to-green-100 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold text-[var(--brand-orange-500)] leading-tight">
               Our Milestones & Achievements
             </h1>
             <div className="absolute inset-0 text-5xl md:text-7xl font-bold text-white/20 blur-sm -z-10">
@@ -67,7 +67,7 @@ export default function AchievementsPage() {
               }
             }}
           >
-            <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="mt-6 text-xl md:text-2xl max-w-3xl mx-auto  text-orange-500 leading-relaxed">
               Celebrating the journey of Vande Bharat Mart and the trust you place in us.
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-orange)] mx-auto mt-6 rounded-full"></div>
@@ -177,7 +177,7 @@ export default function AchievementsPage() {
       </section>
 
       {/* === As Featured In Section === */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-orange-200">
         <div className="container mx-auto px-6 text-center">
           <MotionDiv
             initial={{ opacity: 0, y: 50 }}
@@ -195,20 +195,20 @@ export default function AchievementsPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="flex flex-wrap justify-center items-center gap-12 mt-20"
+            className="flex flex-wrap justify-center items-center gap-12 mt-20 "
           >
             {/* Media Logos */}
-            <MotionDiv variants={fadeInUp} className="grayscale hover:grayscale-0 transition-all duration-300">
-              <Image src="/logo1.png" alt="Media Logo 1" width={150} height={50} />
+            <MotionDiv variants={fadeInUp} className="">
+              <Image src="/medialogo1.png" alt="Media Logo 1" width={150} height={50} />
             </MotionDiv>
-            <MotionDiv variants={fadeInUp} className="grayscale hover:grayscale-0 transition-all duration-300">
-              <Image src="/logo2.png" alt="Media Logo 2" width={150} height={50} />
+            <MotionDiv variants={fadeInUp} className="">
+              <Image src="/medialogo2.png" alt="Media Logo 2" width={150} height={50} />
             </MotionDiv>
-            <MotionDiv variants={fadeInUp} className="grayscale hover:grayscale-0 transition-all duration-300">
-              <Image src="/logo3.png" alt="Media Logo 3" width={150} height={50} />
+            <MotionDiv variants={fadeInUp} className="">
+              <Image src="/medialogo3.png" alt="Media Logo 3" width={150} height={50} />
             </MotionDiv>
-            <MotionDiv variants={fadeInUp} className="grayscale hover:grayscale-0 transition-all duration-300">
-              <Image src="/logo4.png" alt="Media Logo 4" width={150} height={50} />
+            <MotionDiv variants={fadeInUp} className="">
+              <Image src="/medialogo4.jpg" alt="Media Logo 4" width={150} height={50} />
             </MotionDiv>
           </MotionDiv>
         </div>

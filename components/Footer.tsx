@@ -36,8 +36,8 @@ const footerLinkGroups = [
       { name: 'Success Stories', href: '/success-stories' },
       // Linking to sections on the corporate info page
       { name: 'Director Message', href: '/corporate-info/director-message' }, 
-      { name: 'Achievements', href: '/corporate-info#achievements' },
-      { name: 'Legals', href: '/corporate-info/legal' },
+      { name: 'Achievements', href: '/corporate-info/achievements' },
+      { name: 'Legals', href: '/corporate-info/legals' },
       { name: 'Downloads', href: '/corporate-info/downloads' },
       { name: 'Grievance Cell', href: '/corporate-info/grievance-cell' },
     ],

@@ -53,7 +53,7 @@ export function ContactForm() {
     };
 
     return (
-        <section className="my-12 md:my-20 bg-[var(--base-10)] rounded-2xl overflow-hidden">
+        <section className="my-12 md:my-20 bg-[var(--base-10)] rounded-2xl overflow-hidden" id="contact-us">
             <div className="grid md:grid-cols-2 items-center">
                 {/* Left Side: Form */}
                 <div className="p-8 md:p-12">

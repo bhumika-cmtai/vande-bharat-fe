@@ -35,9 +35,9 @@ export default function TermsAndConditionsPage() {
            <div className="container mx-auto px-6 py-20 text-center">
                 <Gavel className="h-16 w-16 mx-auto mb-4 text-gray-400" />
                 <h1 className="text-4xl md:text-6xl font-bold">Terms & Conditions</h1>
-                <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+                {/* <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
                     Please read these terms carefully before using our services. Last Updated: {new Date().toLocaleDateString()}.
-                </p>
+                </p> */}
            </div>
         </section>
 
@@ -66,7 +66,7 @@ export default function TermsAndConditionsPage() {
                     <div className="lg:col-span-9 prose prose-lg max-w-none prose-h2:font-bold prose-h2:text-brand-dark prose-a:text-[var(--brand-blue)]">
                         
                         {/* Legal Disclaimer */}
-                        <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-12" role="alert">
+                        {/* <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-12" role="alert">
                             <div className="flex">
                                 <div className="py-1"><AlertTriangle className="h-6 w-6 text-red-500 mr-4" /></div>
                                 <div>
@@ -76,7 +76,7 @@ export default function TermsAndConditionsPage() {
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <section id="introduction">
                             <h2>1. Introduction & Agreement</h2>
@@ -141,8 +141,14 @@ export default function TermsAndConditionsPage() {
                         <section id="contact-info">
                            <h2>13. Contact Information</h2>
                            <p>For any questions, concerns, or notices regarding these Terms, please contact us at:</p>
-                           <p>Email: <a href="mailto:legal@vandebharatmart.com">legal@vandebharatmart.com</a><br/>
-                           Address: [Your Company's Full Address]</p>
+                           <p>Email: <a href="mailto:support@vandebharatmart.com">support@vandebharatmart.com</a><br/>
+                           Address: VANDE BHARAT MARKETING PVT. LTD.
+
+K-131, KRISHNA PARK EXTN.,
+
+NEAR JANAKPURI DISTRICT CENTRE
+
+NEW DELHI -110018 (INDIA)</p>
                         </section>
                     </div>
                 </div>
