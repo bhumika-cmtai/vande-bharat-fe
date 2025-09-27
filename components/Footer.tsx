@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Facebook, Instagram, LinkedinIcon, Twitter, Youtube } from 'lucide-react';
 import { MotionDiv } from './motion/MotionDiv';
 import Image from 'next/image';
 import { IndiaFlag } from './icons/IndiaFlag';
@@ -57,10 +57,12 @@ const footerLinkGroups = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: '#', name: 'Facebook' },
-  { icon: Instagram, href: '#', name: 'Instagram' },
-  { icon: Twitter, href: '#', name: 'Twitter' },
-  { icon: Youtube, href: '#', name: 'Youtube' },
+  { icon: Facebook, href: 'https://www.facebook.com/share/1B4D8jWdJM/', name: 'Facebook' },
+  { icon: Instagram, href: 'https://www.instagram.com/vandebharat.mart?igsh=MWc2eWF3c3k1M2900Q==', name: 'Instagram' },
+  { icon: Twitter, href: 'https://youtube.com/@vandebharatmart?si=jfjTPsEmPBku-TQH', name: 'Twitter' },
+  { icon: Youtube, href: 'https://youtube.com/@vandebharatmart?si=jfjTPsEmPBku-TQH', name: 'Youtube' },
+  { icon: LinkedinIcon, href: 'https://www.linkedin.com/in/vande-bharat-97252b354?utm_source=share&utm_campaign=share_via&utm_content=profile', name: 'Linkedin' },
+
 ];
 
  const Footer = () => {

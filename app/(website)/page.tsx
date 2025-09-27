@@ -56,7 +56,7 @@ export default function HomePage() {
             // category: "wellness",
             // tags: "featured"
           }}
-          viewAllLink="#latest-articles"
+          viewAllLink="/blogs"
           className="my-16"
         />
         

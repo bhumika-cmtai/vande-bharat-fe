@@ -194,7 +194,7 @@ const cartSlice = createSlice({
       const discountAmount = pointsDiscountValue + couponDiscountValue;
       
       const shippingCost = subTotal > 2000 ? 0 : 90; //temprory
-      const taxAmount = subTotal * state.taxRate;
+      const taxAmount = (subTotal-discountAmount) * state.taxRate;
       console.log("----taxAmount----")
       console.log(state.taxRate)
       const finalTotal = Math.max(0, subTotal - discountAmount + shippingCost + taxAmount );
